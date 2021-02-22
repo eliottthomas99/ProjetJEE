@@ -30,9 +30,9 @@ public class ClientServiceImpl implements ClientService{
 			
 			// Itérer sur le resultSet : 
 			while (rs.next()) {
-				String title = rs.getString("title");
-				String author = rs.getString("author");
-				membres.add(new Membre(compteur,title,author));
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				membres.add(new Membre(compteur,nom,prenom));
 				compteur +=1;
 				
 			}

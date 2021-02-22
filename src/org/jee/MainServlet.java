@@ -44,7 +44,7 @@ public class MainServlet extends HttpServlet {
 		List<Membre> listMembre = clientService.getAllMembre();
 		
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath()).append("\n").append(listMembre.toString());
 	}
 
 	/**
