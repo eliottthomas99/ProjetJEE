@@ -197,7 +197,7 @@ public class Membre {
 		try (Statement stmt = connexion.createStatement()) {
 			// Exécuter la requête SQL et récupérer un java.sql.ResultSet
 			String query = "select * from membres where email='" + email + "' and password='" + password + "';";
-			System.out.println(query);
+			//System.out.println(query);
 			ResultSet rs = stmt.executeQuery(query);
 
 			int idV = -1;

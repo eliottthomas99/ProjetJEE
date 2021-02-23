@@ -35,6 +35,16 @@ public class MainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		//TESTS CREATION COMPTE
+		
+		Visiteur dupond = new Visiteur("Dupond","Charles");
+		
+		dupond.CreerCompte(0, "Dupond", "Charles", "cdupond@enssat.fr", "1234",
+				"1970-08-14","9 place du general de gaule","interphone blanc", 75012, "Paris", "France", 1);
+		
+		
+		
+		
 		
 		
 		//RequestDispatcher rd = getServletContext().getRequestDispatcher("/accueil.jsp");
@@ -53,6 +63,9 @@ public class MainServlet extends HttpServlet {
 		else {
 			response.getWriter().append("Connection failure !");
 		}
+		
+		
+		
 		
 		
 	}
