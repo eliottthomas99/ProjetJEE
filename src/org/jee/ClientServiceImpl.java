@@ -1,6 +1,7 @@
 package org.jee;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,10 +31,21 @@ public class ClientServiceImpl implements ClientService{
 			
 			// Itérer sur le resultSet : 
 			while (rs.next()) {
+				int id = rs.getInt("id");
+				int civilite = rs.getInt("civilite");
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
-				membres.add(new Membre(compteur,nom,prenom));
-				compteur +=1;
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				String naissance = rs.getString("naissance");
+				String addr_rue = rs.getString("addr_rue");
+				String addr_complement = rs.getString("addr_complement");
+				int addr_code_postal = rs.getInt("addr_code_postal");
+				String ville = rs.getString("addr_ville");
+				String pays = rs.getString("addr_pays");
+				int preference = rs.getInt("preference");
+				
+				membres.add(new Membre(id,civilite,nom,prenom,email,password,naissance,addr_rue,addr_complement,addr_code_postal,ville,pays,preference));
 				
 			}
 			

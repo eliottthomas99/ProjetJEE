@@ -43,8 +43,18 @@ public class MainServlet extends HttpServlet {
 		
 		List<Membre> listMembre = clientService.getAllMembre();
 		
+		Membre eliott = listMembre.get(0);
+		//System.out.println("ELIOTT email:"+eliott.getEmail()+" psw: "+eliott.getPassword());
+		Boolean valid = eliott.validerAuthentification("ethomas@enssat.fr", "azerty");
+		if (valid) {
+			response.getWriter().append("Connection success !");
+			//response.getWriter().append("Served at: ").append(request.getContextPath()).append("\n").append(listMembre.toString());
+		}
+		else {
+			response.getWriter().append("Connection failure !");
+		}
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath()).append("\n").append(listMembre.toString());
+		
 	}
 
 	/**

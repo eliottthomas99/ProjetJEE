@@ -1,37 +1,39 @@
 package org.jee;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Membre {
 
 	private int id;
-	
+
 	private int civilite;
-	
+
 	private String nom;
-	
+
 	private String prenom;
-	
+
 	private String email;
-	
+
 	private String password;
-	
-	private Date naissance;
-	
+
+	private String naissance;
+
 	private String addr_rue;
-	
+
 	private String addr_complement;
-	
+
 	private int addr_code_postal;
-	
+
 	private String ville;
-	
+
 	private String pays;
-	
+
 	private int preference;
-	
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -80,11 +82,11 @@ public class Membre {
 		this.password = password;
 	}
 
-	public Date getNaissance() {
+	public String getNaissance() {
 		return naissance;
 	}
 
-	public void setNaissance(Date naissance) {
+	public void setNaissance(String naissance) {
 		this.naissance = naissance;
 	}
 
@@ -136,7 +138,7 @@ public class Membre {
 		this.preference = preference;
 	}
 
-	public Membre(int id, int civilite, String nom, String prenom, String email, String password, Date naissance,
+	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
 			String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays, int preference) {
 		super();
 		this.id = id;
@@ -154,7 +156,7 @@ public class Membre {
 		this.preference = preference;
 	}
 
-	public Membre(int id, int civilite, String nom, String prenom, String email, String password, Date naissance,
+	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
 			String addr_rue, int addr_code_postal, String ville, String pays, int preference) {
 		super();
 		this.id = id;
@@ -171,14 +173,80 @@ public class Membre {
 		this.preference = preference;
 	}
 
-	public Membre(int id , String nom, String prenom) {
+	public Membre(int id, String nom, String prenom) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
-		
+
 	}
-	
-	
-	
+
+	public Boolean validerAuthentification(String email, String password) {
+		/*
+		 * On regarde s'il exite quelqu'un avec la bonne combinaison id/mdp
+		 * 
+		 * 
+		 * */
+		
+		
+		Boolean status = false;
+
+		Connection connexion = DBManager.getInstance().getConnection();
+
+		// Créer un java.sql.Statement à partir de cette connexion en utilisant:
+		try (Statement stmt = connexion.createStatement()) {
+			// Exécuter la requête SQL et récupérer un java.sql.ResultSet
+			String query = "select * from membres where email='" + email + "' and password='" + password + "';";
+			System.out.println(query);
+			ResultSet rs = stmt.executeQuery(query);
+
+			int idV = -1;
+			int civiliteV = -1;
+			String nomV  = "-1";
+			String prenomV = "-1";
+			String emailV = "-1" ;
+			String passwordV = "-1";
+			String naissanceV = "1900-01-01";
+			String addr_rueV = "-1";
+			String addr_complementV = "-1";
+			int addr_code_postalV =-1;
+			String villeV = "-1";
+			String paysV = "-1";
+			int preferenceV = -1;
+
+			int rowCount = 0;
+			while (rs.next()) {
+				rowCount++;
+
+				idV = rs.getInt("id");
+				civiliteV = rs.getInt("civilite");
+				nomV = rs.getString("nom");
+				prenomV = rs.getString("prenom");
+				emailV = rs.getString("email");
+				passwordV = rs.getString("password");
+				naissanceV = rs.getString("naissance");
+				addr_rueV = rs.getString("addr_rue");
+				addr_complementV = rs.getString("addr_complement");
+				addr_code_postalV = rs.getInt("addr_code_postal");
+				villeV = rs.getString("addr_ville");
+				paysV = rs.getString("addr_pays");
+				preferenceV = rs.getInt("preference");
+
+			}
+
+			//System.out.println(idV + " " + civiliteV + " " + nomV + " " + prenomV+" "+naissanceV);
+			//System.out.println("Total number of rows in ResultSet object = " + rowCount);
+
+			if (rowCount == 1) {
+				status = true;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+
+		}
+
+		return status;
+
+	}
+
 }
