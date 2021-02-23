@@ -1,6 +1,10 @@
 package org.jee;
 
 public class Podcast extends ElementDeCatalogue {
+	public Podcast(String titre, String interprete, int nombreDecoute) {
+		super(titre, interprete, nombreDecoute);
+		// TODO Auto-generated constructor stub
+	}
 	public int duree;
 	public String categorie;
 	public int NbEcoutePeriode;

@@ -1,6 +1,10 @@
 package org.jee;
 
 public class Radio extends ElementDeCatalogue{
+	public Radio(String titre, String interprete, int nombreDecoute) {
+		super(titre, interprete, nombreDecoute);
+		// TODO Auto-generated constructor stub
+	}
 	public String genre;
 	public int NbEcoutePeriode;
 	public String getGenre() {

@@ -3,6 +3,10 @@ package org.jee;
 import java.sql.Date;
 
 public class Titre extends ElementDeCatalogue {
+	public Titre(String titre, String interprete, int nombreDecoute) {
+		super(titre, interprete, nombreDecoute);
+		// TODO Auto-generated constructor stub
+	}
 	public Date AnneDeCreation;
 	public Date getAnneDeCreation() {
 		return AnneDeCreation;

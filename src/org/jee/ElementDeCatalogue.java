@@ -16,6 +16,12 @@ public class ElementDeCatalogue {
 	public void setInterprete(String interprete) {
 		this.interprete = interprete;
 	}
+	public ElementDeCatalogue(String titre, String interprete, int nombreDecoute) {
+		super();
+		this.titre = titre;
+		this.interprete = interprete;
+		this.nombreDecoute = nombreDecoute;
+	}
 	public int getNombreDecoute() {
 		return nombreDecoute;
 	}
