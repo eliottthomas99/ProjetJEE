@@ -33,27 +33,49 @@ public class Visiteur {
 	}
 
 	public void CreerCompte(int civilite, String nom, String prenom, String email, String password,
-			String naissance, String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays,
-			int preference) {
+			String confirmPassword, String naissance, String addr_rue, String addr_complement, int addr_code_postal,
+			String ville, String pays, int preference) {
+
+		// 1) Vérifier que tous les champs sont remplis
 
 		Connection connexion = DBManager.getInstance().getConnection();
-		
-		try (Statement stmt = connexion.createStatement()) {
+
+		// 2) Vérifier que l'email est dispo
+
+		Boolean emailDispo = AlgorithmeDeVerification.emailDispo(email);
+
+		if (!emailDispo) {
+			// ANNULER LA PROCEDURE
+			// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
+		} else {
+
 			
-			String insert_query = String.format(
-					"INSERT INTO membres(civilite,nom,prenom,email,password,naissance,addr_rue"
-					+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference) "
-							+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s')",
-					civilite, nom, prenom, email, password, naissance, addr_rue, addr_complement, addr_code_postal,
-					ville, pays, preference);
-			int rs = stmt.executeUpdate(insert_query);
 			
-			
-		}catch(SQLException e) {
-			System.out.println(e);
+			// 3) Vérifier l'égalité des mots de passe
+			if (!password.equals(confirmPassword)) {
+				
+				// ANNULER LA PROCEDURE
+				// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
+				
+			} else {
+				
+				
+				try (Statement stmt = connexion.createStatement()) {
+
+					String insert_query = String.format(
+							"INSERT INTO membres(civilite,nom,prenom,email,password,naissance,addr_rue"
+									+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference) "
+									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s')",
+							civilite, nom, prenom, email, password, naissance, addr_rue, addr_complement,
+							addr_code_postal, ville, pays, preference);
+					int rs = stmt.executeUpdate(insert_query);
+
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+
 		}
-		
-		
 
 	}
 
