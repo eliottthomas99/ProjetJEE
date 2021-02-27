@@ -31,7 +31,8 @@ public class MainServlet extends HttpServlet {
 	enum civilite {
 		  MADAME,
 		  MONSIEUR,
-		  NE_SE_PRONONCE_PAS
+		  NE_SE_PRONONCE_PAS,
+		  NON_BINAIRE
 		}
 
 	
