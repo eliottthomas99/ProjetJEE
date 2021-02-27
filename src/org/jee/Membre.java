@@ -10,7 +10,7 @@ public class Membre {
 
 	private int id;
 
-	private int civilite;
+	private MainServlet.civilite civilite;
 
 	private String nom;
 
@@ -32,7 +32,7 @@ public class Membre {
 
 	private String pays;
 
-	private int preference;
+	private MainServlet.preference preference;
 
 	public int getId() {
 		return id;
@@ -42,11 +42,11 @@ public class Membre {
 		this.id = id;
 	}
 
-	public int getCivilite() {
+	public org.jee.MainServlet.civilite getCivilite() {
 		return civilite;
 	}
 
-	public void setCivilite(int civilite) {
+	public void setCivilite(org.jee.MainServlet.civilite civilite) {
 		this.civilite = civilite;
 	}
 
@@ -130,16 +130,16 @@ public class Membre {
 		this.pays = pays;
 	}
 
-	public int getPreference() {
+	public org.jee.MainServlet.preference getPreference() {
 		return preference;
 	}
 
-	public void setPreference(int preference) {
+	public void setPreference(org.jee.MainServlet.preference preference) {
 		this.preference = preference;
 	}
 
-	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
-			String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays, int preference) {
+	public Membre(int id, org.jee.MainServlet.civilite civilite, String nom, String prenom, String email, String password, String naissance,
+			String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays, org.jee.MainServlet.preference preference) {
 		super();
 		this.id = id;
 		this.civilite = civilite;
@@ -156,8 +156,8 @@ public class Membre {
 		this.preference = preference;
 	}
 
-	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
-			String addr_rue, int addr_code_postal, String ville, String pays, int preference) {
+	public Membre(int id, org.jee.MainServlet.civilite civilite, String nom, String prenom, String email, String password, String naissance,
+			String addr_rue, int addr_code_postal, String ville, String pays, org.jee.MainServlet.preference preference) {
 		super();
 		this.id = id;
 		this.civilite = civilite;

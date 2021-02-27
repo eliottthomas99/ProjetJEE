@@ -32,10 +32,10 @@ public class AlgorithmeDeVerification {
 			//System.out.println("ERREUR");
 			//break;
 		case 0:
-			System.out.println("dispo");
+			//System.out.println("dispo");
 			return true;
 		case 1:
-			System.out.println("pas dispo!!");
+			//System.out.println("pas dispo!!");
 			return false;
 			
 

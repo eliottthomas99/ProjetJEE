@@ -14,11 +14,38 @@ import org.jee.Membre;
 import org.jee.ClientService;
 import org.jee.ClientServiceImpl;
 
+
+
+
+
+
+
+
 /**
  * Servlet implementation class MainServlet
  */
 //@WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
+	
+	
+	enum civilite {
+		  MADAME,
+		  MONSIEUR,
+		  NE_SE_PRONONCE_PAS
+		}
+
+	
+	enum preference {
+		  CLASSIQUE,
+		  HOUSE,
+		  JAZZ,
+		  METAL,
+		  POP,
+		  ROCK
+		}
+	
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -49,8 +76,8 @@ public class MainServlet extends HttpServlet {
 
 		Visiteur dupond = new Visiteur("Dupond", "Charles");
 
-		dupond.CreerCompte(0, "Dupond", "Charles", "cdupond@enssat.fr", "1234","1234", "1970-08-14",
-				"9 place du general de gaule", "interphone blanc", 75012, "Paris", "France", 1);
+		dupond.CreerCompte(MainServlet.civilite.MONSIEUR, "THOMAS", "Julien", "jthomas@enssat.fr", "1234","1234", "1999-08-14",
+				"Les Ursu", "euuu", 22300, "Lannion", "France", MainServlet.preference.HOUSE);
 
 		// RequestDispatcher rd =
 		// getServletContext().getRequestDispatcher("/accueil.jsp");
@@ -67,6 +94,7 @@ public class MainServlet extends HttpServlet {
 		if (valid) {
 			//response.getWriter().append("Connection success !");
 			connect = "Connection success !";
+			System.out.println("success");
 			request.setAttribute("connect", connect);
 
 			// response.getWriter().append("Served at:
@@ -74,6 +102,7 @@ public class MainServlet extends HttpServlet {
 		} else {
 			//response.getWriter().append("Connection failure !");
 			connect = "Connection failure !";
+			System.out.println("fail");
 			request.setAttribute("connect", connect);
 
 		}

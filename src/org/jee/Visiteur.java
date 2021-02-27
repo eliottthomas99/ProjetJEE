@@ -32,9 +32,9 @@ public class Visiteur {
 		this.prenom = prenom;
 	}
 
-	public void CreerCompte(int civilite, String nom, String prenom, String email, String password,
+	public void CreerCompte(MainServlet.civilite civilite, String nom, String prenom, String email, String password,
 			String confirmPassword, String naissance, String addr_rue, String addr_complement, int addr_code_postal,
-			String ville, String pays, int preference) {
+			String ville, String pays, MainServlet.preference preference) {
 
 		// 1) Vérifier que tous les champs sont remplis
 
@@ -46,6 +46,7 @@ public class Visiteur {
 
 		if (!emailDispo) {
 			// ANNULER LA PROCEDURE
+			System.out.println("email non disponible");
 			// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
 		} else {
 
@@ -56,6 +57,7 @@ public class Visiteur {
 				
 				// ANNULER LA PROCEDURE
 				// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
+				System.out.println("mots de passes non identiques");
 				
 			} else {
 				
@@ -66,8 +68,8 @@ public class Visiteur {
 							"INSERT INTO membres(civilite,nom,prenom,email,password,naissance,addr_rue"
 									+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference) "
 									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s')",
-							civilite, nom, prenom, email, password, naissance, addr_rue, addr_complement,
-							addr_code_postal, ville, pays, preference);
+							civilite.ordinal(), nom, prenom, email, password, naissance, addr_rue, addr_complement,
+							addr_code_postal, ville, pays, preference.ordinal());
 					int rs = stmt.executeUpdate(insert_query);
 
 				} catch (SQLException e) {
