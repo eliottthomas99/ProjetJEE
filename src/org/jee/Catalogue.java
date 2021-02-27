@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Catalogue {
+	
+	
+	// Cette classe n'est pas utile ( du moins pour l'instant ) 
+	
+	
 	private ArrayList<ElementDeCatalogue> listeElements;
 
 	public ArrayList<ElementDeCatalogue> getListeElements() {
