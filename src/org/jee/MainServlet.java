@@ -36,129 +36,176 @@ public class MainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// TESTS Interface
+		// param1S Interface
 		
 		
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++ PUSH D'ALEX ATTTTTENTIOOOON  ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		
-		String test = request.getParameter("name");
+		String param1 = request.getParameter("nomElement");
+		String param2 = request.getParameter("categorie");
+		System.out.println("param1---->"+param1);
+		System.out.println("param2---->"+param2);
 		
-		if(test != null) {
+		if(param1 != null && param2 == null) {
 			
-			if(test.equals("Titres")) {
+				if(param1.equals("Titres")) {
+					
+					System.out.println("okkkMusique");
+					CatalogueService catalogueElements = new CatalogueServiceImpl();
+					
+					List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
+					
+					response.getWriter().write("<table border=\"1\">"
+							+ "<tr>\n"
+							+ "	            <th>Titre</th>\n"
+							+ "	            <th>Auteur</th>\n"
+							+ "</tr>");
+					
+					for (ElementDeCatalogue cata:listElements) {
+			     		 String title = cata.getTitre();
+			      		 String author = cata.getInterprete();
+			      		 
+	
+						response.getWriter().write("<tr>\n"
+									+ "<th>"+title+"</th>\n"
+									+ "	<th>"+author+"</th>\n"
+									+ "</tr>");
+					}
+					
+					response.getWriter().write("</table>");
+					
+				}else if(param1.equals("Albums")) {
+					
+					System.out.println("okkk");
 				
-				System.out.println("okkkMusique");
-				CatalogueService catalogueElements = new CatalogueServiceImpl();
+					CatalogueService catalogueElements = new CatalogueServiceImpl();
+					
+					List<ElementDeCatalogue> listElements = catalogueElements.getAllAlbums();
+					
+					response.getWriter().write("<table border=\"1\">"
+							+ "<tr>\n"
+							+ "	            <th>Titre</th>\n"
+							+ "	            <th>Auteur</th>\n"
+							+ "</tr>");
+					
+					for (ElementDeCatalogue cata:listElements) {
+			     		 String title = cata.getTitre();
+			      		 String author = cata.getInterprete();
+			      		 
+			      		System.out.println(title);
+						response.getWriter().write("<tr>\n"
+									+ "<th>"+title+"</th>\n"
+									+ "	<th>"+author+"</th>\n"
+									+ "</tr>");
+					}
+					
+					response.getWriter().write("</table>");
+					
+				}else if(param1.equals("Podcasts")) {
+					
+					System.out.println("okkkPodcast la ");
 				
-				List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
+					CatalogueService catalogueElements = new CatalogueServiceImpl();
+					
+					List<ElementDeCatalogue> listElements = catalogueElements.getAllPodcasts();
+					
+					response.getWriter().write("<table border=\"1\">"
+							+ "<tr>\n"
+							+ "	            <th>Titre</th>\n"
+							+ "	            <th>Auteur</th>\n"
+							+ "</tr>");
+					
+					for (ElementDeCatalogue cata:listElements) {
+			     		 String title = cata.getTitre();
+			      		 String author = cata.getInterprete();
+			      		 
+			      		System.out.println(title);
+						response.getWriter().write("<tr>\n"
+									+ "<th>"+title+"</th>\n"
+									+ "	<th>"+author+"</th>\n"
+									+ "</tr>");
+					}
+					response.getWriter().write("</table>");
+					
+				}else if(param1.equals("Radios")) {
 				
-				response.getWriter().write("<table border=\"1\">"
-						+ "<tr>\n"
-						+ "	            <th>Titre</th>\n"
-						+ "	            <th>Auteur</th>\n"
-						+ "</tr>");
+					System.out.println("okkkPodcast la ");
 				
-				for (ElementDeCatalogue cata:listElements) {
-		     		 String title = cata.getTitre();
-		      		 String author = cata.getInterprete();
-		      		 
-
-					response.getWriter().write("<tr>\n"
-								+ "<th>"+title+"</th>\n"
-								+ "	<th>"+author+"</th>\n"
-								+ "</tr>");
-				}
-				
-				response.getWriter().write("</table>");
-				
-			}else if(test.equals("Albums")) {
-				
-				System.out.println("okkk");
-			
-				CatalogueService catalogueElements = new CatalogueServiceImpl();
-				
-				List<ElementDeCatalogue> listElements = catalogueElements.getAllAlbums();
-				
-				response.getWriter().write("<table border=\"1\">"
-						+ "<tr>\n"
-						+ "	            <th>Titre</th>\n"
-						+ "	            <th>Auteur</th>\n"
-						+ "</tr>");
-				
-				for (ElementDeCatalogue cata:listElements) {
-		     		 String title = cata.getTitre();
-		      		 String author = cata.getInterprete();
-		      		 
-		      		System.out.println(title);
-					response.getWriter().write("<tr>\n"
-								+ "<th>"+title+"</th>\n"
-								+ "	<th>"+author+"</th>\n"
-								+ "</tr>");
-				}
-				
-				response.getWriter().write("</table>");
-				
-			}else if(test.equals("Podcasts")) {
-				
-				System.out.println("okkkPodcast la ");
-			
-				CatalogueService catalogueElements = new CatalogueServiceImpl();
-				
-				List<ElementDeCatalogue> listElements = catalogueElements.getAllPodcasts();
-				
-				response.getWriter().write("<table border=\"1\">"
-						+ "<tr>\n"
-						+ "	            <th>Titre</th>\n"
-						+ "	            <th>Auteur</th>\n"
-						+ "</tr>");
-				
-				for (ElementDeCatalogue cata:listElements) {
-		     		 String title = cata.getTitre();
-		      		 String author = cata.getInterprete();
-		      		 
-		      		System.out.println(title);
-					response.getWriter().write("<tr>\n"
-								+ "<th>"+title+"</th>\n"
-								+ "	<th>"+author+"</th>\n"
-								+ "</tr>");
-				}
-				response.getWriter().write("</table>");
-				
-			}else if(test.equals("Radios")) {
-			
-				System.out.println("okkkPodcast la ");
-			
-				CatalogueService catalogueElements = new CatalogueServiceImpl();
-				
-				List<ElementDeCatalogue> listElements = catalogueElements.getAllRadios();
-				
-				response.getWriter().write("<table border=\"1\">"
-						+ "<tr>\n"
-						+ "	            <th>Titre</th>\n"
-						+ "	            <th>Auteur</th>\n"
-						+ "</tr>");
-				
-				for (ElementDeCatalogue cata:listElements) {
-		     		 String title = cata.getTitre();
-		      		 String author = cata.getInterprete();
-		      		 
-		      		System.out.println(title);
-					response.getWriter().write("<tr>\n"
-								+ "<th>"+title+"</th>\n"
-								+ "	<th>"+author+"</th>\n"
-								+ "</tr>");
-				}
-				response.getWriter().write("</table>");
+					CatalogueService catalogueElements = new CatalogueServiceImpl();
+					
+					List<ElementDeCatalogue> listElements = catalogueElements.getAllRadios();
+					
+					response.getWriter().write("<table border=\"1\">"
+							+ "<tr>\n"
+							+ "	            <th>Titre</th>\n"
+							+ "	            <th>Auteur</th>\n"
+							+ "</tr>");
+					
+					for (ElementDeCatalogue cata:listElements) {
+			     		 String title = cata.getTitre();
+			      		 String author = cata.getInterprete();
+			      		 
+			      		System.out.println(title);
+						response.getWriter().write("<tr>\n"
+									+ "<th>"+title+"</th>\n"
+									+ "	<th>"+author+"</th>\n"
+									+ "</tr>");
+					}
+					response.getWriter().write("</table>");
 			}else { // On sait qu'on est dans la barre de recherche 
 			
 				System.out.println("okkkPodcast la ");
 			
 				CatalogueService catalogueElements = new CatalogueServiceImpl();
 				
-				System.out.println("recherche:"+test);
+				System.out.println("recherche:"+param1);
 				
-				List<ElementDeCatalogue> listElements = catalogueElements.getElementByTitle(test);
+				List<ElementDeCatalogue> listElements = catalogueElements.getElementByTitle(param1);
 				
+				// Si la recherche n'a rien donné : 
+				
+				if(listElements.isEmpty())
+				{
+					response.getWriter().write("<h1 color='red'> Aucun titre n'a ete trouve"
+							+ "</h1>");
+				}else {
+				
+					response.getWriter().write("<table border=\"1\">"
+							+ "<tr>\n"
+							+ "	            <th>Titre</th>\n"
+							+ "	            <th>Auteur</th>\n"
+							+ "</tr>");
+					
+					for (ElementDeCatalogue cata:listElements) {
+			     		 String title = cata.getTitre();
+			      		 String author = cata.getInterprete();
+			      		 
+			      		System.out.println(title);
+						response.getWriter().write("<tr>\n"
+									+ "<th>"+title+"</th>\n"
+									+ "	<th>"+author+"</th>\n"
+									+ "</tr>");
+					}
+					response.getWriter().write("</table>");
+				}
+			}
+		}else if(param2 != null) {
+			
+			System.out.println("okk DEUXIEME PARAM la ");
+			
+			CatalogueService catalogueElements = new CatalogueServiceImpl();
+			
+			
+			List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsOfCategorie(param1,param2);
+			
+			// Si la recherche n'a rien donné : 
+			
+			if(listElements.isEmpty())
+			{
+				response.getWriter().write("<h1 color='red'> Aucun titre n'a ete trouve"
+						+ "</h1>");
+			}else {
+			
 				response.getWriter().write("<table border=\"1\">"
 						+ "<tr>\n"
 						+ "	            <th>Titre</th>\n"
@@ -178,31 +225,31 @@ public class MainServlet extends HttpServlet {
 				response.getWriter().write("</table>");
 			}
 		}else {
-				String pageName = "/Catalogue.jsp";
-				/*
-				response.setContentType("text/html");
-				
-				//System.out.println("okokoko");
-				
-				if(request.getParameter("name") == "accueil")
-				{
-					 pageName = "/accueil.jsp";
-				}else
-				{
-					 pageName = "/Catalogue.jsp";
-				}
-				*/
-				
-		        RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-		        
-		        try {
-		              rd.forward(request, response);
-		        } catch (ServletException e) {
-		              e.printStackTrace();
-		        } catch (IOException e) {
-		              e.printStackTrace();
-		        }
-			  }
+			String pageName = "/Catalogue.jsp";
+			/*
+			response.setContentType("text/html");
+			
+			//System.out.println("okokoko");
+			
+			if(request.getParameter("name") == "accueil")
+			{
+				 pageName = "/accueil.jsp";
+			}else
+			{
+				 pageName = "/Catalogue.jsp";
+			}
+			*/
+			
+	        RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
+	        
+	        try {
+	              rd.forward(request, response);
+	        } catch (ServletException e) {
+	              e.printStackTrace();
+	        } catch (IOException e) {
+	              e.printStackTrace();
+	        }
+		}
 		
 		//System.out.println("okokoko");
 		
@@ -220,7 +267,7 @@ public class MainServlet extends HttpServlet {
 		String connect = request.getParameter("connect");
 
 		
-		// TESTS CREATION COMPTE
+		// param1S CREATION COMPTE
 
 		Visiteur dupond = new Visiteur("Dupond", "Charles");
 

@@ -31,7 +31,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Titre");	
+			 rs = stmt.executeQuery("select * from Titres");	
 			}
 			
 			// Itérer sur le resultSet : 
@@ -39,12 +39,12 @@ public class CatalogueServiceImpl implements CatalogueService {
 			
 				//String titre, String interprete, int nombreDecoute, int id
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("idTitre");
+				int id = rs.getInt("id");
 				String titre = rs.getString("titre");
 				String interpret = rs.getString("interprete");
 				int dureeTotale = rs.getInt("dureeTotale");
 				int nbEcoutePeriode = rs.getInt("nbEcoutePeriode");
-				String genre = rs.getString("genre");
+				String genre = rs.getString("type");
 				Date dateCreation = rs.getDate("anneeCreation");
 				
 				catalogueElements.add(new Titre(titre, interpret, nbEcoutePeriode , id, genre, dureeTotale, dateCreation));
@@ -69,7 +69,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Album");	
+			 rs = stmt.executeQuery("select * from Albums");	
 			}
 			
 			// Itérer sur le resultSet : 
@@ -77,12 +77,12 @@ public class CatalogueServiceImpl implements CatalogueService {
 			
 				//String titre, String interprete, int nombreDecoute, int id
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("idAlbum");
+				int id = rs.getInt("id");
 				String titre = rs.getString("titre");
 				String interprete = rs.getString("interprete");
 				int duree = rs.getInt("duree");
 				int nombreDecoute = rs.getInt("nombreEcoute");
-				String type = rs.getString("typeAlbum");
+				String type = rs.getString("type");
 				Date annee = rs.getDate("annee");
 				
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
@@ -108,7 +108,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Podcast");	
+			 rs = stmt.executeQuery("select * from Podcasts");	
 			}
 			
 			// Itérer sur le resultSet : 
@@ -116,7 +116,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			
 				//String titre, String interprete, int nombreDecoute, int id
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("idPodcast");
+				int id = rs.getInt("id");
 				String titre = rs.getString("titre");
 				String interprete = rs.getString("interprete");
 				int duree = rs.getInt("duree");
@@ -147,7 +147,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Radio");	
+			 rs = stmt.executeQuery("select * from Radios");	
 			}
 			
 			// Itérer sur le resultSet : 
@@ -155,7 +155,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			
 				//String titre, String interprete, int nombreDecoute, int id
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("idRadio");
+				int id = rs.getInt("id");
 				String titre = rs.getString("titre");
 				String interprete = rs.getString("interprete");
 				String genre = rs.getString("genre");
@@ -185,7 +185,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select idTitre,titre,interprete,nbEcoutePeriode from Titre where titre like '%"+search+"%'");	
+			 rs = stmt.executeQuery("select id,titre,interprete,nbEcoutePeriode from Titres where titre like '%"+search+"%'");	
 			}
 			
 			// Itérer sur le resultSet : 
@@ -193,7 +193,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			
 				//String titre, String interprete, int nombreDecoute, int id
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("idTitre");
+				int id = rs.getInt("id");
 				String titre = rs.getString("titre");
 				String interprete = rs.getString("interprete");
 				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
@@ -201,6 +201,41 @@ public class CatalogueServiceImpl implements CatalogueService {
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
 				
 				catalogueElements.add(new Titre(titre, interprete,nombreEcoutePeriode ,id));	
+			}
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+		return catalogueElements;
+	}
+	
+	
+	public List<ElementDeCatalogue> getAllElementsOfCategorie(String table,String categorie)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 rs = stmt.executeQuery("select * from "+table+" where type ="+"'"+categorie+"'");	
+			}
+			
+			// Itérer sur le resultSet : 
+			while (rs.next()) {
+			
+				//String titre, String interprete, int nombreDecoute, int id
+				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
+				int id = rs.getInt("id");
+				String titre = rs.getString("titre");
+				String interprete = rs.getString("interprete");
+				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
+				
+				//titre, interprete, nombreDecoute, type, annee, duree, idElement
+				
+				catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));	
 			}
 		
 		}catch(SQLException e) {

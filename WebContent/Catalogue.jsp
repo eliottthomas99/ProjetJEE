@@ -18,29 +18,29 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAtt
 	<nav id="primary_nav_wrap">
 		<ul>
 		  <li class="current-menu-item"><a href="accueil.jsp">Accueil</a></li>
-		  <li><a href="#"></a>
-		    <ul>
-		      <li><a href="#">Sub Menu 1</a></li>
-		      <li><a href="#">Sub Menu 2</a></li>
-		      <li><a href="#">Sub Menu 3</a></li>
-		      <li><a href="#">Sub Menu 4</a></li>
-		      <li><a href="#">Sub Menu 5</a></li>
-		    </ul> 
-		 </li>
 		  <li><a href="#" id ="Titremusical" onclick ="goAccueil(this)">Titres</a>
-		    <ul>
-		      <li><a href="#">Rock</a></li>
-		      <li><a href="#">Rap Français</a></li>
-		      <li><a href="#">Rap US</a></li>
-		      <li><a href="#">Classique</a></li>
+		    <ul id = "Titres">
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Rock</a>
+		      </li>
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Rap Francais</a></li>
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Rap US</a></li>
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Classique</a></li>
 		    </ul>
 		  </li>
-		  <li><a href="#" id = "album" onclick ="goAccueil(this)">Albums</a>
-		    <ul>
-		      <li><a href="#">Rock</a></li>
-		      <li><a href="#">Rap Français</a></li>
-		      <li><a href="#">Rap US</a></li>
-		      <li><a href="#">Classique</a></li>
+		  <li id = "album"><a  onclick ="goAccueil(this)">Albums</a>
+		    <ul id = "Albums">
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Rock</a></li>
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Rap Francais</a></li>
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Rap US</a></li>
+		      <li>
+		      	<a href="#" onclick ="goAccueil(this)">Classique</a></li>
 		    </ul>
 		  </li>
 		  <li><a href="#" id = "Podcasts" onclick ="goAccueil(this)">Podcasts</a></li>

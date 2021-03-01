@@ -8,18 +8,30 @@ public interface CatalogueService {
 	// Récupère tout les titres musicaux
 	public List<ElementDeCatalogue> getAllTitres();
 	
-	
 	// Récupère tout les albums
 	public List<ElementDeCatalogue> getAllAlbums();
 	
-	
+	// Récupère tout les podcasts
 	public List<ElementDeCatalogue> getAllPodcasts();
 	
-	
+	// Récupère toutes les radios
 	public List<ElementDeCatalogue> getAllRadios();
 	
-	
+	// rechercher un titre
 	public List<ElementDeCatalogue> getElementByTitle(String search);	
+	
+	
+	
+	
+	// Récupérer des titres par catégories 
+	
+	public List<ElementDeCatalogue> getAllElementsOfCategorie(String table, String categorie);
+	
+	//public List<ElementDeCatalogue> getTitreRapRnb();
+	
+	//public List<ElementDeCatalogue> getTitreClassique();
+	
+	//public List<ElementDeCatalogue> getTitreRock();
 		
 
 }
