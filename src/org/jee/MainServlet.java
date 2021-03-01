@@ -69,6 +69,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<th>"+title+"</th>\n"
 									+ "	<th>"+author+"</th>\n"
+									+ "<th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
 									+ "</tr>");
 					}
 					
@@ -86,6 +87,7 @@ public class MainServlet extends HttpServlet {
 							+ "<tr>\n"
 							+ "	            <th>Titre</th>\n"
 							+ "	            <th>Auteur</th>\n"
+							+ "	            <th></th>\n"
 							+ "</tr>");
 					
 					for (ElementDeCatalogue cata:listElements) {
@@ -96,6 +98,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<th>"+title+"</th>\n"
 									+ "	<th>"+author+"</th>\n"
+									+ "<th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
 									+ "</tr>");
 					}
 					
@@ -123,6 +126,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<th>"+title+"</th>\n"
 									+ "	<th>"+author+"</th>\n"
+									+ "<th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
 									+ "</tr>");
 					}
 					response.getWriter().write("</table>");
@@ -149,6 +153,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<th>"+title+"</th>\n"
 									+ "	<th>"+author+"</th>\n"
+									+ "<th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
 									+ "</tr>");
 					}
 					response.getWriter().write("</table>");
@@ -183,7 +188,8 @@ public class MainServlet extends HttpServlet {
 			      		System.out.println(title);
 						response.getWriter().write("<tr>\n"
 									+ "<th>"+title+"</th>\n"
-									+ "	<th>"+author+"</th>\n"
+									+ "	<th id='Auteur'>"+author+"</th>\n"
+									+ "<th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
 									+ "</tr>");
 					}
 					response.getWriter().write("</table>");
@@ -204,10 +210,11 @@ public class MainServlet extends HttpServlet {
 			{
 				response.getWriter().write("<h1 color='red'> Aucun titre n'a ete trouve"
 						+ "</h1>");
-			}else {
+				
+			}else if(param1.equals("Albums")) {
 			
 				response.getWriter().write("<table border=\"1\">"
-						+ "<tr>\n"
+						+ "<tr border ='1'>\n"
 						+ "	            <th>Titre</th>\n"
 						+ "	            <th>Auteur</th>\n"
 						+ "</tr>");
@@ -219,7 +226,30 @@ public class MainServlet extends HttpServlet {
 		      		System.out.println(title);
 					response.getWriter().write("<tr>\n"
 								+ "<th>"+title+"</th>\n"
-								+ "	<th>"+author+"</th>\n"
+								+ "	<th id='Auteur'>"+author+"</th>\n"
+								+ " <th><button onclick= 'goTitresAlbum()'>Parcourir l'album</button></th> <th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
+								+ "</tr>");
+				}
+				response.getWriter().write("</table>");
+			
+			
+			}else {
+			
+				response.getWriter().write("<table border=\"1\">"
+						+ "<tr border ='1'>\n"
+						+ "	            <th>Titre</th>\n"
+						+ "	            <th>Auteur</th>\n"
+						+ "</tr>");
+				
+				for (ElementDeCatalogue cata:listElements) {
+		     		 String title = cata.getTitre();
+		      		 String author = cata.getInterprete();
+		      		 
+		      		System.out.println(title);
+					response.getWriter().write("<tr>\n"
+								+ "<th>"+title+"</th>\n"
+								+ "	<th id='Auteur'>"+author+"</th>\n"
+								+ " <th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
 								+ "</tr>");
 				}
 				response.getWriter().write("</table>");

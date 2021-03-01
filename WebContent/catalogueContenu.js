@@ -9,17 +9,9 @@ var search = "";
 
 function goAccueil(object)
 {	
+	// Pour récupérer l'id de la balise ul '
 	var elem = object.parentElement.parentElement.id;
 	
-
-	if(elem == "") // Je ne vais pas dans le sous menu
-	{
-		console.log("ohw");
-	}else { // Cela signifie que je vais chercher dans le ""sous menu"
-		console.log("yes"+elem);
-	}
-
-
 	if(object.textContent == "Recherche")
 	{
 		search = document.getElementById("barre").value;
@@ -37,6 +29,7 @@ function goAccueil(object)
 	 
 		}else {
 			
+			// Plusieurs paramètres
 			xhr.open('GET',"MainServlet?nomElement="+elem+"&categorie="+object.textContent,true);
 			xhr.onreadystatechange = majCatalogue;
 			xhr.send(); // requête pret à étre envoyé*/
@@ -44,6 +37,13 @@ function goAccueil(object)
 			console.log("hey y'a 2 paramètre'");
 		}
 	}	
+}
+
+
+
+function goAlbum()
+{
+	console.log("yews ->"+document.getElementById("Auteur").textContent);
 }
 
 
