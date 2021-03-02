@@ -54,7 +54,7 @@ public class Visiteur {
 			
 			// 3) Vérifier l'égalité des mots de passe
 			if (!password.equals(confirmPassword)) {
-				
+				//TODO
 				// ANNULER LA PROCEDURE
 				// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
 				System.out.println("mots de passes non identiques");
