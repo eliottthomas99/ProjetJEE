@@ -77,7 +77,7 @@ public class MainServlet extends HttpServlet {
 
 		Visiteur dupond = new Visiteur("Dupond", "Charles");
 
-		dupond.CreerCompte(MainServlet.civilite.MONSIEUR, "THOMAS", "Julien", "jthomas@enssat.fr", "1234","1234", "1999-08-14",
+		dupond.CreerCompte(MainServlet.civilite.MONSIEUR, "THOMAS", "alex", "athomas@enssat.fr", "1234","1234", "1999-08-14",
 				"Les Ursu", "euuu", 22300, "Lannion", "France", MainServlet.preference.HOUSE);
 
 		// RequestDispatcher rd =
@@ -90,7 +90,13 @@ public class MainServlet extends HttpServlet {
 		Membre eliott = listMembre.get(0);
 		// System.out.println("ELIOTT email:"+eliott.getEmail()+" psw:
 		// "+eliott.getPassword());
-		Boolean valid = eliott.validerAuthentification("ethomas@enssat.fr", "azerty");
+		Boolean valid = null;
+		try {
+			valid = eliott.validerAuthentification("ethomas@enssat.fr", "az76283");
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		if (valid) {
 			//response.getWriter().append("Connection success !");
