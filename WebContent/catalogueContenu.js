@@ -6,10 +6,11 @@
 var xhr = new XMLHttpRequest();
 var object = "";
 var search = "";
+var interpreteAlbum;
 
 function goAccueil(object)
 {	
-	// Pour récupérer l'id de la balise ul '
+	// Pour récupérer l'id de la balise ul 
 	var elem = object.parentElement.parentElement.id;
 	
 	if(object.textContent == "Recherche")
@@ -41,9 +42,13 @@ function goAccueil(object)
 
 
 
-function goAlbum()
+function goTitresAlbum()
 {
-	console.log("yews ->"+document.getElementById("Auteur").textContent);
+	interpreteAlbum = document.getElementById("Auteur").textContent;
+	//console.log("yews ->"+document.getElementById("Auteur").textContent);
+	xhr.open('GET',"MainServlet?interprete="+interpreteAlbum,true);
+	xhr.onreadystatechange = majCatalogue;
+	xhr.send(); // requête pret à étre envoyé 
 }
 
 

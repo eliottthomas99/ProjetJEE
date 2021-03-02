@@ -27,6 +27,11 @@ public interface CatalogueService {
 	
 	public List<ElementDeCatalogue> getAllElementsOfCategorie(String table, String categorie);
 	
+	// Récupérer les titres d'un album 
+	//( fictif dans la bdd ce n'est pas vraiment le cas ,
+	// je check juste que ça soit le même artiste mais un titre peut ne pas faire partie de l'album normalement .. "
+	
+	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String inter);
 	//public List<ElementDeCatalogue> getTitreRapRnb();
 	
 	//public List<ElementDeCatalogue> getTitreClassique();

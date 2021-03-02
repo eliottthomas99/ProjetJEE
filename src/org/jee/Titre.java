@@ -14,6 +14,7 @@ public class Titre extends ElementDeCatalogue {
 	private int nbEcoutePeriode;
 	/* Je rajoute les attributs que tu n'as pas ajouté */
 	private Date anneeCreation;
+	//boolean refAlbum;
 	
 	
 	
@@ -25,7 +26,7 @@ public class Titre extends ElementDeCatalogue {
 		super(titre, interprete, nombreDecoute,id);
 	}
 	
-	public Titre(String titre, String interprete,int nbEcoutePeriode, int idElement,String genre, int dureeTotale, Date anneeCreation) {
+	public Titre(String titre, String interprete,int nbEcoutePeriode, int idElement,String genre, int dureeTotale, Date anneeCreationm) {
 		super(titre, interprete, nbEcoutePeriode,0);
 		
 		/* Tu as oublié les attributs propre à la classe fille */
@@ -34,6 +35,7 @@ public class Titre extends ElementDeCatalogue {
 		this.anneeCreation = anneeCreation;
 		this.nbEcoutePeriode = nbEcoutePeriode;
 		this.idElement = idElement;
+		//this.refAlbum = refAlbum;
 			// TODO Auto-generated constructor stub
 	}
 

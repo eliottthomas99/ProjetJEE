@@ -1,6 +1,7 @@
 package org.jee;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -39,14 +40,14 @@ public class MainServlet extends HttpServlet {
 		// param1S Interface
 		
 		
-		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++ PUSH D'ALEX ATTTTTENTIOOOON  ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		
 		String param1 = request.getParameter("nomElement");
 		String param2 = request.getParameter("categorie");
+		String param3 = request.getParameter("interprete");
+		
 		System.out.println("param1---->"+param1);
 		System.out.println("param2---->"+param2);
 		
-		if(param1 != null && param2 == null) {
+		if(param1 != null && param2 == null && param3 == null) {
 			
 				if(param1.equals("Titres")) {
 					
@@ -254,7 +255,33 @@ public class MainServlet extends HttpServlet {
 				}
 				response.getWriter().write("</table>");
 			}
+		}else if(param3 != null) {
+			
+			CatalogueService catalogueElements = new CatalogueServiceImpl();
+			List<ElementDeCatalogue> listElements = catalogueElements.titreBelongingToAnAlbum(param3);
+			
+			response.getWriter().write("<table border=\"1\">"
+					+ "<tr>\n"
+					+ "	            <th>Titre</th>\n"
+					+ "	            <th>Auteur</th>\n"
+					+ "</tr>");
+			
+			for (ElementDeCatalogue cata:listElements) {
+	     		 String title = cata.getTitre();
+	      		 String author = cata.getInterprete();
+	      		 
+	      		System.out.println(title);
+				response.getWriter().write("<tr>\n"
+							+ "<th>"+title+"</th>\n"
+							+ "	<th>"+author+"</th>\n"
+							+ "<th><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></th>"
+							+ "</tr>");
+			}
+			response.getWriter().write("</table>");
+			
+			
 		}else {
+		
 			String pageName = "/Catalogue.jsp";
 			/*
 			response.setContentType("text/html");
@@ -269,6 +296,13 @@ public class MainServlet extends HttpServlet {
 				 pageName = "/Catalogue.jsp";
 			}
 			*/
+			CatalogueService catalogueElements = new CatalogueServiceImpl();
+			List<ElementDeCatalogue> listElements = catalogueElements.titreBelongingToAnAlbum("Damso");
+			
+			Iterator<ElementDeCatalogue> i = listElements.iterator();
+			while(i.hasNext()) {
+				System.out.println((i.next()).getInterprete());
+			}
 			
 	        RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
 	        

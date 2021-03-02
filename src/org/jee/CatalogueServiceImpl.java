@@ -16,8 +16,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 	
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++ PUSH D'ALEX ATTTTTENTIOOOON  ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	Statement stmt;
-	ResultSet rs;
+	Statement stmt, stmt2;
+	ResultSet rs,rs2;
 	Connection connexion;
 	List<ElementDeCatalogue> catalogueElements = new ArrayList<>();
 	
@@ -236,6 +236,57 @@ public class CatalogueServiceImpl implements CatalogueService {
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
 				
 				catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));	
+			}
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+		return catalogueElements;
+	}
+	
+	
+	
+	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String inter)
+	{
+		String titre;
+		String interprete;
+		int nombreEcoutePeriode;
+		int id ;
+		
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 rs = stmt.executeQuery("select * from Titres where interprete ='"+inter+"'");	
+			 
+			}
+			// Itérer sur le resultSet : 
+			while (rs.next()) {
+			 
+				int refAlbum = rs.getInt("refAlbum");
+				
+				if(refAlbum != 0) // Ce titre apparetient à un album, mais lequel ? 
+				{
+					  stmt2 = connexion.createStatement();
+					  rs2 = stmt2.executeQuery("select * from Albums where interprete ='"+inter+"'");
+					  while (rs2.next()) {
+						  if(refAlbum ==  rs2.getInt("id"))
+						  {
+							  	id = rs.getInt("id");
+							    titre = rs.getString("titre");
+								interprete = rs.getString("interprete");
+								nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
+								
+								// On récupère alors le titre qui correspond à l'album 
+								catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));
+						  }  
+					  }	  
+				}
+					
 			}
 		
 		}catch(SQLException e) {
