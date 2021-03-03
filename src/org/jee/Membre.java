@@ -278,10 +278,63 @@ public class Membre {
 			//System.out.println("Total number of rows in ResultSet object = " + rowCount);
 
 			
+			try (Statement stmt2 = connexion.createStatement()) {
+
+				String insert_query = "select * from membres where email='" + email + "';";
+				ResultSet rs2 = stmt2.executeQuery(insert_query);
+				
+				int rowCount2 = 0;
+				int bloqueV2 = 0;
+				int tempsV2 = 0;
+				while (rs2.next()) {
+					bloqueV2 = rs2.getInt("bloque");
+					tempsV2 = rs2.getInt("temps");
+					
+					
+					rowCount2++;						
+					
+				}
+				
+				if(rowCount2==1) { //si l'email appartient à quelqu'un
+					
+					if( bloqueV2==1 ) {//si le compte est bloque
+						
+						int maintenant = (int)(System.currentTimeMillis()/1000); //on met en secondes
+						
+						if(maintenant-tempsV2>=3600) { //si le temps de bloquage est ecoulé
+							
+							//on passe bloque à 0
+							
+							insert_query = "UPDATE  membres SET bloque=0 where email='"+emailV+"';";
+							int rs3 = stmt2.executeUpdate(insert_query);
+							
+							
+						}
+						else {
+							//il reste bloqué
+							return false;
+						}
+						
+					}
+					
+					
+					
+					
+				}
+				
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+			
+			
+			
 			
 			
 			
 			if (rowCount == 1 ) {
+				
+				
+				
 				
 				
 				
@@ -322,8 +375,10 @@ public class Membre {
 					
 					int rowCount2 = 0;
 					int tentativesV2 = 0;
+				
 					while (rs2.next()) {
 						tentativesV2 = rs2.getInt("tentatives");
+						
 						rowCount2++;						
 						
 					}
@@ -339,13 +394,14 @@ public class Membre {
 							int calcul = tentativesV2+1;
 							
 							
-							int cast = (int)System.currentTimeMillis();
+							int cast = (int)(System.currentTimeMillis()/1000); //on met en secondes
+							System.out.println("cast :" + cast);
 							
 							String insert_query2 = "UPDATE  membres SET tentatives="+calcul+" , temps="+ cast+"  where email='"+email+"';";
 							int rs3 = stmt1.executeUpdate(insert_query2);
 							
 							if(calcul>=3) {
-								String insert_query3 = "UPDATE  membres SET bloque=1  where email='"+emailV+"';";
+								String insert_query3 = "UPDATE  membres SET bloque=1  where email='"+email+"';";
 								rs3 = stmt1.executeUpdate(insert_query3);
 							}
 							

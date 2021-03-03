@@ -92,7 +92,7 @@ public class MainServlet extends HttpServlet {
 		// "+eliott.getPassword());
 		Boolean valid = null;
 		try {
-			valid = eliott.validerAuthentification("ethomas@enssat.fr", "az76283");
+			valid = eliott.validerAuthentification("ethomas@enssat.fr", "azerty");
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
