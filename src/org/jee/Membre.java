@@ -269,7 +269,7 @@ public class Membre {
 				tentativesV = rs.getInt("tentatives");
 				tempsV = rs.getInt("temps");
 				
-				System.out.println(tempsV);
+				//System.out.println(tempsV);
 				
 				
 			}
@@ -395,7 +395,7 @@ public class Membre {
 							
 							
 							int cast = (int)(System.currentTimeMillis()/1000); //on met en secondes
-							System.out.println("cast :" + cast);
+							//System.out.println("cast :" + cast);
 							
 							String insert_query2 = "UPDATE  membres SET tentatives="+calcul+" , temps="+ cast+"  where email='"+email+"';";
 							int rs3 = stmt1.executeUpdate(insert_query2);
