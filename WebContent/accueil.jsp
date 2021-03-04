@@ -7,11 +7,18 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Inscription</title>
+        <title>Accueil</title>
         <link type="text/css" rel="stylesheet" href="form.css" />
     </head>
     <body>
-        <form method="post" action="inscription">
+		<a href="http://localhost:8080/ProjetJEE/Visiteur">
+			<input type="submit" value="Visiteur" class="sansLabel" />
+     	</a>
+		<br />
+		<a href="http://localhost:8080/ProjetJEE/Connection">
+			<input type="submit" value="Membre" class="sansLabel" />
+     	</a>
+        <!--form method="post" action="inscription">
             <fieldset>
                 <legend>Inscription</legend>
                 <p>Vous pouvez vous inscrire via ce formulaire.</p>
@@ -35,6 +42,6 @@
                 <input type="submit" value="Inscription" class="sansLabel" />
                 <br />
             </fieldset>
-        </form>
+        </form-->
     </body>
 </html>

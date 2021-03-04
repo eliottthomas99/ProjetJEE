@@ -24,7 +24,7 @@ import org.jee.ClientServiceImpl;
 /**
  * Servlet implementation class MainServlet
  */
-//@WebServlet("/MainServlet")
+@WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 	
 	
@@ -66,7 +66,7 @@ public class MainServlet extends HttpServlet {
 
 		// TESTS Interface
 
-		String pageName = "/accueil.jsp";
+		String pageName = "/connectionMembre.jsp";
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
 
