@@ -43,8 +43,29 @@
                 <label for="motdepasse">Mot de passe <span class="requis">*</span></label>
                 <input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
                 <br />
+                
+                <label for="confirmationMotdepasse">Confirmer mot de passe<span class="requis">*</span></label>
+                <input type="password" id="confirmationMotdepasse" name="motdepasse" value="" size="20" maxlength="20" />
+                <br />
+                
+                <label for="dateDeNaissance">Entrez votre date de naissance au format AAAA-MM-JJ<span class="requis">*</span></label>
+                <input type="text" id="dateDeNaissance" name="date de naissance" value="" size="20" maxlength="60" />
+                <br />
+                
+                <label for="Rue">Rue<span class="requis">*</span></label>
+                <input type="text" id="Rue" name="Rue" value="" size="20" maxlength="60" />
+                <br />
+                
+                <label for="Complement">Complément d'adresse<span class="Nonrequis"></span></label>
+                <input type="text" id="Complement" name="complementAdresse" value="" size="20" maxlength="60" />
+                <br />
+                
+                <label for="CodePostal">Code Postal<span class="requis">*</span></label>
+                <input type="text" id="CodePostal" name="CodePostal" value="" size="20" maxlength="60" />
+                <br />
+                
 
-                <input type="submit" value="Connexion" class="sansLabel" />
+                <input type="submit" value="Inscription" class="sansLabel" />
                 <br />
             </fieldset>
 	    	
