@@ -1,6 +1,8 @@
 package org.jee;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +16,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/Connection")
 public class ConnectionMembreServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
+    public static final String CHAMP_EMAIL = "email";
+    public static final String CHAMP_PASS = "motdepasse";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,23 +39,9 @@ public class ConnectionMembreServlet extends HttpServlet {
 		
 		String pageName = "/connectionMembre.jsp";
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-
-		String connect = request.getParameter("connect");
+		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 		
-		try {
-
-			rd.forward(request, response);
-
-		} catch (ServletException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
+		
 	}
 
 	/**
@@ -57,6 +49,33 @@ public class ConnectionMembreServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+        
+		String valideStr = "";
+        
+        
+        /* Récupération des champs du formulaire. */
+        String email = request.getParameter( CHAMP_EMAIL );
+        String motDePasse = request.getParameter( CHAMP_PASS );
+        
+        
+        try {
+			Boolean valide = Membre.validerAuthentification(email, motDePasse);
+			
+			if (valide) {
+				valideStr = "c'est bon";
+				request.setAttribute("valideStr", valideStr);
+			} else {
+				valideStr = "email ou mot de passe incorrect";
+				request.setAttribute("valideStr", valideStr);
+			}
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
 		doGet(request, response);
 	}
 

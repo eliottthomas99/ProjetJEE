@@ -205,7 +205,7 @@ public class Membre {
 
 	}
 
-	public Boolean validerAuthentification(String email, String password) throws InterruptedException {
+	public static Boolean validerAuthentification(String email, String password) throws InterruptedException {
 		/*
 		 * On regarde s'il exite quelqu'un avec la bonne combinaison id/mdp
 		 * 
