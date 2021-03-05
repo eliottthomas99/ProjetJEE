@@ -18,8 +18,8 @@ String str = (String)request.getAttribute("valideStr");
 	
 	<form method="post" action="Connection">
 			<fieldset>
-                <legend>Inscription</legend>
-                <p>Vous pouvez vous inscrire via ce formulaire.</p>
+                <legend>Connection</legend>
+                <p>Veuillez rentrer vos identifiants pour vous connecter.</p>
 
                 <label for="email">Adresse email <span class="requis">*</span></label>
                 <input type="text" id="email" name="email" value="" size="20" maxlength="60" />
