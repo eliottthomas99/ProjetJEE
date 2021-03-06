@@ -83,6 +83,11 @@ public class Inscription extends HttpServlet {
         int preferenceInt = Integer.parseInt(request.getParameter( CHAMP_PREFERENCE ));
         MainServlet.preference preference = MainServlet.preference.values()[preferenceInt] ;
 		
+        System.out.println("mdp : "+password);
+        System.out.println("mdpConf : "+passwordConf);
+
+        
+        
         Visiteur.returnStatement retour = Visiteur.CreerCompte(civilite, nom, prenom,email, password, passwordConf, 
         														naissance, rue, complement, codePostal, ville, pays, preference);
         

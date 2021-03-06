@@ -30,11 +30,11 @@
 					<br />
 
 					<label for="nomInscription">nom<span class="requis">*</span></label>
-					<input type="text" id="nomInscription" name="nom" value="" size="20" maxlength="60" />
+					<input type="text" id="nomInscription" name="nomInscription" value="" size="20" maxlength="60" />
 					<br />
 
 					<label for="prenomInscription">prenom<span class="requis">*</span></label>
-					<input type="text" id="prenomInscription" name="prenom" value="" size="20" maxlength="20" />
+					<input type="text" id="prenomInscription" name="prenomInscription" value="" size="20" maxlength="20" />
 					<br />
 
 
@@ -48,13 +48,13 @@
 					<br />
 
 					<label for="confirmationMotdepasse">Confirmer mot de passe<span class="requis">*</span></label>
-					<input type="password" id="confirmationMotdepasse" name="motdepasse" value="" size="20"
+					<input type="password" id="confirmationMotdepasse" name="confirmationMotdepasse" value="" size="20"
 						maxlength="20" />
 					<br />
 
 					<label for="dateDeNaissance">Entrez votre date de naissance au format AAAA-MM-JJ<span
 							class="requis">*</span></label>
-					<input type="text" id="dateDeNaissance" name="date de naissance" value="" size="20"
+					<input type="text" id="dateDeNaissance" name="dateDeNaissance" value="" size="20"
 						maxlength="60" />
 					<br />
 
@@ -63,7 +63,7 @@
 					<br />
 
 					<label for="Complement">Complément d'adresse<span class="Nonrequis"></span></label>
-					<input type="text" id="Complement" name="complementAdresse" value="" size="20" maxlength="60" />
+					<input type="text" id="Complement" name="Complement" value="" size="20" maxlength="60" />
 					<br />
 
 					<label for="CodePostal">Code Postal<span class="requis">*</span></label>

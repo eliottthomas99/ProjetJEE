@@ -80,9 +80,12 @@ public class Visiteur {
 					String insert_query = String.format(
 							"INSERT INTO membres(civilite,nom,prenom,email,password,naissance,addr_rue"
 									+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference,bloque,tentatives,temps) "
-									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s')",
+									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s','%s','%s')",
 							civilite.ordinal(), nom, prenom, email, password, naissance, addr_rue, addr_complement,
 							addr_code_postal, ville, pays, preference.ordinal(),0,0,0);
+					
+					System.out.println(insert_query);
+					
 					int rs = stmt.executeUpdate(insert_query);
 					return returnStatement.OK;
 				} catch (SQLException e) {
