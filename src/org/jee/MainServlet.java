@@ -47,6 +47,8 @@ public class MainServlet extends HttpServlet {
 	
 	
 	
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -77,7 +79,7 @@ public class MainServlet extends HttpServlet {
 
 		Visiteur dupond = new Visiteur("Dupond", "Charles");
 
-		dupond.CreerCompte(MainServlet.civilite.MONSIEUR, "THOMAS", "alex", "athomas@enssat.fr", "1234","1234", "1999-08-14",
+		Visiteur.CreerCompte(MainServlet.civilite.MONSIEUR, "THOMAS", "alex", "athomas@enssat.fr", "1234","1234", "1999-08-14",
 				"Les Ursu", "euuu", 22300, "Lannion", "France", MainServlet.preference.HOUSE);
 
 		// RequestDispatcher rd =
@@ -92,7 +94,7 @@ public class MainServlet extends HttpServlet {
 		// "+eliott.getPassword());
 		Boolean valid = null;
 		try {
-			valid = eliott.validerAuthentification("ethomas@enssat.fr", "azerty");
+			valid = Membre.validerAuthentification("ethomas@enssat.fr", "azerty");
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
