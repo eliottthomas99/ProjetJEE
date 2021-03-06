@@ -10,6 +10,17 @@ public class Visiteur {
 	private String nom;
 	private String prenom;
 
+	
+	enum returnStatement {
+		  OK,
+		  CONNECTION_FAIL,
+		  EMAIL_NON_DISPO,
+		  MDP_DIFF,
+		  POP,
+		  ROCK
+		}
+	
+	
 	public String getNom() {
 		return nom;
 	}
@@ -32,7 +43,7 @@ public class Visiteur {
 		this.prenom = prenom;
 	}
 
-	public void CreerCompte(MainServlet.civilite civilite, String nom, String prenom, String email, String password,
+	public static returnStatement CreerCompte(MainServlet.civilite civilite, String nom, String prenom, String email, String password,
 			String confirmPassword, String naissance, String addr_rue, String addr_complement, int addr_code_postal,
 			String ville, String pays, MainServlet.preference preference) {
 
@@ -47,6 +58,7 @@ public class Visiteur {
 		if (!emailDispo) {
 			// ANNULER LA PROCEDURE
 			System.out.println("email non disponible");
+			return returnStatement.EMAIL_NON_DISPO;
 			// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
 		} else {
 
@@ -58,6 +70,7 @@ public class Visiteur {
 				// ANNULER LA PROCEDURE
 				// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
 				System.out.println("mots de passes non identiques");
+				return returnStatement.MDP_DIFF;
 				
 			} else {
 				
@@ -67,17 +80,23 @@ public class Visiteur {
 					String insert_query = String.format(
 							"INSERT INTO membres(civilite,nom,prenom,email,password,naissance,addr_rue"
 									+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference,bloque,tentatives,temps) "
-									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s')",
+									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s','%s','%s')",
 							civilite.ordinal(), nom, prenom, email, password, naissance, addr_rue, addr_complement,
-							addr_code_postal, ville, pays, preference.ordinal(),0,0,"tkt");
+							addr_code_postal, ville, pays, preference.ordinal(),0,0,0);
+					
+					System.out.println(insert_query);
+					
 					int rs = stmt.executeUpdate(insert_query);
-
+					return returnStatement.OK;
 				} catch (SQLException e) {
+					
 					System.out.println(e);
+					return returnStatement.CONNECTION_FAIL;
 				}
 			}
 
 		}
+		 
 
 	}
 
