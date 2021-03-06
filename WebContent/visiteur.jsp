@@ -10,8 +10,9 @@
 	</head>
 
 	<body>
+		<div class="corps">
 		<section class="inscription">
-			<h1>Visiteur</h1>
+			<h1>Inscription</h1>
 			<form method="post" action="Inscription">
 				<fieldset>
 					<legend>Inscription</legend>
@@ -29,23 +30,41 @@
 					</select>
 					<br />
 
-					<label for="nomInscription">nom<span class="requis">*</span></label>
-					<input type="text" id="nomInscription" name="nomInscription" value="" size="20" maxlength="60" />
-					<br />
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Nom" name="nom" id='nomInscription' required />
+						<label for="nomInscription" class="form__label">Nom</label>
+					</div>
 
-					<label for="prenomInscription">prenom<span class="requis">*</span></label>
-					<input type="text" id="prenomInscription" name="prenomInscription" value="" size="20" maxlength="20" />
-					<br />
+					<!--label for="nomInscription">nom<span class="requis">*</span></label>
+					<input type="text" id="nomInscription" name="nom" value="" size="20" maxlength="60" />
+					<br /-->
 
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id='prenomInscription' required />
+						<label for="prenomInscription" class="form__label">Prénom</label>
+					</div>
 
+					<!--label for="c">prenom<span class="requis">*</span></label>
+					<input type="text" id="prenomInscription" name="prenom" value="" size="20" maxlength="20" />
+					<br /-->
 
-					<label for="email">Adresse email <span class="requis">*</span></label>
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Email" name="email" id='email' required />
+						<label for="email" class="form__label">Email</label>
+					</div>
+
+					<!--label for="email">Adresse email <span class="requis">*</span></label>
 					<input type="text" id="email" name="email" value="" size="20" maxlength="60" />
-					<br />
+					<br /-->
 
-					<label for="motdepasse">Mot de passe <span class="requis">*</span></label>
+					<div class="form__group field">
+						<input type="password" class="form__field" placeholder="Mot de passe" name="motdepasse" id='motdepasse' required />
+						<label for="motdepasse" class="form__label">Mot de passe</label>
+					</div>
+
+					<!--label for="motdepasse">Mot de passe <span class="requis">*</span></label>
 					<input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
-					<br />
+					<br /-->
 
 					<label for="confirmationMotdepasse">Confirmer mot de passe<span class="requis">*</span></label>
 					<input type="password" id="confirmationMotdepasse" name="confirmationMotdepasse" value="" size="20"
@@ -67,7 +86,7 @@
 					<br />
 
 					<label for="CodePostal">Code Postal<span class="requis">*</span></label>
-					<input type="text" id="CodePostal" name="CodePostal" value="" size="20" maxlength="60" />
+					<input type="number" id="CodePostal" name="CodePostal" value="" size="20" maxlength="60" />
 					<br />
 
 					<label for="Ville">Ville<span class="requis">*</span></label>
@@ -101,7 +120,10 @@
 			</form>
 		</section>
 
+		<hr>
+		
 		<section class="visiteur">
+			<h1>Visiteur</h1>
 			<form method="post" action="ConnectionTemporaire">
 				<fieldset>
 					<legend>Connection en tant qu'utilisateur invite</legend>
@@ -121,9 +143,13 @@
 
 			</form>
 		</section>
+		</div>
 
+		<br>
+		<br>
+		<br>
+		<br>
 
-		<hr>
 		<section class="Connection">
 			<form method="post" action="ConnectionTemporaire">
 				<input type="submit" value="J'ai déjà un compte" class="sansLabel" />

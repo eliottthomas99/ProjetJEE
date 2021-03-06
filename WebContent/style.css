@@ -1,7 +1,12 @@
 @charset "UTF-8";
 
-body {
+.corps {
 	/*background-color: #2e3440;
 	color: #eceff4 ; */
 	display: flex;
+	flex-direction: row;
+}
+
+.inscription, .visiteur {
+	margin: auto;
 }
