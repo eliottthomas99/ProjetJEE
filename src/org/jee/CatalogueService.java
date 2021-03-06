@@ -32,7 +32,19 @@ public interface CatalogueService {
 	// je check juste que ça soit le même artiste mais un titre peut ne pas faire partie de l'album normalement .. "
 	
 	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String inter);
+	
+	
+	public List<Playlist> getTitresAlbumPersoMembre(int idMembre);
+	
+	
+	public void newPlaylistMembre(String nomPlaylist,int idMembre);
+	
+	
+	public void newElementInPrivatePlaylist(String nomPlaylistPerso, String section, String nomChanteur);
 	//public List<ElementDeCatalogue> getTitreRapRnb();
+	
+	
+	public List<ElementDeCatalogue> getAllElementsFromPlaylistPerso(int idMembre, String nomPlaylistPerso);
 	
 	//public List<ElementDeCatalogue> getTitreClassique();
 	

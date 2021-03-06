@@ -2,8 +2,13 @@
     pageEncoding="UTF-8"%>
     
 <%@page import="java.util.List,org.jee.ElementDeCatalogue"%>
+<%@page import="java.util.List,org.jee.Membre"%>
 <%
 List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAttribute("listElements");
+
+// On récupère les données des membres 
+Membre alex = (Membre)request.getAttribute("alex");
+
 %>   
 <!DOCTYPE html>
 <html>
@@ -19,6 +24,9 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAtt
 	<nav id="primary_nav_wrap">
 		<ul>
 		  <li class="current-menu-item"><a href="accueil.jsp">Accueil</a></li>
+		  
+		  <li><li id = "album"><a onclick ="mesPlaylists(this)">Mes playlists</a></li>
+		  
 		  <li><a href="#" id ="Titremusical" onclick ="goAccueil(this)">Titres</a>
 		    <ul id = "Titres">
 		      <li>
@@ -53,9 +61,6 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAtt
 	</nav>
 	
 	
-	<br>
-	<br>
-	<br>
 	<br>
 	<br>
 	<br>

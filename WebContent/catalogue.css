@@ -85,6 +85,13 @@
 	border-color: black;
 }
 
+#barre2{
+	line-height:120%;
+	width:200px;
+	padding:5px 15px;
+	border-color: black;
+}
+
 #musical{
 	display:block;
 	color:#333;

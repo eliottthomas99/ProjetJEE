@@ -13,13 +13,13 @@ import org.jee.ElementDeCatalogue;
 
 public class CatalogueServiceImpl implements CatalogueService {
 	
+
 	
-	
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++ PUSH D'ALEX ATTTTTENTIOOOON  ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	Statement stmt, stmt2;
 	ResultSet rs,rs2;
 	Connection connexion;
 	List<ElementDeCatalogue> catalogueElements = new ArrayList<>();
+	List<Playlist> titresPlaylists = new ArrayList<>();
 	
 	
 	
@@ -261,8 +261,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Titres where interprete ='"+inter+"'");	
-			 
+			 rs = stmt.executeQuery("select * from Titres where interprete ='"+inter+"'");	 
 			}
 			// Itérer sur le resultSet : 
 			while (rs.next()) {
@@ -297,7 +296,152 @@ public class CatalogueServiceImpl implements CatalogueService {
 		return catalogueElements;
 	}
 	
-	
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++ PUSH D'ALEX ATTTTTENTIOOOON  ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-}
+	public List<Playlist> getTitresAlbumPersoMembre(int idMembre)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 rs = stmt.executeQuery("select*from PlaylistPerso,membres,lienPlaylistPersoMembre where PlaylistPerso.id = lienPlaylistPersoMembre.idPlaylistPerso AND lienPlaylistPersoMembre.idMembre = membres.id AND membres.id ="+idMembre);	
+			}
+			
+			// Itérer sur le resultSet : 
+			while (rs.next()) {
+			
+				//String titre, String interprete, int nombreDecoute, int id
+				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
+				int id = rs.getInt("id");
+				String nom = rs.getString("nom");
+			
+				//titre, interprete, nombreDecoute, type, annee, duree, idElement
+				
+				titresPlaylists.add(new PlaylistPerso(id,nom));	
+			}
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+		return titresPlaylists;
+	}
+	
+	public void newPlaylistMembre(String nomPlaylist,int idMembre)
+	{		
+		ResultSet rs3, rs4;
+		Statement stmt3,stmt4, stmt5;
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 stmt3 = connexion.createStatement();
+			 stmt4 = connexion.createStatement();
+			 stmt5 = connexion.createStatement();
+			 
+			 System.out.println("ok");
+			 stmt.executeUpdate("INSERT INTO PlaylistPerso (nom) VALUES ('"+nomPlaylist+"')");
+			 System.out.println("ok");
+			 rs3 = stmt3.executeQuery("SELECT id from PlaylistPerso WHERE nom ='"+nomPlaylist+"'");
+			 System.out.println("pas ok");
+			 rs4 = stmt4.executeQuery("SELECT id from membres WHERE id='"+idMembre+"'");
+			 
+			 rs3.next();
+			 rs4.next();
+			 int idPlaylistPerso = rs3.getInt("id");
+			 int idDuMembre = rs4.getInt("id");
+			 
+			 stmt5.executeUpdate("INSERT INTO lienPlaylistPersoMembre VALUES(("+idPlaylistPerso+"),("+idDuMembre+"))");
+			}
+			
+			// Itérer sur le resultSet : 
+		
+		}catch(SQLException e) {
+			System.out.println(e);
+		
+		}
+	}
+	
+	
+	
+	//select Titres.titre from Titres,lienPlaylistPersoTitre,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitre.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitre.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id = idMembre
+	
+	
+
+	public void newElementInPrivatePlaylist(String nomPlaylistPerso, String section, String titre)
+	{
+		ResultSet rs3, rs4;
+		Statement stmt3,stmt4, stmt5;
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 stmt3 = connexion.createStatement();
+			 stmt4 = connexion.createStatement();
+			 stmt5 = connexion.createStatement();
+			 
+			 System.out.println("ok");
+			 rs3 = stmt.executeQuery("select id from PlaylistPerso where nom like'%"+nomPlaylistPerso+"%'");
+			 System.out.println("ok");
+			 rs4 = stmt3.executeQuery("select id from "+section+" where titre like '%"+titre+"%'");
+			 
+			 rs3.next();
+			 rs4.next();
+			 int idPlaylistPerso = rs3.getInt("id");
+			 int idTitre = rs4.getInt("id");
+			 
+			 stmt5.executeUpdate("INSERT INTO lienPlaylistPersoTitre VALUES(("+idPlaylistPerso+"),("+idTitre+"))");
+			}
+			
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+	}
+	
+	
+	
+	public List<ElementDeCatalogue>  getAllElementsFromPlaylistPerso(int idMembre, String nomPlaylistPerso)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 rs = stmt.executeQuery("Select Titres.titre, Titres.interprete, Titres.id, Titres.nbEcoutePeriode from Titres,lienPlaylistPersoTitre,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitre.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitre.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
+			}
+			
+			while (rs.next()) {
+				
+				//String titre, String interprete, int nombreDecoute, int id
+				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
+				int id = rs.getInt("id");
+				String titre = rs.getString("titre");
+				String interprete = rs.getString("interprete");
+				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
+				
+				//titre, interprete, nombreDecoute, type, annee, duree, idElement
+				
+				catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));	
+			}
+			
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+		return catalogueElements;
+		
+	}
+}	
+	
