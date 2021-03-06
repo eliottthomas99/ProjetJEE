@@ -16,7 +16,7 @@
 
 
 				<label for="civilite-select">Civilité:</label>
-					<select name="civilite" id="pet-select">
+					<select name="civilite" id="civilite-select">
 					    <option value="">--Please choose an option--</option>
 					    <option value=0>Madame</option>
 					    <option value=1>Monsieur</option>
@@ -64,6 +64,29 @@
                 <input type="text" id="CodePostal" name="CodePostal" value="" size="20" maxlength="60" />
                 <br />
                 
+                <label for="Ville">Ville<span class="requis">*</span></label>
+                <input type="text" id="Ville" name="Ville" value="" size="20" maxlength="60" />
+                <br />
+                
+                <label for="Pays">Pays<span class="requis">*</span></label>
+                <input type="text" id="Pays" name="Pays" value="" size="20" maxlength="60" />
+                <br />
+
+
+				<label for="preference-select">Style de musique préféré:</label>
+					<select name="preference" id="preference-select">
+					    <option value="">--Please choose an option--</option>
+					    <option value=0>Classique</option>
+					    <option value=1>House</option>
+					    <option value=2>Jazz</option>
+					    <option value=3>Métal</option>
+					    <option value=4>Pop</option>
+					    <option value=5>Rock</option>
+					    
+					</select>
+				<br />
+
+
 
                 <input type="submit" value="Inscription" class="sansLabel" />
                 <br />
