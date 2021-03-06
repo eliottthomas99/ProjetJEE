@@ -52,9 +52,9 @@
 						maxlength="20" />
 					<br />
 
-					<label for="dateDeNaissance">Entrez votre date de naissance au format AAAA-MM-JJ<span
+					<label for="dateDeNaissance">Entrez votre date de naissance<span
 							class="requis">*</span></label>
-					<input type="text" id="dateDeNaissance" name="dateDeNaissance" value="" size="20"
+					<input type="date" id="dateDeNaissance" name="dateDeNaissance" value="" size="20"
 						maxlength="60" />
 					<br />
 

@@ -55,6 +55,9 @@ public class Visiteur {
 
 		Boolean emailDispo = AlgorithmeDeVerification.emailDispo(email);
 
+		
+		
+		
 		if (!emailDispo) {
 			// ANNULER LA PROCEDURE
 			System.out.println("email non disponible");
@@ -75,12 +78,14 @@ public class Visiteur {
 			} else {
 				
 				
+				
+				
 				try (Statement stmt = connexion.createStatement()) {
 
 					String insert_query = String.format(
 							"INSERT INTO membres(civilite,nom,prenom,email,password,naissance,addr_rue"
 									+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference,bloque,tentatives,temps) "
-									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s','%s','%s')",
+									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s','%s','%s');",
 							civilite.ordinal(), nom, prenom, email, password, naissance, addr_rue, addr_complement,
 							addr_code_postal, ville, pays, preference.ordinal(),0,0,0);
 					
