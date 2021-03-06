@@ -66,36 +66,66 @@
 					<input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
 					<br /-->
 
-					<label for="confirmationMotdepasse">Confirmer mot de passe<span class="requis">*</span></label>
+					<div class="form__group field">
+						<input type="password" class="form__field" placeholder="Confirmer mot de passe" name="confirmationMotdepasse" id='confirmationMotdepasse' required />
+						<label for="confirmationMotdepasse" class="form__label">Confirmer mot de passe</label>
+					</div>
+
+					<!--label for="confirmationMotdepasse">Confirmer mot de passe<span class="requis">*</span></label>
 					<input type="password" id="confirmationMotdepasse" name="confirmationMotdepasse" value="" size="20"
 						maxlength="20" />
-					<br />
+					<br /-->
 
 					<label for="dateDeNaissance">Entrez votre date de naissance<span
 							class="requis">*</span></label>
 					<input type="date" id="dateDeNaissance" name="dateDeNaissance" value="" size="20"
 						maxlength="60" />
 					<br />
+					
+					<div class="form__group field">
+						<input type="text" class="form__field" placeholder="Rue" name="Rue" id='Rue' required />
+						<label for="Rue" class="form__label">Rue</label>
+					</div>
 
-					<label for="Rue">Rue<span class="requis">*</span></label>
+					<!--label for="Rue">Rue<span class="requis">*</span></label>
 					<input type="text" id="Rue" name="Rue" value="" size="20" maxlength="60" />
-					<br />
+					<br /-->
 
-					<label for="Complement">Complément d'adresse<span class="Nonrequis"></span></label>
+					<div class="form__group field">
+						<input type="text" class="form__field" placeholder="Complément d'adresse" name="Complement" id='Complement' value='' />
+						<label for="Complement" class="form__label">Complément d'adresse</label>
+					</div>
+
+					<!--label for="Complement">Complément d'adresse<span class="Nonrequis"></span></label>
 					<input type="text" id="Complement" name="Complement" value="" size="20" maxlength="60" />
-					<br />
+					<br /-->
 
-					<label for="CodePostal">Code Postal<span class="requis">*</span></label>
+					<div class="form__group field">
+						<input type="number" class="form__field" placeholder="Code Postal" name="CodePostal" id='CodePostal' required />
+						<label for="CodePostal" class="form__label">Code Postal</label>
+					</div>
+
+					<!--label for="CodePostal">Code Postal<span class="requis">*</span></label>
 					<input type="number" id="CodePostal" name="CodePostal" value="" size="20" maxlength="60" />
-					<br />
+					<br /-->
 
-					<label for="Ville">Ville<span class="requis">*</span></label>
+					<div class="form__group field">
+						<input type="text" class="form__field" placeholder="Ville" name="Ville" id='Ville' required />
+						<label for="Ville" class="form__label">Ville</label>
+					</div>
+
+					<!--label for="Ville">Ville<span class="requis">*</span></label>
 					<input type="text" id="Ville" name="Ville" value="" size="20" maxlength="60" />
-					<br />
+					<br /-->
 
-					<label for="Pays">Pays<span class="requis">*</span></label>
+					<div class="form__group field">
+						<input type="text" class="form__field" placeholder="Pays" name="Pays" id='Pays' required />
+						<label for="Pays" class="form__label">Pays</label>
+					</div>
+
+					<!--label for="Pays">Pays<span class="requis">*</span></label>
 					<input type="text" id="Pays" name="Pays" value="" size="20" maxlength="60" />
-					<br />
+					<br /-->
 
 
 					<label for="preference-select">Style de musique préféré:</label>

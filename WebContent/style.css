@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+body{
+	background-color: #2e3440;
+	color: #eceff4;
+} 
+
 .corps {
 	/*background-color: #2e3440;
 	color: #eceff4 ; */
@@ -10,3 +15,67 @@
 .inscription, .visiteur {
 	margin: auto;
 }
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #4c566a;
+  outline: 0;
+  font-size: 1rem;
+  color: #eceff4;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  /*&::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }*/
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #4c566a;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #88c0d0,#81a1c1);
+  border-image-slice: 1;
+}
+
+
+.form__field:focus .form__label{
+	  position: absolute;
+	  top: 0;
+	  display: block;
+	  transition: 0.2s;
+	  font-size: 1rem;
+	  color: #88c0d0;
+	  font-weight:700;    
+  }
+
+
+/* reset input 
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
+}*/
