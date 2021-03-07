@@ -20,8 +20,14 @@ public class ElementDeCatalogue {
 		this.id = id;
 	}
 	
+	public ElementDeCatalogue(String titre, String interprete) {
+		
+		//super(); ?? Je comprends pas de qui hérite cette classe ... 
+		this.titre = titre;
+		this.interprete = interprete;
+	}
 	
-public ElementDeCatalogue(String titre) {
+	public ElementDeCatalogue(String titre) {
 		
 		//super(); ?? Je comprends pas de qui hérite cette classe ... 
 		this.titre = titre;

@@ -185,7 +185,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
-	
+	/*
 	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String inter)
 	{
 		String titre;
@@ -237,6 +237,35 @@ public class CatalogueServiceImpl implements CatalogueService {
 		
 		return catalogueElements;
 	}
+	*/
+	
+	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String inter)
+	{
+	
+		int nombreEcoutePeriode;
+		int id ;
+		
+		try {
+				connexion = DBManager.getInstance().getConnection();
+				
+				if (connexion != null)
+				{
+				 stmt = connexion.createStatement();
+				 rs = stmt.executeQuery("select Titres.titre, Titres.interprete from Titres,Albums,lienAlbumTitres where Titres.id = lienAlbumTitres.idTitre AND lienAlbumTitres.idAlbum = Albums.id AND Albums.titre = '"+inter+"'");	 
+				}
+				// Itérer sur le resultSet : 
+				while (rs.next()) {
+				   String titre = rs.getString("titre");
+				   String interprete = rs.getString("interprete");
+				   catalogueElements.add(new Album(titre,interprete));					
+				}  		
+			}catch(SQLException e) {
+				System.out.println(e);
+		}
+		
+		return catalogueElements;
+	}
+	
 	
 
 	public List<Playlist> getTitresAlbumPersoMembre(int idMembre)
@@ -384,7 +413,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			  		+ "lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id AND lienPlaylistPersoMembre.idMembre = membres.id AND \n"
 			  		+ "membres.id = "+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
 			  
-			  rs2 = stmt3.executeQuery("Select Albums.titre from lienPlaylistPersoAlbums,PlaylistPerso,lienPlaylistPersoMembre, Albums,membres where \n"
+			  rs2 = stmt3.executeQuery("Select Albums.titre, Albums.interprete from lienPlaylistPersoAlbums,PlaylistPerso,lienPlaylistPersoMembre, Albums,membres where \n"
 			 		+ "\n"
 			 		+ "PlaylistPerso.id = lienPlaylistPersoAlbums.idPlaylistPerso AND lienPlaylistPersoAlbums.idAlbums = Albums.id  AND \n"
 			 		+ "\n"
@@ -403,8 +432,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 				//int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
 				
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
-				System.out.println((new ElementDeCatalogue(titre)).getTitre());
-				catalogueElements.add(new ElementDeCatalogue(titre));	
+				System.out.println((new Titre(titre)).getTitre());
+				catalogueElements.add(new Titre(titre));	
 			}
 			
 			while (rs2.next()) {
@@ -414,11 +443,12 @@ public class CatalogueServiceImpl implements CatalogueService {
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
 
 				String titre = rs2.getString("titre");
+				String interprete= rs2.getString("interprete");
 				
 				
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
 				System.out.println((new ElementDeCatalogue(titre)).getTitre());
-				catalogueElements.add(new ElementDeCatalogue(titre));	
+				catalogueElements.add(new Album(titre,interprete));
 			}
 			
 			

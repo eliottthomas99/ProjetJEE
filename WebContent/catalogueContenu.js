@@ -49,7 +49,7 @@ function goAccueil(object)
 
 function goTitresAlbum(object)
 {
-	console.log(interpreteAlbum)
+	console.log("hhhhhhh----->"+object.id)
 	//console.log("yews ->"+document.getElementById("Auteur").textContent);
 	xhr.open('GET',"MainServlet?interprete="+object.id,true);
 	xhr.onreadystatechange = majCatalogue;

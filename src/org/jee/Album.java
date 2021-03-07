@@ -16,6 +16,16 @@ public class Album extends ElementDeCatalogue {
 	private int id;
 	private int idElement;
 	
+	public Album(String titre) 
+	{
+		super(titre);
+	}
+	
+	
+	public Album(String titre,String interprete) 
+	{
+		super(titre,interprete);
+	}
 	// Constructeur utile à l'affichage de tout le catalogue 
 	public Album(String titre, String interprete, int nombreDecoute, int id)
 	{

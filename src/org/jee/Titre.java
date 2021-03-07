@@ -21,6 +21,11 @@ public class Titre extends ElementDeCatalogue {
 	// 2 constructeurs utiles lors de l'afichage de tout les elements du catalogue.
 	// Le  deuxième constructeur sera utile quand on voudra affichage des elements sepcifiques 
 	
+	public Titre(String titre)
+	{
+		super(titre);
+	}
+	
 	public Titre(String titre, String interprete, int nombreDecoute, int id)
 	{
 		super(titre, interprete, nombreDecoute,id);
