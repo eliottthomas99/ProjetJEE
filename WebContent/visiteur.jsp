@@ -181,11 +181,13 @@
 		<br>
 
 		<section class="Connection">
-			<form method="post" action="ConnectionTemporaire">
-				<input type="submit" value="J'ai déjà un compte" class="sansLabel" />
+			
+				<a href="http://localhost:8080/ProjetJEE/Connection">
+					<input type="submit" value="J'ai déjà un compte" class="sansLabel" />
+     			</a>
 				<br />
 
-			</form>
+			
 		</section>
 
 

@@ -8,7 +8,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Accueil</title>
-        <link type="text/css" rel="stylesheet" href="form.css" />
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
 		<a href="http://localhost:8080/ProjetJEE/Visiteur">

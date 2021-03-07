@@ -58,6 +58,7 @@ public class ConnectionMembreServlet extends HttpServlet {
         String email = request.getParameter( CHAMP_EMAIL );
         String motDePasse = request.getParameter( CHAMP_PASS );
         
+        Boolean redo = true;
         
         try {
 			Boolean valide = Membre.validerAuthentification(email, motDePasse);
@@ -65,6 +66,24 @@ public class ConnectionMembreServlet extends HttpServlet {
 			if (valide) {
 				valideStr = "c'est bon";
 				request.setAttribute("valideStr", valideStr);
+				
+				redo = false;
+				
+				//creer un objet membre
+				
+				Membre membre  =  Membre.getMembre(email, motDePasse);
+				//System.out.println(membre);
+				// le passer en paramètre à la page suivante
+				
+				request.setAttribute("leMembre", membre);
+				
+				String pageName = "/modifCompte.jsp";
+				this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+				
+				
+				
+				
+				
 			} else {
 				valideStr = "email ou mot de passe incorrect";
 				request.setAttribute("valideStr", valideStr);
@@ -75,8 +94,9 @@ public class ConnectionMembreServlet extends HttpServlet {
 			e.printStackTrace();
 		}
         
-        
+        if(redo) {
 		doGet(request, response);
+        }
 	}
 
 }

@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+	
+	<%@page import="java.util.List,org.jee.Membre"%>
+	
+	<%
+	Membre membre = (Membre)request.getAttribute("leMembre");	
+	%>
+	
 	<!DOCTYPE html>
 	<html>
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Visiteur</title>
+		<title>Modification Compte</title>
 		<link rel="stylesheet" href="style.css" />
 
 	</head>
@@ -28,10 +35,10 @@
 						<option value=3>Non binaire</option>
 
 					</select>
-					<br />
+					<br /> 
 
 					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Nom" name="nom" id='nomInscription' required />
+						<input type="input" class="form__field" placeholder="Nom" name="nom" id='nomInscription' value="<%=membre.getNom() %>" required />
 						<label for="nomInscription" class="form__label">Nom</label>
 					</div>
 
@@ -40,7 +47,7 @@
 					<br /-->
 
 					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id='prenomInscription' required />
+						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id="prenomInscription" value="<%=membre.getPrenom() %>" required />
 						<label for="prenomInscription" class="form__label">Prénom</label>
 					</div>
 
@@ -56,7 +63,7 @@
 					<br />
 					
 					<div class="form__group field">
-						<input type="text" class="form__field" placeholder="Rue" name="Rue" id='Rue' required />
+						<input type="text" class="form__field" placeholder="Rue" name="Rue" id='Rue' value="<%=membre.getAddr_rue() %>" required />
 						<label for="Rue" class="form__label">Rue</label>
 					</div>
 
@@ -65,7 +72,7 @@
 					<br /-->
 
 					<div class="form__group field">
-						<input type="text" class="form__field" placeholder="Complément d'adresse" name="Complement" id='Complement' value='' />
+						<input type="text" class="form__field" placeholder="Complément d'adresse" name="Complement" id='Complement' value="<%=membre.getAddr_complement() %>" />
 						<label for="Complement" class="form__label">Complément d'adresse</label>
 					</div>
 
@@ -74,7 +81,7 @@
 					<br /-->
 
 					<div class="form__group field">
-						<input type="number" class="form__field" placeholder="Code Postal" name="CodePostal" id='CodePostal' required />
+						<input type="number" class="form__field" placeholder="Code Postal" name="CodePostal" id='CodePostal' value="<%=membre.getAddr_code_postal() %>" required />
 						<label for="CodePostal" class="form__label">Code Postal</label>
 					</div>
 
@@ -83,7 +90,7 @@
 					<br /-->
 
 					<div class="form__group field">
-						<input type="text" class="form__field" placeholder="Ville" name="Ville" id='Ville' required />
+						<input type="text" class="form__field" placeholder="Ville" name="Ville" id='Ville' value="<%=membre.getVille() %>" required />
 						<label for="Ville" class="form__label">Ville</label>
 					</div>
 
@@ -92,7 +99,7 @@
 					<br /-->
 
 					<div class="form__group field">
-						<input type="text" class="form__field" placeholder="Pays" name="Pays" id='Pays' required />
+						<input type="text" class="form__field" placeholder="Pays" name="Pays" id='Pays' value="<%=membre.getPays() %>" required />
 						<label for="Pays" class="form__label">Pays</label>
 					</div>
 
@@ -116,14 +123,13 @@
 
 
 
-					<input type="submit" value="Inscription" class="sansLabel" />
-					<br />
+					<input type="submit" value="Modification" class="sansLabel" />
+					<br id='onFaitCommeOnPeut' value="<%=membre.getEmail() %>"/>
 				</fieldset>
 
 			</form>
 		</section>
 
-		<hr>
 		
 		
 
