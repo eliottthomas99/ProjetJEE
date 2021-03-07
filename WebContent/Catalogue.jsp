@@ -52,11 +52,9 @@ Membre alex = (Membre)request.getAttribute("alex");
 		      	<a href="#" onclick ="goAccueil(this)">Classique</a></li>
 		    </ul>
 		  </li>
-		  <li><a href="#" id = "Podcasts" onclick ="goAccueil(this)">Podcasts</a></li>
-		  <li><a href="#" onclick ="goAccueil(this)">Radios</a></li>
 		  
-		  <li></li><input id= "barre" type='text' placeholder='Rechercher un element avec son titre ..'>
-		  <button onclick ="goAccueil(this)">Recherche</button>
+		  <li></li><input name="search" id= "barre" type='text' placeholder='Rechercher un element avec son titre ..'>
+		  <button class = onclick ="goAccueil(this)">Recherche</button>
 		</ul>
 	</nav>
 	

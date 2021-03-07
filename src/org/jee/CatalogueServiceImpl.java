@@ -15,8 +15,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 	
 
 	
-	Statement stmt, stmt2;
-	ResultSet rs,rs2;
+	Statement stmt, stmt2,stmt3;
+	ResultSet rs,rs2, rs3;
 	Connection connexion;
 	List<ElementDeCatalogue> catalogueElements = new ArrayList<>();
 	List<Playlist> titresPlaylists = new ArrayList<>();
@@ -50,7 +50,11 @@ public class CatalogueServiceImpl implements CatalogueService {
 				catalogueElements.add(new Titre(titre, interpret, nbEcoutePeriode , id, genre, dureeTotale, dateCreation));
 				//String titre, String interprete,int nbEcoutePeriode, int idElement,String genre, int dureeTotale, Date anneeCreation
 			}
-		
+			
+			stmt.close();
+			connexion.close();
+			System.out.println("connection fermé");
+			
 		}catch(SQLException e) {
 		System.out.println(e);
 		
@@ -89,6 +93,9 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new Album(titre, interprete, nombreDecoute ,type, annee, duree,id));			
 			}
+			
+			stmt.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 		System.out.println(e);
@@ -99,81 +106,6 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
-	
-	public List<ElementDeCatalogue> getAllPodcasts()
-	{
-		try {
-			connexion = DBManager.getInstance().getConnection();
-			
-			if (connexion != null)
-			{
-			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Podcasts");	
-			}
-			
-			// Itérer sur le resultSet : 
-			while (rs.next()) {
-			
-				//String titre, String interprete, int nombreDecoute, int id
-				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("id");
-				String titre = rs.getString("titre");
-				String interprete = rs.getString("interprete");
-				int duree = rs.getInt("duree");
-				int nombreDecoute = rs.getInt("nombreEcoute");
-				String categorie = rs.getString("categorie");
-				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
-				
-				//titre, interprete, nombreDecoute, type, annee, duree, idElement
-				
-				catalogueElements.add(new Podcast(titre, interprete, nombreDecoute ,duree, categorie,nombreEcoutePeriode ,id));		
-			}
-		
-		}catch(SQLException e) {
-		System.out.println(e);
-		
-		}
-		
-		return catalogueElements;
-	}
-	
-	
-
-	public List<ElementDeCatalogue> getAllRadios()
-	{
-		try {
-			connexion = DBManager.getInstance().getConnection();
-			
-			if (connexion != null)
-			{
-			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select * from Radios");	
-			}
-			
-			// Itérer sur le resultSet : 
-			while (rs.next()) {
-			
-				//String titre, String interprete, int nombreDecoute, int id
-				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("id");
-				String titre = rs.getString("titre");
-				String interprete = rs.getString("interprete");
-				String genre = rs.getString("genre");
-				int nombreDecoute = rs.getInt("nombreEcoute");
-				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
-				
-				//titre, interprete, nombreDecoute, type, annee, duree, idElement
-				
-				catalogueElements.add(new Radio(titre, interprete, nombreDecoute ,genre,nombreEcoutePeriode ,id));	
-			}
-		
-		}catch(SQLException e) {
-		System.out.println(e);
-		
-		}
-		
-		return catalogueElements;
-	}
 	
 	
 	
@@ -202,6 +134,9 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new Titre(titre, interprete,nombreEcoutePeriode ,id));	
 			}
+			
+			stmt.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 		System.out.println(e);
@@ -237,6 +172,9 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));	
 			}
+			
+			stmt.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 		System.out.println(e);
@@ -287,6 +225,10 @@ public class CatalogueServiceImpl implements CatalogueService {
 				}
 					
 			}
+			
+			stmt.close();
+			stmt2.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 		System.out.println(e);
@@ -320,6 +262,9 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				titresPlaylists.add(new PlaylistPerso(id,nom));	
 			}
+			
+			stmt.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 		System.out.println(e);
@@ -333,16 +278,17 @@ public class CatalogueServiceImpl implements CatalogueService {
 	{		
 		ResultSet rs3, rs4;
 		Statement stmt3,stmt4, stmt5;
+		
 		try {
 			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+			stmt3 = connexion.createStatement();
+			stmt4 = connexion.createStatement();
+			stmt5 = connexion.createStatement();
 			
 			if (connexion != null)
 			{
-			 stmt = connexion.createStatement();
-			 stmt3 = connexion.createStatement();
-			 stmt4 = connexion.createStatement();
-			 stmt5 = connexion.createStatement();
-			 
+		
 			 System.out.println("ok");
 			 stmt.executeUpdate("INSERT INTO PlaylistPerso (nom) VALUES ('"+nomPlaylist+"')");
 			 System.out.println("ok");
@@ -358,33 +304,38 @@ public class CatalogueServiceImpl implements CatalogueService {
 			 stmt5.executeUpdate("INSERT INTO lienPlaylistPersoMembre VALUES(("+idPlaylistPerso+"),("+idDuMembre+"))");
 			}
 			
-			// Itérer sur le resultSet : 
+			stmt.close();
+			stmt3.close();
+			stmt4.close();
+			stmt5.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 			System.out.println(e);
 		
 		}
+		
+	
 	}
 	
 	
 	
-	//select Titres.titre from Titres,lienPlaylistPersoTitre,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitre.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitre.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id = idMembre
+	//select Titres.titre from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitres.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id = idMembre
 	
-	
-
-	public void newElementInPrivatePlaylist(String nomPlaylistPerso, String section, String titre)
+	public void newElementInPrivatePlaylist(String nomPlaylistPerso, String section, String titre )
 	{
 		ResultSet rs3, rs4;
-		Statement stmt3,stmt4, stmt5;
+		Statement stmt3,stmt4, stmt5, stmt6;
 		try {
 			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+			stmt3 = connexion.createStatement();
+			stmt4 = connexion.createStatement();
+			stmt5 = connexion.createStatement();
+			stmt6 = connexion.createStatement();
 			
 			if (connexion != null)
 			{
-			 stmt = connexion.createStatement();
-			 stmt3 = connexion.createStatement();
-			 stmt4 = connexion.createStatement();
-			 stmt5 = connexion.createStatement();
 			 
 			 System.out.println("ok");
 			 rs3 = stmt.executeQuery("select id from PlaylistPerso where nom like'%"+nomPlaylistPerso+"%'");
@@ -394,46 +345,86 @@ public class CatalogueServiceImpl implements CatalogueService {
 			 rs3.next();
 			 rs4.next();
 			 int idPlaylistPerso = rs3.getInt("id");
-			 int idTitre = rs4.getInt("id");
+			 int id = rs4.getInt("id");
 			 
-			 stmt5.executeUpdate("INSERT INTO lienPlaylistPersoTitre VALUES(("+idPlaylistPerso+"),("+idTitre+"))");
+			 stmt5.executeUpdate("INSERT INTO lienPlaylistPerso"+section+" VALUES(("+idPlaylistPerso+"),("+id+"))");
+			 
 			}
 			
+			stmt.close();
+			stmt3.close();
+			stmt4.close();
+			stmt5.close();
+			connexion.close(); 
 		
 		}catch(SQLException e) {
-		System.out.println(e);
+		System.out.println("rrrooooooooh"+e);
 		
 		}
 		
 	}
 	
 	
-	
 	public List<ElementDeCatalogue>  getAllElementsFromPlaylistPerso(int idMembre, String nomPlaylistPerso)
 	{
+		List<ElementDeCatalogue> check;
+		
 		try {
 			connexion = DBManager.getInstance().getConnection();
 			
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("Select Titres.titre, Titres.interprete, Titres.id, Titres.nbEcoutePeriode from Titres,lienPlaylistPersoTitre,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitre.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitre.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
+			 stmt3 = connexion.createStatement();
+			 //rs = stmt.executeQuery("Select Titres.titre, Titres.interprete, Titres.id, Titres.nbEcoutePeriode from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitres.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
+			  rs = stmt.executeQuery("Select DISTINCT Titres.titre  from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre,membres, PlaylistPerso, Albums where \n"
+			  		+ "\n"
+			  		+ "Titres.id = lienPlaylistPersoTitres.idTitres AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND \n"
+			  		+ "\n"
+			  		+ "lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id AND lienPlaylistPersoMembre.idMembre = membres.id AND \n"
+			  		+ "membres.id = "+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
+			  
+			  rs2 = stmt3.executeQuery("Select Albums.titre from lienPlaylistPersoAlbums,PlaylistPerso,lienPlaylistPersoMembre, Albums,membres where \n"
+			 		+ "\n"
+			 		+ "PlaylistPerso.id = lienPlaylistPersoAlbums.idPlaylistPerso AND lienPlaylistPersoAlbums.idAlbums = Albums.id  AND \n"
+			 		+ "\n"
+			 		+ "lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id AND lienPlaylistPersoMembre.idMembre = membres.id AND \n"
+			 		+ "\n"
+			 		+ "membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
 			}
 			
 			while (rs.next()) {
 				
 				//String titre, String interprete, int nombreDecoute, int id
 				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("id");
+				//int id = rs.getInt("id");
 				String titre = rs.getString("titre");
-				String interprete = rs.getString("interprete");
-				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
+				//String interprete = rs.getString("interprete");
+				//int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
 				
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
-				
-				catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));	
+				System.out.println((new ElementDeCatalogue(titre)).getTitre());
+				catalogueElements.add(new ElementDeCatalogue(titre));	
 			}
 			
+			while (rs2.next()) {
+				
+				System.out.println("yes yes");
+				//String titre, String interprete, int nombreDecoute, int id
+				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
+
+				String titre = rs2.getString("titre");
+				
+				
+				//titre, interprete, nombreDecoute, type, annee, duree, idElement
+				System.out.println((new ElementDeCatalogue(titre)).getTitre());
+				catalogueElements.add(new ElementDeCatalogue(titre));	
+			}
+			
+			
+			stmt.close();
+			stmt3.close();
+			connexion.close();
 		
 		}catch(SQLException e) {
 		System.out.println(e);
@@ -443,5 +434,94 @@ public class CatalogueServiceImpl implements CatalogueService {
 		return catalogueElements;
 		
 	}
+	
+	
+	public void deletePlaylistMembre(String nomPlaylist)
+	{
+		Statement stmt3,stmt4, stmt5, stmt6, stmt7;
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt3 = connexion.createStatement();
+			stmt4 = connexion.createStatement();
+			stmt5 = connexion.createStatement();
+			stmt6 = connexion.createStatement();
+			stmt7 = connexion.createStatement();
+			
+			if (connexion != null)
+			{
+			 rs = stmt7.executeQuery("select id from PlaylistPerso where nom ='"+nomPlaylist+"'");
+			 rs.next();
+			 int id = rs.getInt("id");
+			 stmt3.executeUpdate("delete from PlaylistPerso where id ="+id+"");
+			 stmt4.executeUpdate("delete from lienPlaylistPersoTitres where idPlaylistPerso ="+id+"");
+			 stmt5.executeUpdate("delete from lienPlaylistPersoAlbums where idPlaylistPerso = "+id+"");
+			 stmt6.executeUpdate("delete from lienPlaylistPersoMembre where idPlaylistPerso = "+id+"");
+			}
+			
+			stmt3.close();
+			stmt4.close();
+			stmt5.close();
+			stmt6.close();
+			stmt7.close();
+			connexion.close(); 
+		
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}	
+	
+	
+	public void deleteTitreFromPlaylistPerso(int idMembre,String titre, String titrePlaylistPerso)
+	{
+		Statement stmt2, stmt4;
+		try {
+			
+			connexion = DBManager.getInstance().getConnection();
+			
+			stmt = connexion.createStatement();
+			stmt2 = connexion.createStatement();
+			stmt3 = connexion.createStatement();
+			stmt4 = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				 rs = stmt.executeQuery("select PlaylistPerso.id from PlaylistPerso,lienPlaylistPersoMembre, membres where PlaylistPerso.id = lienPlaylistPersoMembre.idPlaylistPerso  AND lienPlaylistPersoMembre.idMembre = membres.id AND membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+titrePlaylistPerso+"'");
+				 rs2 = stmt2.executeQuery("select id from Titres where titre ='"+titre+"'");
+				 rs3 = stmt3.executeQuery("select id from Albums where titre ='"+titre+"'");
+				 
+				 rs.next();
+				
+				 int idPlaylistPerso = rs.getInt("id");
+				 System.out.println("je suis avant ?");
+				 
+				 if(rs2.next())
+				 {
+					 //rs2.beforeFirst();
+					 int idTitre= rs2.getInt("id");
+					 System.out.println("ok l'id de titre dans Titres vaut:"+idTitre);
+					 stmt4.executeUpdate("delete from lienPlaylistPersoTitres where lienPlaylistPersoTitres.idPlaylistPerso = "+idPlaylistPerso+" and lienPlaylistPersoTitres.idTitres ="+idTitre+"");
+					 
+				 }else if(rs3.next())
+				 {
+					 //rs3.beforeFirst();
+					 int idAlbum= rs3.getInt("id");
+					 System.out.println("ok l'id de titre dans album vaut:"+idAlbum);
+					 stmt4.executeUpdate("delete from lienPlaylistPersoAlbums where lienPlaylistPersoAlbums.idPlaylistPerso = "+idPlaylistPerso+" and lienPlaylistPersoAlbums.idAlbums ="+idAlbum+"");
+				 }
+			}
+			
+			stmt.close();
+			stmt2.close();
+			stmt3.close();
+			stmt4.close();
+			connexion.close(); 
+		
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}
+	
 }	
 	

@@ -11,12 +11,6 @@ public interface CatalogueService {
 	// Récupère tout les albums
 	public List<ElementDeCatalogue> getAllAlbums();
 	
-	// Récupère tout les podcasts
-	public List<ElementDeCatalogue> getAllPodcasts();
-	
-	// Récupère toutes les radios
-	public List<ElementDeCatalogue> getAllRadios();
-	
 	// rechercher un titre
 	public List<ElementDeCatalogue> getElementByTitle(String search);	
 	
@@ -45,6 +39,12 @@ public interface CatalogueService {
 	
 	
 	public List<ElementDeCatalogue> getAllElementsFromPlaylistPerso(int idMembre, String nomPlaylistPerso);
+	
+	
+	public void deletePlaylistMembre(String nomPlaylistPerso);
+	
+	
+	public void deleteTitreFromPlaylistPerso(int idMembre,String titre, String titrePlaylistPerso);
 	
 	//public List<ElementDeCatalogue> getTitreClassique();
 	

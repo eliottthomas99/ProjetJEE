@@ -1,5 +1,7 @@
 package org.jee;
 
+import java.util.List;
+
 public class ElementDeCatalogue {
 	
 	// Pourquoi public ? protected suffit seules les classes filles en ont besoin 
@@ -18,6 +20,12 @@ public class ElementDeCatalogue {
 		this.id = id;
 	}
 	
+	
+public ElementDeCatalogue(String titre) {
+		
+		//super(); ?? Je comprends pas de qui hérite cette classe ... 
+		this.titre = titre;
+	}
 	
 	public String getTitre() {
 		return titre;
@@ -42,5 +50,5 @@ public class ElementDeCatalogue {
 	public void setNombreDecoute(int nombreDecoute) {
 		this.nombreDecoute = nombreDecoute;
 	} 
-
+	
 }

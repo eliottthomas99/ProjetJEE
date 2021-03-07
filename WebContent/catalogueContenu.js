@@ -9,6 +9,11 @@ var search = "";
 var interpreteAlbum;
 
 
+function Visuelle()
+{
+	console.log("ok");
+}
+
 function goAccueil(object)
 {	
 	// Pour récupérer l'id de la balise ul 
@@ -91,7 +96,7 @@ function goInsert(object)
 	console.log("premier mot:",wordsArray[0],"deuxième mot:",wordsArray[1],"troisième mot:",wordsArray[2]);
 	
 	// Je suis censé aussi récup l'id du MEMBRE!!!!
-	xhr.open('POST',"MainServlet?nomPlaylist="+wordsArray[0]+"&section="+wordsArray[1]+"&chanteur="+wordsArray[2],true); // Potentiellement récupérer les données stockées dans le navigateur pour un utilisateur (à la place de aChanger) à ce moment là? (idée julien)
+	xhr.open('POST',"MainServlet?nomPlaylist="+wordsArray[0]+"&section="+wordsArray[1]+"&titre="+wordsArray[2],true); // Potentiellement récupérer les données stockées dans le navigateur pour un utilisateur (à la place de aChanger) à ce moment là? (idée julien)
 	xhr.onreadystatechange = majCatalogue;
 	xhr.send(); // requête pret à étre envoyé 
 
@@ -112,6 +117,28 @@ function titresFromPlaylistPerso(object)
 	// Pour au final afficher toutes les musiques liée à une playlistPerso particulière
 	console.log(object.id);
 	xhr.open('GET',"MainServlet?titresFromPlaylistPerso="+object.id,true);
+	xhr.onreadystatechange = majCatalogue;
+	xhr.send(); // requête pret à étre envoyé 
+}
+
+function deletePlaylistPerso(object)
+{
+	console.log("a supp");
+	// Je suis censé aussi récup l'id du MEMBRE!!!!
+	xhr.open('POST',"MainServlet?PlaylistPerso="+object.id,true); // Potentiellement récupérer les données stockées dans le navigateur pour un utilisateur (à la place de aChanger) à ce moment là? (idée julien)
+	xhr.onreadystatechange = majCatalogue;
+	xhr.send(); // requête pret à étre envoyé 
+}
+
+function deleteTitreFromPlaylistPerso(object)
+{
+	console.log("a supp");
+	var str = (object.id).toString();
+	console.log((object.id).toString());
+	var wordsArray = str.split(" ");
+	console.log("premier mot:",wordsArray[0],"deuxième mot:",wordsArray[1]);
+	// Je suis censé aussi récup l'id du MEMBRE!!!!
+	xhr.open('POST',"MainServlet?TitreFromPlaylistPerso="+wordsArray[0]+"&PlaylistPerso="+wordsArray[1],true); // Potentiellement récupérer les données stockées dans le navigateur pour un utilisateur (à la place de aChanger) à ce moment là? (idée julien)
 	xhr.onreadystatechange = majCatalogue;
 	xhr.send(); // requête pret à étre envoyé 
 }
