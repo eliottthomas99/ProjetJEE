@@ -15,9 +15,7 @@ public class Visiteur {
 		  OK,
 		  CONNECTION_FAIL,
 		  EMAIL_NON_DISPO,
-		  MDP_DIFF,
-		  POP,
-		  ROCK
+		  MDP_DIFF
 		}
 	
 	

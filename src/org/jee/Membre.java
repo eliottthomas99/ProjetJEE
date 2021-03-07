@@ -5,7 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;  
 
 
-import java.util.Date;  
+import java.util.Date;
+
+import org.jee.Visiteur.returnStatement;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -440,6 +442,50 @@ public class Membre {
 
 	}
 
+	
+	public static Boolean modifCompte(MainServlet.civilite civilite, String nom, String prenom, String naissance, String addr_rue, String addr_complement, int addr_code_postal,
+			String ville, String pays, MainServlet.preference preference, String email) {
+
+		// 1) Vérifier que tous les champs sont remplis
+
+		Connection connexion = DBManager.getInstance().getConnection();
+
+		// 2) Vérifier que l'email est dispo
+
+		try (Statement stmt = connexion.createStatement()) {
+
+			String insert_query = String.format(
+					"UPDATE membres set civilite='%s',nom='%s',prenom='%s',naissance='%s',addr_rue='%s'"
+							+ ",addr_complement='%s',addr_code_postal='%s',addr_ville='%s',addr_pays='%s',preference='%s'"
+							+ "where email='%s';",
+					civilite.ordinal(), nom, prenom , naissance, addr_rue, addr_complement,
+					addr_code_postal, ville, pays, preference.ordinal(),email);
+			
+			System.out.println(insert_query);
+			
+			int rs = stmt.executeUpdate(insert_query);
+			return true;
+		} catch (SQLException e) {
+			
+			System.out.println(e);
+			return false;
+		}
+	}
+
+			
+			
+			
+				
+				
+				
+				
+				
+
+		
+		 
+
+	
+	
 	
 
 }
