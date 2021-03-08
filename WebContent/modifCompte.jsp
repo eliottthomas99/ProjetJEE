@@ -132,6 +132,25 @@
 
 			</form>
 		</section>
+		<section class="modifAvanceeCompte">
+		<h1>Modification Avancée Compte</h1>
+			<form method="post" action="ModifAvanceeCompte">
+				<fieldset>
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Nom" name="nom" id='nomInscription' value="<%=membre.getNom() %>" required />
+						<label for="nomInscription" class="form__label">Nom</label>
+					</div>
+
+					<div class="form__group field">
+						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id="prenomInscription" value="<%=membre.getPrenom() %>" required />
+						<label for="prenomInscription" class="form__label">Prénom</label>
+					</div>
+					
+				</fieldset>
+
+			</form>
+		
+		</section>
 
 		
 		

@@ -534,7 +534,39 @@ public class Membre {
 	}
 
 			
-			
+
+	public static Boolean modifAvanceeCompte(String ancienEmail, String nouveauEmail, String nouveauMotDePasse) {
+
+		// 1) Vérifier que tous les champs sont remplis
+
+		Connection connexion = DBManager.getInstance().getConnection();
+
+		// 2) Vérifier que l'email est dispo
+		
+		Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail);
+		
+		if (emailDispo) {
+			try (Statement stmt = connexion.createStatement()) {
+	
+				String insert_query = String.format(
+						"UPDATE membres set email='%s',password='%s'"
+								+ "where email='%s';",
+						nouveauEmail, nouveauMotDePasse, ancienEmail);
+				
+				System.out.println(insert_query);
+				
+				int rs = stmt.executeUpdate(insert_query);
+				return true;
+			} catch (SQLException e) {
+				
+				System.out.println(e);
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
 			
 				
 				
