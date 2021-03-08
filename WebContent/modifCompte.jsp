@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	
-	<%@page import="java.util.List,org.jee.Membre"%>
+	<%@page	import="java.util.List,org.jee.Membre,org.jee.MainServlet" %>
 	
 	<%
 	//Membre membre = (Membre)request.getAttribute("leMembre");
@@ -31,7 +31,7 @@
 
 					<label for="civilite-select">Civilité:</label>
 					<select name="civilite" id="civilite-select">
-						<option value="">--Please choose an option--</option>
+						<option value="<%=membre.getCivilite().ordinal() %>"><%=membre.getCivilite() %></option>
 						<option value=0>Madame</option>
 						<option value=1>Monsieur</option>
 						<option value=2>Ne se prononce pas</option>
@@ -61,7 +61,7 @@
 
 					<label for="dateDeNaissance">Entrez votre date de naissance<span
 							class="requis">*</span></label>
-					<input type="date" id="dateDeNaissance" name="dateDeNaissance" value="" size="20"
+					<input type="date" id="dateDeNaissance" name="dateDeNaissance" value="<%=membre.getNaissance() %>" size="20"
 						maxlength="60" />
 					<br />
 					
@@ -113,7 +113,7 @@
 
 					<label for="preference-select">Style de musique préféré:</label>
 					<select name="preference" id="preference-select">
-						<option value="">--Please choose an option--</option>
+						<option value="<%=membre.getPreference().ordinal() %>"><%=membre.getPreference() %></option>
 						<option value=0>Classique</option>
 						<option value=1>House</option>
 						<option value=2>Jazz</option>

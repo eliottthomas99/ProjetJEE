@@ -28,7 +28,7 @@ import org.jee.ClientServiceImpl;
 public class MainServlet extends HttpServlet {
 	
 	
-	enum civilite {
+	public enum civilite {
 		  MADAME,
 		  MONSIEUR,
 		  NE_SE_PRONONCE_PAS,
@@ -36,7 +36,7 @@ public class MainServlet extends HttpServlet {
 		}
 
 	
-	enum preference {
+	public enum preference {
 		  CLASSIQUE,
 		  HOUSE,
 		  JAZZ,
