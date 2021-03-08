@@ -127,7 +127,7 @@
 
 
 					<input type="submit" value="Modification" class="sansLabel" />
-					<br id='onFaitCommeOnPeut' value="<%=membre.getEmail() %>"/>
+					<br />
 				</fieldset>
 
 			</form>
@@ -136,16 +136,24 @@
 		<h1>Modification Avancée Compte</h1>
 			<form method="post" action="ModifAvanceeCompte">
 				<fieldset>
+				<legend>Modificaction Avancee</legend>
 					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Nom" name="nom" id='nomInscription' value="<%=membre.getNom() %>" required />
-						<label for="nomInscription" class="form__label">Nom</label>
+						<input type="password" class="form__field" placeholder="ancienMotDePasse" name="ancienMotDePasse" id='nomInscription' value="" required />
+						<label for="ancienMotDePasse" class="form__label">ancienMotDePasse</label>
 					</div>
 
 					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id="prenomInscription" value="<%=membre.getPrenom() %>" required />
-						<label for="prenomInscription" class="form__label">Prénom</label>
+						<input type="input" class="form__field" placeholder="nouveauEmail" name="nouveauEmail" id="nouveauEmail" value="" required />
+						<label for="nouveauEmail" class="form__label">nouveauEmail</label>
 					</div>
 					
+					<div class="form__group field">
+						<input type="password" class="form__field" placeholder="nouveauMotDePasse" name="nouveauMotDePasse" id="nouveauMotDePasse" value="" required />
+						<label for="nouveauMotDePasse" class="form__label">nouveauMotDePasse</label>
+					</div>
+					
+					<input type="submit" value="ModificationAvancee" class="sansLabel" />
+					<br />
 				</fieldset>
 
 			</form>
