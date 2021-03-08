@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ConnectionMembreServlet
@@ -70,12 +71,17 @@ public class ConnectionMembreServlet extends HttpServlet {
 				redo = false;
 				
 				//creer un objet membre
-				
 				Membre membre  =  Membre.getMembre(email, motDePasse);
+				
+				// creation session http
+				HttpSession maSession = request.getSession();
+				maSession.setAttribute("membre", membre);
+				
+				
 				//System.out.println(membre);
 				// le passer en paramètre à la page suivante
 				
-				request.setAttribute("leMembre", membre);
+				//request.setAttribute("leMembre", membre);
 				
 				String pageName = "/modifCompte.jsp";
 				this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );

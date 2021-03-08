@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ModifCompte
@@ -15,8 +16,8 @@ public class ModifCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	public static final String CHAMP_CIVILITE = "civilite";
-    public static final String CHAMP_NOM = "nomInscription";
-    public static final String CHAMP_PRENOM = "prenomInscription";
+    public static final String CHAMP_NOM = "nom";
+    public static final String CHAMP_PRENOM = "prenom";
     public static final String CHAMP_NAISSANCE = "dateDeNaissance";
     public static final String CHAMP_RUE = "Rue";
     public static final String CHAMP_COMPLEMENT = "Complement";
@@ -70,13 +71,30 @@ public class ModifCompte extends HttpServlet {
         int preferenceInt = Integer.parseInt(request.getParameter( CHAMP_PREFERENCE ));
         MainServlet.preference preference = MainServlet.preference.values()[preferenceInt] ;
 		
-        String email = request.getParameter( "onFaitCommeOnPeut" );
+        // String email = request.getParameter( "onFaitCommeOnPeut" );
+
+        HttpSession maSession = request.getSession();
+    	Membre membre = (Membre)maSession.getAttribute("membre");
+    	String email = membre.getEmail();
+ 
+    	membre.setCivilite(civilite);
+    	membre.setNom(nom);
+    	membre.setPrenom(prenom);
+    	membre.setNaissance(naissance);
+    	membre.setAddr_rue(rue);
+    	membre.setAddr_complement(complement);
+    	membre.setAddr_code_postal(codePostal);
+    	membre.setVille(ville);
+    	membre.setPays(pays);
+    	membre.setPreference(preference);
+    	
         
+    	System.out.println("nom : " + nom + "\nprenom : " + prenom);
         Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement,
         												codePostal, ville, pays, preference, email);
         		
         		
-        		
+        maSession.setAttribute("membre", membre);
         		
         System.out.println(retour);
 		

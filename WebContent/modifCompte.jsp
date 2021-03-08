@@ -3,8 +3,11 @@
 	<%@page import="java.util.List,org.jee.Membre"%>
 	
 	<%
-	Membre membre = (Membre)request.getAttribute("leMembre");	
+	//Membre membre = (Membre)request.getAttribute("leMembre");
+	Membre membre = (Membre)session.getAttribute("membre");
+	//System.out.println(membre);
 	%>
+	
 	
 	<!DOCTYPE html>
 	<html>

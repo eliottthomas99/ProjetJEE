@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%
+<%@page import="java.util.List,org.jee.Membre"%>
+
+<!-- %
 
 String str = (String)request.getAttribute("valideStr");
 
-%>
+%-->
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +35,6 @@ String str = (String)request.getAttribute("valideStr");
                 <input type="submit" value="Connexion" class="sansLabel" />
                 <br />
             </fieldset>
-    	<span class="erreur"><%=str %></span>
 	</form>
 </body>
 </html>
