@@ -152,6 +152,11 @@
 						<label for="nouveauMotDePasse" class="form__label">nouveauMotDePasse</label>
 					</div>
 					
+					<div class="form__group field">
+						<input type="password" class="form__field" placeholder="nouveauMotDePasse Confirmation" name="nouveauMotDePasseConfirmation" id="nouveauMotDePasseConfirmation" value="" required />
+						<label for="nouveauMotDePasse" class="form__label">nouveauMotDePasse Confirmation</label>
+					</div>
+					
 					<input type="submit" value="ModificationAvancee" class="sansLabel" />
 					<br />
 				</fieldset>

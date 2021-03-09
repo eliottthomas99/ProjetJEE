@@ -1,6 +1,8 @@
 package org.jee;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,33 +46,54 @@ public class modifAvanceeCompte extends HttpServlet {
 		String ancienMotDePasse = request.getParameter( "ancienMotDePasse" );
         String nouveauEmail = request.getParameter( "nouveauEmail" );
         String nouveauMotDePasse = request.getParameter( "nouveauMotDePasse" );
+        String nouveauMotDePasseConfirmation = request.getParameter( "nouveauMotDePasseConfirmation" );
 		Boolean valid = false;
 		
-		
-		try {
+		// les nouveaux mdp correspondent
+		if (nouveauMotDePasse.equals(nouveauMotDePasseConfirmation)) {
 			
-			
-			 HttpSession maSession = request.getSession();
-	    	 Membre membre = (Membre)maSession.getAttribute("membre");
-	    	 String ancienEmail = membre.getEmail();
-			 valid = Membre.validerAuthentification(ancienEmail, ancienMotDePasse);
-			 
-			 if (valid) {
-					
-					
-				 	membre.setEmail(nouveauEmail);
-				 	membre.setPassword(nouveauMotDePasse);
-			        maSession.setAttribute("membre", membre);
+			// on recupere l ancien email
+			try {
+				 HttpSession maSession = request.getSession();
+		    	 Membre membre = (Membre)maSession.getAttribute("membre");
+		    	 String ancienEmail = membre.getEmail();
+		    	 
+		    	 // on verifie que le mdp entre soit le bon
+				 valid = Membre.validerAuthentification(ancienEmail, ancienMotDePasse);
+				 
+				if (valid) {
 
-					
-					Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasse);
-
+					Connection connexion = DBManager.getInstance().getConnection();					
+					Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail);
+					// on verifie que l email choisit soit : sois l ancien soit un nouveau email disponible
+					if (emailDispo) {
+							// si tout est ok on met à jour les informations
+						 	membre.setEmail(nouveauEmail);
+						 	membre.setPassword(nouveauMotDePasse);
+					        maSession.setAttribute("membre", membre);
+					        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasse);
+					}
+					// sinon si l email n'est pas dispo
+					else {
+						// TODO : message email non disponible
+					}
+				} 
+				// sinon si l ancien mdp n'est pas bon
+				else {
+					// TODO : message mdp incorrect
 				}
-			 
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				 
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		// sinon si les mdps ne correspondent pas
+		else {
+			// TODO : message les mdps ne correspondent pas
+		}
+		
+		
 		
 		
 		
