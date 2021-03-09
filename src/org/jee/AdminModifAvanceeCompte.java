@@ -98,7 +98,7 @@ public class AdminModifAvanceeCompte extends HttpServlet {
 			membre.setEmail(nouveauEmail);
 			membre.setPassword(nouveauMotDePasse);
 			request.setAttribute("leMembre", membre);		
-
+			request.setAttribute("lemail", emailModif);
 		
 		
 		doGet(request, response);

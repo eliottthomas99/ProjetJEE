@@ -183,7 +183,17 @@
 			</form>
 		
 		</section>
-
+		
+		
+		<form method="post" action="AdminSupprimerCompte">
+		
+		<fieldset>
+				<legend>Suppression du Compte</legend>
+		<input color ="red" type="submit" value="Supprimer" class="sansLabel" />
+					<br />
+		</fieldset>
+		</form>
+		
 		
 		
 

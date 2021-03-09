@@ -612,6 +612,33 @@ public class Membre {
 			return false;
 		}
 	}
+	
+	
+	public static Boolean supprimerCompte( String emailSup) {
+
+
+		Connection connexion = DBManager.getInstance().getConnection();
+
+		
+		
+	
+			try (Statement stmt = connexion.createStatement()) {
+	
+				String delete_query = String.format(
+						"DELETE FROM membres where email='%s';",emailSup);
+				
+				System.out.println(delete_query);
+				
+				int rs = stmt.executeUpdate(delete_query);
+				return true;
+			} catch (SQLException e) {
+				
+				System.out.println(e);
+				return false;
+			}
+		
+		
+	}
 			
 				
 				
