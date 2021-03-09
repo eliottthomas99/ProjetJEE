@@ -56,11 +56,17 @@ public class AdminModifCompte extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		String emailModif = request.getParameter( "email" );
-		Membre membreModif = Membre.getMembre(emailModif);
-		request.setAttribute("leMembre", membreModif);
+		HttpSession maSession = request.getSession();
+    	String emailModif = (String)maSession.getAttribute("lemail");
 		
-		/*
+		
+		
+		//String emailModif = request.getParameter( "lemail" );
+		System.out.println("emodif : " + emailModif );
+		Membre membreModif = Membre.getMembre(emailModif);
+		//request.setAttribute("leMembre", membreModif);
+		
+		
 		int civiliteInt = Integer.parseInt(request.getParameter( CHAMP_CIVILITE ));
 		MainServlet.civilite civilite = MainServlet.civilite.values()[civiliteInt] ;
 		
@@ -78,31 +84,32 @@ public class AdminModifCompte extends HttpServlet {
 		
         // String email = request.getParameter( "onFaitCommeOnPeut" );
 
-        HttpSession maSession = request.getSession();
-    	Membre membre = (Membre)maSession.getAttribute("membre");
-    	String email = membre.getEmail();
+        //HttpSession maSession = request.getSession();
+    	//Membre membre = (Membre)maSession.getAttribute("membre");
+    	//String email = membreModif.getEmail();
  
-    	membre.setCivilite(civilite);
-    	membre.setNom(nom);
-    	membre.setPrenom(prenom);
-    	membre.setNaissance(naissance);
-    	membre.setAddr_rue(rue);
-    	membre.setAddr_complement(complement);
-    	membre.setAddr_code_postal(codePostal);
-    	membre.setVille(ville);
-    	membre.setPays(pays);
-    	membre.setPreference(preference);
+    	membreModif.setCivilite(civilite);
+    	membreModif.setNom(nom);
+    	membreModif.setPrenom(prenom);
+    	membreModif.setNaissance(naissance);
+    	membreModif.setAddr_rue(rue);
+    	membreModif.setAddr_complement(complement);
+    	membreModif.setAddr_code_postal(codePostal);
+    	membreModif.setVille(ville);
+    	membreModif.setPays(pays);
+    	membreModif.setPreference(preference);
     	
         
     	System.out.println("nom : " + nom + "\nprenom : " + prenom);
         Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement,
-        												codePostal, ville, pays, preference, email);
+        												codePostal, ville, pays, preference, emailModif);
         		
-        		
-        maSession.setAttribute("membre", membre);
+		request.setAttribute("leMembre", membreModif);		
+        //maSession.setAttribute("membre", membre);
         		
         System.out.println(retour);
-		*/
+		
+        request.setAttribute("lemail", emailModif);
 		
 		
 		doGet(request, response);
