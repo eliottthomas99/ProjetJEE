@@ -58,7 +58,7 @@ public class AdminModifCompte extends HttpServlet {
 		
 		HttpSession maSession = request.getSession();
     	String emailModif = (String)maSession.getAttribute("lemail");
-		
+		System.out.println("emod :"+emailModif);
 		
 		
 		//String emailModif = request.getParameter( "lemail" );
