@@ -85,11 +85,18 @@ public class ConnectionMembreServlet extends HttpServlet {
 				
 				
 				
+				
+				
+				
+				
 				//On va sur une page membre ou admin en fonction 
 				int adminCompte = membre.getAdminCompte();
 				
 				if(adminCompte==1) { //vers page adminMusique
 					String pageName = "/adminModifCompte.jsp";
+					
+					Membre membreAdmin = Membre.getMembre(email);
+					request.setAttribute("leMembre", membreAdmin);
 					this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 					
 				}

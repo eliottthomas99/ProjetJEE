@@ -4,7 +4,16 @@
 	
 	<%
 	Membre membre = (Membre)request.getAttribute("leMembre");
-	//Membre membre = (Membre)session.getAttribute("membre");
+	
+	String lemail = (String)request.getAttribute("lemail");
+	
+	System.out.println("lemail?" +lemail);
+
+	
+	if(lemail==null){
+		lemail="";
+	}
+	// Membre membre = (Membre)session.getAttribute("membre");
 	//System.out.println(membre);
 	%>
 	
@@ -23,15 +32,26 @@
 		<div class="corps">
 		<section class="modifCompte">
 			<h1>Modification Compte Admin</h1>
+			
+			
+			
+			<form method="post" action="AdminChooseCompte">
+						
+								<div   class="form__group field">
+									<input type="input" class="form__field" placeholder="email" name="email" id="email" value="<%=lemail %>" required />
+									<label for="email" class="form__label">Email</label>
+								</div>
+								
+								<input type="submit" value="Choisir" class="sansLabel" />
+								<br />	
+							
+			</form>		
 			<form method="post" action="AdminModifCompte">
 				<fieldset>
 					<legend>Modification Compte Admin</legend>
 					
 					
-					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="email" name="email" id="email" value="" required />
-						<label for="nomInscription" class="form__label">Nom</label>
-					</div>
+					
 					
 					
 					<p>Veuillez remplire les champs nécessaires.</p>
