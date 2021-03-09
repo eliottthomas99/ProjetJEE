@@ -31,7 +31,7 @@
 					<br />
 
 					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Nom" name="nom" id='nomInscription' required />
+						<input type="input" class="form__field" placeholder="Nom" name="nomInscription" id='nomInscription' required />
 						<label for="nomInscription" class="form__label">Nom</label>
 					</div>
 
@@ -40,7 +40,7 @@
 					<br /-->
 
 					<div class="form__group field">
-						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id='prenomInscription' required />
+						<input type="input" class="form__field" placeholder="Prénom" name="prenomInscription" id='prenomInscription' required />
 						<label for="prenomInscription" class="form__label">Prénom</label>
 					</div>
 
