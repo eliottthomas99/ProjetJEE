@@ -54,7 +54,7 @@ public class AdminChooseCompte extends HttpServlet {
 		maSession.setAttribute("lemail", emailModif);
 		
 		
-		System.out.println("chosed" +emailModif);
+		//System.out.println("chosed" +emailModif);
  
 		
 		

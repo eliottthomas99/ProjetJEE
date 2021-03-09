@@ -62,7 +62,7 @@ public class AdminModifCompte extends HttpServlet {
 		
 		
 		//String emailModif = request.getParameter( "lemail" );
-		System.out.println("emodif : " + emailModif );
+		//System.out.println("emodif : " + emailModif );
 		Membre membreModif = Membre.getMembre(emailModif);
 		//request.setAttribute("leMembre", membreModif);
 		
@@ -100,14 +100,14 @@ public class AdminModifCompte extends HttpServlet {
     	membreModif.setPreference(preference);
     	
         
-    	System.out.println("nom : " + nom + "\nprenom : " + prenom);
+    	//System.out.println("nom : " + nom + "\nprenom : " + prenom);
         Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement,
         												codePostal, ville, pays, preference, emailModif);
         		
 		request.setAttribute("leMembre", membreModif);		
         //maSession.setAttribute("membre", membre);
         		
-        System.out.println(retour);
+        //System.out.println(retour);
 		
         request.setAttribute("lemail", emailModif);
 		

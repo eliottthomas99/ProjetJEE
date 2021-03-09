@@ -7,7 +7,7 @@
 	
 	String lemail = (String)request.getAttribute("lemail");
 	
-	System.out.println("lemail?" +lemail);
+	//System.out.println("lemail?" +lemail);
 
 	
 	if(lemail==null){
@@ -160,15 +160,11 @@
 
 			</form>
 		</section>
-		<section class="modifAvanceeCompte">
+		<section class="AdminModifAvanceeCompte">
 		<h1>Modification Avancée Compte</h1>
-			<form method="post" action="ModifAvanceeCompte">
+			<form method="post" action="AdminModifAvanceeCompte">
 				<fieldset>
-				<legend>Modificaction Avancee</legend>
-					<div class="form__group field">
-						<input type="password" class="form__field" placeholder="ancienMotDePasse" name="ancienMotDePasse" id='nomInscription' value="" required />
-						<label for="ancienMotDePasse" class="form__label">ancienMotDePasse</label>
-					</div>
+				<legend>Modificaction Avancee Admin Compte</legend>
 
 					<div class="form__group field">
 						<input type="input" class="form__field" placeholder="nouveauEmail" name="nouveauEmail" id="nouveauEmail" value="" required />
