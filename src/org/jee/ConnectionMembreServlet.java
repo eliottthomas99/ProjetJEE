@@ -71,7 +71,7 @@ public class ConnectionMembreServlet extends HttpServlet {
 				redo = false;
 				
 				//creer un objet membre
-				Membre membre  =  Membre.getMembre(email, motDePasse);
+				Membre membre  =  Membre.getMembre(email);
 				
 				// creation session http
 				HttpSession maSession = request.getSession();
@@ -83,8 +83,22 @@ public class ConnectionMembreServlet extends HttpServlet {
 				
 				//request.setAttribute("leMembre", membre);
 				
-				String pageName = "/modifCompte.jsp";
-				this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+				
+				
+				//On va sur une page membre ou admin en fonction 
+				int adminCompte = membre.getAdminCompte();
+				
+				if(adminCompte==1) { //vers page adminMusique
+					String pageName = "/adminModifCompte.jsp";
+					this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+					
+				}
+				else {
+					String pageName = "/modifCompte.jsp";
+					this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+					
+				}
+				
 				
 				
 				
