@@ -57,6 +57,44 @@ public class Membre {
 	private int tentatives;
 	
 	private long temps;
+	
+	private int adminMusique;
+	
+	private int adminCompte; 
+
+	
+	
+	public int getTentatives() {
+		return tentatives;
+	}
+
+	public void setTentatives(int tentatives) {
+		this.tentatives = tentatives;
+	}
+
+	public long getTemps() {
+		return temps;
+	}
+
+	public void setTemps(long temps) {
+		this.temps = temps;
+	}
+
+	public int getAdminMusique() {
+		return adminMusique;
+	}
+
+	public void setAdminMusique(int adminMusique) {
+		this.adminMusique = adminMusique;
+	}
+
+	public int getAdminCompte() {
+		return adminCompte;
+	}
+
+	public void setAdminCompte(int adminCompte) {
+		this.adminCompte = adminCompte;
+	}
 
 	public int getId() {
 		return id;
@@ -483,7 +521,7 @@ public class Membre {
 	}
 	
 	
-	public static Membre getMembre(String emailP, String passwordP) {
+	public static Membre getMembre(String emailP) {
 		// TODO Auto-generated method stub
 		
 		Connection connexion = DBManager.getInstance().getConnection();
@@ -496,7 +534,6 @@ public class Membre {
 		try(Statement stmt = connexion.createStatement()){
 			//  Exécuter la requête SQL  et récupérer un java.sql.ResultSet
 			ResultSet rs = stmt.executeQuery("select * from membres where email='"+emailP
-					+ "' and password='"+passwordP
 					+ "' ;");
 			
 			// Itérer sur le resultSet : 
@@ -516,7 +553,15 @@ public class Membre {
 				String pays = rs.getString("addr_pays");
 				MainServlet.preference preference = MainServlet.preference.values()[rs.getInt("preference")];
 				
+				int adminMusique = rs.getInt("adminMusique");
+				int adminCompte = rs.getInt("adminCompte");
+
+				
+				
 				membre = new Membre(id,civilite,nom,prenom,email,password,naissance,addr_rue,addr_complement,addr_code_postal,ville,pays,preference);
+				membre.setAdminMusique(adminMusique);
+				membre.setAdminCompte(adminCompte);
+				
 				
 			}
 			
