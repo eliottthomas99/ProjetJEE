@@ -94,6 +94,13 @@ public class ModifCompte extends HttpServlet {
         												codePostal, ville, pays, preference, email);
         		
         		
+
+		if (retour) {
+		maSession.setAttribute("codeRetour", "modification prise en compte :-)");
+		} else {
+		maSession.setAttribute("codeRetour", "la modification a échouée :-(");
+		}
+        
         maSession.setAttribute("membre", membre);
         		
         System.out.println(retour);

@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 	
-	<%@page	import="java.util.List,org.jee.Membre,org.jee.MainServlet" %>
+	<%@page	import="java.util.List,org.jee.Membre,org.jee.ModifCompte,org.jee.modifAvanceeCompte,org.jee.MainServlet" %>
 	
 	<%
 	//Membre membre = (Membre)request.getAttribute("leMembre");
+
+	String codeRetour = (String)session.getAttribute("codeRetour");
 	Membre membre = (Membre)session.getAttribute("membre");
 	//System.out.println(membre);
 	%>
@@ -166,7 +168,17 @@
 		</section>
 
 		
-		
+		<%
+		//Membre membre = (Membre)request.getAttribute("leMembre");
+		// String codeRetour = (String)request.getAttribute("codeRetour");
+		System.out.println(codeRetour);
+		if (codeRetour != null)
+		{ %>
+		<script>
+			console.log("<%= codeRetour%>");
+			alert("<%= codeRetour%>");
+		</script>
+		<%} %>
 
 
 	</body>

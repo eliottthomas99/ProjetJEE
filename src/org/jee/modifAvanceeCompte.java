@@ -41,7 +41,15 @@ public class modifAvanceeCompte extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String codeRetourModifAvancee = null;
 		
+
+		 HttpSession maSession = request.getSession();
+		 Membre membre = (Membre)maSession.getAttribute("membre");
+		
+		String toto = null;
+		toto = "toto";
+		System.out.println(toto);
 		
 		String ancienMotDePasse = request.getParameter( "ancienMotDePasse" );
         String nouveauEmail = request.getParameter( "nouveauEmail" );
@@ -54,8 +62,6 @@ public class modifAvanceeCompte extends HttpServlet {
 			
 			// on recupere l ancien email
 			try {
-				 HttpSession maSession = request.getSession();
-		    	 Membre membre = (Membre)maSession.getAttribute("membre");
 		    	 String ancienEmail = membre.getEmail();
 		    	 
 		    	 // on verifie que le mdp entre soit le bon
@@ -67,22 +73,28 @@ public class modifAvanceeCompte extends HttpServlet {
 					Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail);
 					// on verifie que l email choisit soit : sois l ancien soit un nouveau email disponible
 					if (emailDispo) {
+						
 							// si tout est ok on met à jour les informations
 						 	membre.setEmail(nouveauEmail);
 						 	membre.setPassword(nouveauMotDePasse);
 					        maSession.setAttribute("membre", membre);
 					        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasse);
+					        
+					        // on affiche que tout s est bien passe
+					        codeRetourModifAvancee = "modifications enregistrées";
 					}
 					// sinon si l email n'est pas dispo
 					else {
 						// TODO : message email non disponible
+						codeRetourModifAvancee = "email non disponible";
 					}
 				} 
 				// sinon si l ancien mdp n'est pas bon
 				else {
 					// TODO : message mdp incorrect
+					codeRetourModifAvancee = "mot de passe actuel incorrect";
 				}
-				 
+		
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -91,11 +103,15 @@ public class modifAvanceeCompte extends HttpServlet {
 		// sinon si les mdps ne correspondent pas
 		else {
 			// TODO : message les mdps ne correspondent pas
+			codeRetourModifAvancee = "les mots de passe de passe ne correspondent pas";
 		}
 		
 		
 		
-		
+
+				
+				System.out.println(codeRetourModifAvancee);
+			maSession.setAttribute("codeRetour", codeRetourModifAvancee);
 		
 		
 		
