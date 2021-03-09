@@ -46,6 +46,8 @@ public interface CatalogueService {
 	
 	public void deleteTitreFromPlaylistPerso(int idMembre,String titre, String titrePlaylistPerso);
 	
+	
+	public List<ElementDeCatalogue> getAllElementsFromPlaylistPublic();
 	//public List<ElementDeCatalogue> getTitreClassique();
 	
 	//public List<ElementDeCatalogue> getTitreRock();

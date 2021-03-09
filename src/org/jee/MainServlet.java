@@ -68,8 +68,10 @@ public class MainServlet extends HttpServlet {
 		System.out.println("param1---->"+param1);
 		System.out.println("param2---->"+param2);
 		
+		
 		if(param1 != null && param2 == null && param3 == null) {
 			
+				int i = 0;
 				if(param1.equals("Titres")) {
 					
 					System.out.println("okkkMusique");
@@ -77,7 +79,7 @@ public class MainServlet extends HttpServlet {
 					
 					List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
 					
-					response.getWriter().write("<table border=\"1\">"
+					response.getWriter().write("<table border=\"0\">"
 							+ "<tr>\n"
 							+ "	            <th>Titre</th>\n"
 							+ "	            <th>Auteur</th>\n"
@@ -91,8 +93,10 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<td>"+title+"</td>\n"
 									+ "<td>"+author+"</td>\n"
-									+ "<td><button onmouseover ='Visuelle()'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
+									+ "<td><button hidden = 'true' id='jouer"+i+"' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
 									+ "</tr>");
+						
+						i = i + 1;
 					}
 					
 					response.getWriter().write("</table>");
@@ -105,7 +109,7 @@ public class MainServlet extends HttpServlet {
 					
 					List<ElementDeCatalogue> listElements = catalogueElements.getAllAlbums();
 					
-					response.getWriter().write("<table border=\"1\">"
+					response.getWriter().write("<table border=\"0\">"
 							+ "<tr>\n"
 							+ "	            <th>Titre</th>\n"
 							+ "	            <th>Auteur</th>\n"
@@ -143,7 +147,7 @@ public class MainServlet extends HttpServlet {
 							+ "</h1>");
 				}else {
 				
-					response.getWriter().write("<table border=\"1\">"
+					response.getWriter().write("<table border=\"0\">"
 							+ "<tr>\n"
 							+ "	            <td>Titre</td>\n"
 							+ "	            <td>Auteur</td>\n"
@@ -181,7 +185,7 @@ public class MainServlet extends HttpServlet {
 				
 			}else if(param1.equals("Albums")) {
 			
-				response.getWriter().write("<table border=\"1\">"
+				response.getWriter().write("<table border=\"0\">"
 						+ "<tr border ='1'>\n"
 						+ "	            <th>Titre</th>\n"
 						+ "	            <th>Auteur</th>\n"
@@ -195,7 +199,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<tr>\n"
 								+ "<td>"+title+"</td>\n"
 								+ "	<td id='Auteur'>"+author+"</td>\n"
-								+ " <td><button id='"+title +" onclick= 'goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button  class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>"
+								+ " <td><button id='"+title+"' onclick= 'goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button  class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>"
 								+ "</tr>");
 				}
 				response.getWriter().write("</table>");
@@ -203,7 +207,7 @@ public class MainServlet extends HttpServlet {
 			
 			}else {
 			
-				response.getWriter().write("<table border=\"1\">"
+				response.getWriter().write("<table border=\"0\">"
 						+ "<tr border ='1'>\n"
 						+ "	            <th>Titre</th>\n"
 						+ "	            <th>Auteur</th>\n"
@@ -227,7 +231,7 @@ public class MainServlet extends HttpServlet {
 			CatalogueService catalogueElements = new CatalogueServiceImpl();
 			List<ElementDeCatalogue> listElements = catalogueElements.titreBelongingToAnAlbum(param3);
 			System.out.println("Titre de l'album ->"+param3);
-			response.getWriter().write("<table border=\"1\">"
+			response.getWriter().write("<table border=\"0\">"
 					+ "<tr>\n"
 					+ "	            <th>Titre</th>\n"
 					+ "	            <th>Auteur</th>\n"
@@ -271,9 +275,9 @@ public class MainServlet extends HttpServlet {
 				  }else 
 				  {
 				  
-					  response.getWriter().write("<table border=\"1\">"
+					  response.getWriter().write("<table border=\"0\">"
 								+ "<tr>\n"
-								+ "	            <th>Titre</th>\n"
+								+ "	            <th>Titre de la playlist</th>\n"
 								+ "</tr>");
 						
 						for (Playlist cata:listPlaylist) {
@@ -291,6 +295,7 @@ public class MainServlet extends HttpServlet {
 				  
 				}
 			}
+			
 		}else if(param5!=null ) {
 			
 			  // execution de la requête :
@@ -310,7 +315,7 @@ public class MainServlet extends HttpServlet {
 			  		+ "<br>"
 			  		+ "<br>");
 			  
-			  response.getWriter().write("<table border=\"1\">"
+			  response.getWriter().write("<table border=\"0\">"
 						+ "<tr>\n"
 						+ "<th>Titre</th>\n"
 						+ "</tr>");
@@ -365,6 +370,8 @@ public class MainServlet extends HttpServlet {
 				  
 				  String nomPlaylistPerso = param8;
 				  
+		
+				  
 				  if(listElements.isEmpty() || listElements == null)
 				  {
 					  response.getWriter().write("<h1> Playlist vide .. </h1> ");
@@ -376,7 +383,7 @@ public class MainServlet extends HttpServlet {
 				     		 System.out.println(title);
 					  }
 					  
-					 response.getWriter().write("<table border=\"1\">"
+					 response.getWriter().write("<table border=\"0\">"
 								+ "<tr>\n"
 								+ "	            <th>Titre</th>\n"
 								+ "	            <th>Type</th>\n"
@@ -391,13 +398,13 @@ public class MainServlet extends HttpServlet {
 				      			response.getWriter().write("<tr>\n"
 										+ "<td>"+title+"</td>\n"
 										+ "<td>Album</td>\n"
-										+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button id='"+title+"'onclick='goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button class='buttonElements' id='"+title+" "+nomPlaylistPerso+"'onclick ='deleteTitreFromPlaylistPerso(this)'>supprimer</button></td>"
+										+ "<td><button id='jouer' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button id='"+title+"'onclick='goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button class='buttonElements' id='"+title+" "+nomPlaylistPerso+"'onclick ='deleteTitreFromPlaylistPerso(this)'>supprimer</button></td>"
 										+ "</tr>");
 				      		}else {
 							response.getWriter().write("<tr>\n"
 										+ "<td>"+title+"</td>\n"
 										+ "<td>Titre musical</td>\n"
-										+ "<td class='buttonElements'><button class='buttonElements'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button class='buttonElements' id='"+title+" "+nomPlaylistPerso+"'onclick ='deleteTitreFromPlaylistPerso(this)'>supprimer</button></td>"
+										+ "<td class='buttonElements'><button class='buttonElements'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button  id='"+title+" "+nomPlaylistPerso+"'onclick ='deleteTitreFromPlaylistPerso(this)'>supprimer</button></td>"
 										+ "</tr>");
 				      		}
 						}
@@ -405,8 +412,17 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("</table>");
 				  }
 				  
-			}else {
-		
+		}else { // La page d'acceuil avec la playlist public en quelque sorte 
+				
+			System.out.println("okkkMusique");
+			CatalogueService catalogueElements = new CatalogueServiceImpl();
+			
+			//request.getSize
+			
+			List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPublic();
+			
+			request.setAttribute("listElements", listElements);
+			
 			String pageName = "/Catalogue.jsp";
 			
 	        RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);

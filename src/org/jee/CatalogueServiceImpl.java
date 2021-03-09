@@ -239,7 +239,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	*/
 	
-	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String inter)
+	public List<ElementDeCatalogue> titreBelongingToAnAlbum(String titreAlbum)
 	{
 	
 		int nombreEcoutePeriode;
@@ -251,7 +251,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				if (connexion != null)
 				{
 				 stmt = connexion.createStatement();
-				 rs = stmt.executeQuery("select Titres.titre, Titres.interprete from Titres,Albums,lienAlbumTitres where Titres.id = lienAlbumTitres.idTitre AND lienAlbumTitres.idAlbum = Albums.id AND Albums.titre = '"+inter+"'");	 
+				 rs = stmt.executeQuery("select Titres.titre, Titres.interprete from Titres,Albums,lienAlbumTitres where Titres.id = lienAlbumTitres.idTitre AND lienAlbumTitres.idAlbum = Albums.id AND Albums.titre = '"+titreAlbum+"'");	 
 				}
 				// Itérer sur le resultSet : 
 				while (rs.next()) {
@@ -346,8 +346,6 @@ public class CatalogueServiceImpl implements CatalogueService {
 		
 	
 	}
-	
-	
 	
 	//select Titres.titre from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitres.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id = idMembre
 	
@@ -463,6 +461,49 @@ public class CatalogueServiceImpl implements CatalogueService {
 		
 		return catalogueElements;
 		
+	}
+	
+	
+	public List<ElementDeCatalogue> getAllElementsFromPlaylistPublic()
+	{
+		try {
+			
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+			stmt2 = connexion.createStatement();
+			
+			if(connexion!= null)
+			{
+				rs = stmt.executeQuery("SELECT Albums.titre, Albums.interprete from Albums where Albums.inPb = 1");
+				rs2 = stmt2.executeQuery("SELECT Titres.titre, Titres.interprete from Titres where Titres.inPb = 1");
+			}
+			
+			while (rs.next()) {
+				
+				String titre = rs.getString("titre");
+				String interprete = rs.getString("interprete");	
+				
+				catalogueElements.add(new Album(titre,interprete));
+			}
+			
+			while (rs2.next()) { 
+
+				String titre = rs2.getString("titre");
+				String interprete= rs2.getString("interprete");
+				
+				catalogueElements.add(new Titre(titre,interprete));
+			}
+			
+			stmt.close();
+			stmt2.close();
+			connexion.close();
+			
+		}catch(SQLException e) {
+			
+			System.out.println("rrrooooooooh"+e);
+		}
+		
+		return catalogueElements;
 	}
 	
 	

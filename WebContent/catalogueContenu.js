@@ -7,11 +7,24 @@ var xhr = new XMLHttpRequest();
 var object = "";
 var search = "";
 var interpreteAlbum;
+var inStop = 0;
 
-
-function Visuelle()
+function goSwitch(object)
 {
-	console.log("ok");
+	if(!inStop)
+	{
+		console.log(object.textContent);
+		var tag = document.getElementById(object.id);
+		console.log(tag);
+		tag.innerHTML = 'Pause <i style=\"font-size:8px\" class=\"fa\">&#xf04c;</i>'
+		inStop = 1;
+	}else{
+		console.log(object.textContent);
+		var tag = document.getElementById(object.id);
+		console.log(tag);
+		tag.innerHTML = 'Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i>'
+		inStop = 0;
+	}
 }
 
 function goAccueil(object)
@@ -114,6 +127,7 @@ function newPlaylistMembre()
 
 function titresFromPlaylistPerso(object)
 {
+	object.tex
 	// Pour au final afficher toutes les musiques liée à une playlistPerso particulière
 	console.log(object.id);
 	xhr.open('GET',"MainServlet?titresFromPlaylistPerso="+object.id,true);

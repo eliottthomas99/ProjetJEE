@@ -141,7 +141,7 @@ table  {
   width: 70%;
 }
 
-table  td, #customers th {
+table  td {
   border: 1px solid #ddd;
   padding: 8px;
   font-family:"comic sans ms";

@@ -26,6 +26,11 @@ public class Titre extends ElementDeCatalogue {
 		super(titre);
 	}
 	
+	public Titre(String titre, String interprete)
+	{
+		super(titre,interprete);
+	}
+	
 	public Titre(String titre, String interprete, int nombreDecoute, int id)
 	{
 		super(titre, interprete, nombreDecoute,id);
