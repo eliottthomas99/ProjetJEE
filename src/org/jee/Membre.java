@@ -543,7 +543,7 @@ public class Membre {
 
 		// 2) Vérifier que l'email est dispo
 		
-		Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail);
+		Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail);
 		
 		if (emailDispo) {
 			try (Statement stmt = connexion.createStatement()) {
