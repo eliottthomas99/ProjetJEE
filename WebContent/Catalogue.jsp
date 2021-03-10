@@ -14,6 +14,10 @@ int res = (int)request.getAttribute("res");
 // On récupère les données des membres 
 //Membre alex = (Membre)request.getAttribute("alex");
 
+HttpSession maSession = request.getSession();
+Membre elMembre = (Membre)maSession.getAttribute("leMembre");
+
+System.out.println(elMembre);
 %>  
 
  

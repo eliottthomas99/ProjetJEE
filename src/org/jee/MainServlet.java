@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import org.jee.ClientService;
 import org.jee.ClientServiceImpl;
@@ -74,6 +74,13 @@ public class MainServlet extends HttpServlet {
 		// Quand on arrive sur une page, peut être faire une requête , checker la liste des elements dans les playlists perso du membre avec la liste des elements présentes dans la page 
 		
 		// Si listPage(i) == getTitleByPlaylistPerso(i) ...................
+		
+		
+		
+		HttpSession maSession = request.getSession();
+		Membre elMembre = (Membre)maSession.getAttribute("leMembre");
+
+		System.out.println("coucou c le main : " + elMembre);
 		
 		
 		// Récupérer les paramètre dans jsp d'un des deux ou les deux 
