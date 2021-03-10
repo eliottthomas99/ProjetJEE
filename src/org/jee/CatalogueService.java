@@ -12,7 +12,7 @@ public interface CatalogueService {
 	public List<ElementDeCatalogue> getAllAlbums();
 	
 	// rechercher un titre
-	public List<ElementDeCatalogue> getElementByTitle(String search);	
+	//public List<ElementDeCatalogue> getElementByTitle(String search);	
 	
 	
 	
@@ -48,9 +48,13 @@ public interface CatalogueService {
 	
 	
 	public List<ElementDeCatalogue> getAllElementsFromPlaylistPublic();
+	
+	
+	public List<ElementDeCatalogue> getElementByresearch(String search);
 	//public List<ElementDeCatalogue> getTitreClassique();
 	
 	//public List<ElementDeCatalogue> getTitreRock();
-		
+	
+	public int isAnAdmin(int id);
 
 }

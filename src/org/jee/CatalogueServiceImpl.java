@@ -20,7 +20,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 	Connection connexion;
 	List<ElementDeCatalogue> catalogueElements = new ArrayList<>();
 	List<Playlist> titresPlaylists = new ArrayList<>();
-	
+	private int adminOrNo;
 	
 	
 	public List<ElementDeCatalogue> getAllTitres()
@@ -106,10 +106,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
-	
-	
-	
-	public List<ElementDeCatalogue> getElementByTitle(String search)
+	public List<ElementDeCatalogue> getElementByresearch(String search)
 	{
 		try {
 			connexion = DBManager.getInstance().getConnection();
@@ -117,25 +114,30 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
-			 rs = stmt.executeQuery("select id,titre,interprete,nbEcoutePeriode from Titres where titre like '%"+search+"%'");	
+			 stmt2 = connexion.createStatement();
+			 rs = stmt.executeQuery("Select Titres.titre, Titres.interprete from Titres where titre like '%"+search+"%'");	
+			 rs2 = stmt2.executeQuery("select Albums.titre, Albums.interprete from Albums where titre like '%"+search+"%'");	
+		
 			}
 			
-			// Itérer sur le resultSet : 
 			while (rs.next()) {
-			
-				//String titre, String interprete, int nombreDecoute, int id
-				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("id");
+				
 				String titre = rs.getString("titre");
-				String interprete = rs.getString("interprete");
-				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
+				String interprete = rs.getString("interprete");	
 				
-				//titre, interprete, nombreDecoute, type, annee, duree, idElement
+				catalogueElements.add(new Titre(titre,interprete));
+			}
+			
+			while (rs2.next()) { 
+
+				String titre = rs2.getString("titre");
+				String interprete= rs2.getString("interprete");
 				
-				catalogueElements.add(new Titre(titre, interprete,nombreEcoutePeriode ,id));	
+				catalogueElements.add(new Album(titre,interprete));
 			}
 			
 			stmt.close();
+			stmt2.close();
 			connexion.close();
 		
 		}catch(SQLException e) {
@@ -421,31 +423,19 @@ public class CatalogueServiceImpl implements CatalogueService {
 			}
 			
 			while (rs.next()) {
-				
-				//String titre, String interprete, int nombreDecoute, int id
-				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				//int id = rs.getInt("id");
+			
 				String titre = rs.getString("titre");
-				//String interprete = rs.getString("interprete");
-				//int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
-				
-				//titre, interprete, nombreDecoute, type, annee, duree, idElement
 				System.out.println((new Titre(titre)).getTitre());
 				catalogueElements.add(new Titre(titre));	
 			}
 			
 			while (rs2.next()) {
 				
-				System.out.println("yes yes");
-				//String titre, String interprete, int nombreDecoute, int id
-				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-
+		
 				String titre = rs2.getString("titre");
 				String interprete= rs2.getString("interprete");
-				
-				
-				//titre, interprete, nombreDecoute, type, annee, duree, idElement
-				System.out.println((new ElementDeCatalogue(titre)).getTitre());
+
+				System.out.println((new Album(titre)).getTitre());
 				catalogueElements.add(new Album(titre,interprete));
 			}
 			
@@ -593,6 +583,33 @@ public class CatalogueServiceImpl implements CatalogueService {
 		
 		}
 	}
+	
+	
+	public int isAnAdmin(int id)
+	{
+		
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				 rs = stmt.executeQuery("select adminMusique from membres where id = "+id+"");
+				 rs.next();
+				 adminOrNo = rs.getInt("adminMusique");
+				 System.out.println(adminOrNo);
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+		
+		return adminOrNo;
+	}
+	
+	
 	
 }	
 	

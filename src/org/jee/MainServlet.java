@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jee.Membre;
+
 import org.jee.ClientService;
 import org.jee.ClientServiceImpl;
 
@@ -41,10 +41,21 @@ public class MainServlet extends HttpServlet {
 		
 		// Test : on va supposer qu'on connait déjà 2 membres 
 		
+		// Quand on arrive sur une page, peut être faire une requête , checker la liste des elements dans les playlists perso du membre avec la liste des elements présentes dans la page 
+		
+		// Si listPage(i) == getTitleByPlaylistPerso(i) ...................
+		
 		
 		// Récupérer les paramètre dans jsp d'un des deux ou les deux 
 		Membre alex = new Membre(1,"THOMAS","Eliott");
 		Membre kevin = new Membre(13,"Dupond","Charles");
+		
+		CatalogueService catalogueElements = new CatalogueServiceImpl();
+		
+		int res = catalogueElements.isAnAdmin(1);
+		request.setAttribute("res",res);
+		
+		
 		
 		int idAlex = alex.getId();
 		//int idAlex = kevin.getId();
@@ -75,7 +86,10 @@ public class MainServlet extends HttpServlet {
 				if(param1.equals("Titres")) {
 					
 					System.out.println("okkkMusique");
-					CatalogueService catalogueElements = new CatalogueServiceImpl();
+					
+					// Fonction pour check les titres qui sont déjà dans la playlist du membre 
+					//  ............
+					
 					
 					List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
 					
@@ -93,7 +107,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<td>"+title+"</td>\n"
 									+ "<td>"+author+"</td>\n"
-									+ "<td><button hidden = 'true' id='jouer"+i+"' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
+									+ "<td><button hidden = 'true' id='jouer"+i+"' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button style='color : red' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
 									+ "</tr>");
 						
 						i = i + 1;
@@ -104,8 +118,6 @@ public class MainServlet extends HttpServlet {
 				}else if(param1.equals("Albums")) {
 					
 					System.out.println("okkk");
-				
-					CatalogueService catalogueElements = new CatalogueServiceImpl();
 					
 					List<ElementDeCatalogue> listElements = catalogueElements.getAllAlbums();
 					
@@ -132,12 +144,11 @@ public class MainServlet extends HttpServlet {
 				}else { // On sait qu'on est dans la barre de recherche 
 			
 				System.out.println("okkkPodcast la ");
-			
-				CatalogueService catalogueElements = new CatalogueServiceImpl();
+
 				
 				System.out.println("recherche:"+param1);
 				
-				List<ElementDeCatalogue> listElements = catalogueElements.getElementByTitle(param1);
+				List<ElementDeCatalogue> listElements = catalogueElements.getElementByresearch(param1);
 				
 				// Si la recherche n'a rien donné : 
 				
@@ -147,31 +158,39 @@ public class MainServlet extends HttpServlet {
 							+ "</h1>");
 				}else {
 				
-					response.getWriter().write("<table border=\"0\">"
-							+ "<tr>\n"
-							+ "	            <td>Titre</td>\n"
-							+ "	            <td>Auteur</td>\n"
-							+ "</tr>");
-					
-					for (ElementDeCatalogue cata:listElements) {
-			     		 String title = cata.getTitre();
-			      		 String author = cata.getInterprete();
-			      		 
-			      		System.out.println(title);
-						response.getWriter().write("<tr>\n"
-									+ "<td>"+title+"</td>\n"
-									+ "<td id='Auteur'>"+author+"</td>\n"
-									+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>"
-									+ "</tr>");
-					}
-					response.getWriter().write("</table>");
+					 response.getWriter().write("<table border=\"0\">"
+								+ "<tr>\n"
+								+ "	            <th>Titre</th>\n"
+								+ "	            <th>Type</th>\n"
+								+ "</tr>");
+						
+						for (ElementDeCatalogue cata:listElements) {
+				     		 String title = cata.getTitre();
+				      		 
+				      		if(cata instanceof Album)
+				      		{
+				      			String author = cata.getInterprete();
+				      			response.getWriter().write("<tr>\n"
+										+ "<td>"+title+"</td>\n"
+										+ "<td>Album</td>\n"
+										+ "<td><button id='jouer' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button id='"+title+"'onclick='goTitresAlbum(this)'>Parcourir l'album</button></td>"
+										+ "</tr>");
+				      		}else {
+							response.getWriter().write("<tr>\n"
+										+ "<td>"+title+"</td>\n"
+										+ "<td>Titre musical</td>\n"
+										+ "<td class='buttonElements'><button class='buttonElements'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>"
+										+ "</tr>");
+				      		}
+						}
+						
+						response.getWriter().write("</table>");
 				}
 			}
 		}else if(param2 != null) {
 			
 			System.out.println("okk DEUXIEME PARAM la ");
 			
-			CatalogueService catalogueElements = new CatalogueServiceImpl();
 			
 			
 			List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsOfCategorie(param1,param2);
@@ -228,7 +247,6 @@ public class MainServlet extends HttpServlet {
 			}
 		}else if(param3 != null) {
 			
-			CatalogueService catalogueElements = new CatalogueServiceImpl();
 			List<ElementDeCatalogue> listElements = catalogueElements.titreBelongingToAnAlbum(param3);
 			System.out.println("Titre de l'album ->"+param3);
 			response.getWriter().write("<table border=\"0\">"
@@ -257,8 +275,7 @@ public class MainServlet extends HttpServlet {
 			if(param4.equals("aChanger"))
 			{
 			 
-			  // execution de la requête :
-				  CatalogueService catalogueElements = new CatalogueServiceImpl();
+			  // execution de la requête 
 				  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idAlex);
 				  
 				  
@@ -299,7 +316,7 @@ public class MainServlet extends HttpServlet {
 		}else if(param5!=null ) {
 			
 			  // execution de la requête :
-			  CatalogueService catalogueElements = new CatalogueServiceImpl();
+
 			  
 			  catalogueElements.newPlaylistMembre(param5,idAlex);
 			  
@@ -336,7 +353,7 @@ public class MainServlet extends HttpServlet {
 		}else if(param6!=null && param7 != null) {
 				
 				  // execution de la requête :
-				  CatalogueService catalogueElements = new CatalogueServiceImpl();
+
 				  
 				  System.out.println(idAlex);
 				  
@@ -362,7 +379,6 @@ public class MainServlet extends HttpServlet {
 		}else if(param8 != null) {
 				
 				  // execution de la requête :
-				  CatalogueService catalogueElements = new CatalogueServiceImpl();
 				  
 				  List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPerso(idAlex,param8);
 				 
@@ -415,7 +431,7 @@ public class MainServlet extends HttpServlet {
 		}else { // La page d'acceuil avec la playlist public en quelque sorte 
 				
 			System.out.println("okkkMusique");
-			CatalogueService catalogueElements = new CatalogueServiceImpl();
+	
 			
 			//request.getSize
 			

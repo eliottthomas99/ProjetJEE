@@ -33,6 +33,8 @@ public class Membre {
 	private String pays;
 
 	private int preference;
+	
+	private int adminMusique;
 
 	public int getId() {
 		return id;
@@ -138,6 +140,17 @@ public class Membre {
 		this.preference = preference;
 	}
 
+	
+	// Pour tester l'admin en dur !! 
+	
+	public Membre(int id, String prenom, int adminMusique)
+	{
+		super();
+		this.id = id;
+		this.adminMusique = adminMusique;
+	}
+
+	
 	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
 			String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays, int preference) {
 		super();
@@ -155,7 +168,8 @@ public class Membre {
 		this.pays = pays;
 		this.preference = preference;
 	}
-
+	
+	
 	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
 			String addr_rue, int addr_code_postal, String ville, String pays, int preference) {
 		super();
