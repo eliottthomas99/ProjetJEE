@@ -222,8 +222,8 @@ public class Membre {
 	}
 
 	
-	public Membre(int id, int civilite, String nom, String prenom, String email, String password, String naissance,
-			String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays, int preference) {
+	public Membre(int id, MainServlet.civilite civilite, String nom, String prenom, String email, String password, String naissance,
+			String addr_rue, String addr_complement, int addr_code_postal, String ville, String pays, MainServlet.preference preference) {
 		super();
 		this.id = id;
 		this.civilite = civilite;
