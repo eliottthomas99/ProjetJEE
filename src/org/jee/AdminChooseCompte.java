@@ -48,11 +48,20 @@ public class AdminChooseCompte extends HttpServlet {
 		
 		String emailModif = request.getParameter( "email" );
 		Membre membreModif = Membre.getMembre(emailModif);
-		request.setAttribute("leMembre", membreModif);
-		
 		HttpSession maSession = request.getSession();
-		maSession.setAttribute("lemail", emailModif);
 		
+		if(membreModif!=null) {
+			request.setAttribute("leMembre", membreModif);
+			
+			
+			maSession.setAttribute("lemail", emailModif);
+			request.setAttribute("lemail", emailModif); //pour l'affichage
+		}
+		else {
+			Membre membreVide = new Membre();
+			request.setAttribute("leMembre", membreVide);
+			request.setAttribute("lemail", emailModif); //pour l'affichage
+		}
 		
 		//System.out.println("chosed" +emailModif);
  
