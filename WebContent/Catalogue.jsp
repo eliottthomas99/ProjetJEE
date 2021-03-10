@@ -2,10 +2,14 @@
     pageEncoding="UTF-8"%>
     
 <%@page import="java.util.List,org.jee.ElementDeCatalogue"%>
+<%@page import="java.util.List,org.jee.CatalogueServiceImpl"%>
 <%@page import="java.util.List,org.jee.Membre"%>
 <%@page import="java.util.List,org.jee.Album"%>
 <%
 List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAttribute("listElements");
+
+
+int res = (int)request.getAttribute("res");
 
 // On récupère les données des membres 
 //Membre alex = (Membre)request.getAttribute("alex");
@@ -57,7 +61,16 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAtt
 		  </li>
 		  
 		  <li id = "album"><a onclick ="mesPlaylists(this)">Mon profil</a></li>
+		  <%
+				if (res == 1)
+				{
+		  %>
 		  
+		  	<li id = "album"><a onclick ="mesPlaylists(this)">Gestion Clients</a></li>
+		  
+		  <%
+				}else{}
+		  %>
 		  <li><input name="search" id= "barre" type='text' placeholder='Rechercher un element avec son titre ..'></input>
 		  <button onclick ="goAccueil(this)">Recherche</button></li>
 		  
