@@ -45,7 +45,7 @@ public class modifAvanceeCompte extends HttpServlet {
 		
 
 		 HttpSession maSession = request.getSession();
-		 Membre membre = (Membre)maSession.getAttribute("membre");
+		 Membre membre = (Membre)maSession.getAttribute("membreModifie");
 		
 		String toto = null;
 		toto = "toto";
@@ -77,7 +77,7 @@ public class modifAvanceeCompte extends HttpServlet {
 							// si tout est ok on met à jour les informations
 						 	membre.setEmail(nouveauEmail);
 						 	membre.setPassword(nouveauMotDePasse);
-					        maSession.setAttribute("membre", membre);
+					        maSession.setAttribute("membreModifie", membre);
 					        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasse);
 					        
 					        // on affiche que tout s est bien passe
@@ -110,7 +110,7 @@ public class modifAvanceeCompte extends HttpServlet {
 		
 
 				
-				System.out.println(codeRetourModifAvancee);
+			System.out.println(codeRetourModifAvancee);
 			maSession.setAttribute("codeRetour", codeRetourModifAvancee);
 		
 		

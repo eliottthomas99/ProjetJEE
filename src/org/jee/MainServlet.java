@@ -65,12 +65,12 @@ public class MainServlet extends HttpServlet {
 
 
 		HttpSession maSession = request.getSession();
-		Membre elMembre = (Membre)maSession.getAttribute("leMembre");
-		
+		Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
+		elMembre = Membre.getMembre(elMembre.getEmail());
 		int idMembreActuel = elMembre.getId();
 		
 		CatalogueService catalogueElements = new CatalogueServiceImpl();
-		System.out.println(elMembre.getCivilite());
+		//System.out.println(elMembre.getCivilite());
 		
 		int res = catalogueElements.isAnAdmin(idMembreActuel);
 		request.setAttribute("res",res);

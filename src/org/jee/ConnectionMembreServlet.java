@@ -95,14 +95,15 @@ public class ConnectionMembreServlet extends HttpServlet {
 				if(adminCompte==1) { 
 					//String pageName = "/adminModifCompte.jsp"
 					Membre membreAdmin = Membre.getMembre(email);
-					maSession.setAttribute("leMembre", membreAdmin);
+					maSession.setAttribute("membreConnecte", membreAdmin);
+					maSession.setAttribute("membreModifie", membreAdmin);
 					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
 					rd.forward(request,response);
 					
 				}
 				else {
-					Membre membreAdmin = Membre.getMembre(email);
-					maSession.setAttribute("leMembre", membreAdmin);
+					Membre membreNormal = Membre.getMembre(email);
+					maSession.setAttribute("membreConnecte", membreNormal);
 					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
 					rd.forward(request,response);	
 				}

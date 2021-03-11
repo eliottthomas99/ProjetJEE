@@ -57,7 +57,7 @@ public class AdminModifCompte extends HttpServlet {
 		
 		
 		HttpSession maSession = request.getSession();
-    	String emailModif = (String)maSession.getAttribute("lemail");
+    	String emailModif = (String)maSession.getAttribute("mailModif");
 		System.out.println("emod :"+emailModif);
 		
 		
@@ -105,7 +105,7 @@ public class AdminModifCompte extends HttpServlet {
         												codePostal, ville, pays, preference, emailModif);
         		
 		//request.setAttribute("leMembre", membreModif);		
-        maSession.setAttribute("leMembre",membreModif); 
+        maSession.setAttribute("membreModifie",membreModif); 
         //System.out.println(retour);
 		
         request.setAttribute("lemail", emailModif);

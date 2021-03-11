@@ -4,9 +4,10 @@
 	
 	<%
 	//Membre membre = (Membre)request.getAttribute("leMembre");
-
-	String codeRetour = (String)session.getAttribute("codeRetour");
-	Membre membre = (Membre)session.getAttribute("membre");
+	HttpSession maSession = request.getSession();
+	
+	String codeRetour = (String)maSession.getAttribute("codeRetour");
+	Membre membre = (Membre)maSession.getAttribute("membreConnecte");
 	//System.out.println(membre);
 	%>
 	
@@ -179,6 +180,17 @@
 			alert("<%= codeRetour%>");
 		</script>
 		<%} %>
+
+
+		<form method="post" action="MainServlet">
+		
+		<fieldset>
+				<legend>Accueil</legend>
+		<input color ="red" type="submit" value="Accueil" class="sansLabel" />
+					<br />
+		</fieldset>
+		</form>
+
 
 
 	</body>

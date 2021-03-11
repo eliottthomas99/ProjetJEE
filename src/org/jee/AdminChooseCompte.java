@@ -54,13 +54,16 @@ public class AdminChooseCompte extends HttpServlet {
 			request.setAttribute("leMembre", membreModif);
 			
 			
-			maSession.setAttribute("lemail", emailModif);
+			maSession.setAttribute("membreModifie", membreModif);
+			maSession.setAttribute("mailModif", emailModif);
 			request.setAttribute("lemail", emailModif); //pour l'affichage
 		}
 		else {
 			Membre membreVide = new Membre();
 			//request.setAttribute("leMembre", membreVide);
 			//maSession.setAttribute("leMembre",membreVide);
+			maSession.setAttribute("membreModifie", membreModif);
+			maSession.setAttribute("mailModif", emailModif);
 			request.setAttribute("lemail", emailModif); //pour l'affichage
 		}
 		

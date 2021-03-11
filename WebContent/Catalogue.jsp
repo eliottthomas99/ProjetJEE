@@ -16,7 +16,7 @@ int res = (int)request.getAttribute("res");
 //Membre alex = (Membre)request.getAttribute("alex");
 
 HttpSession maSession = request.getSession();
-Membre elMembre = (Membre)maSession.getAttribute("leMembre");
+Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
 int id = elMembre.getId();
 
 System.out.println("id membre"+id);

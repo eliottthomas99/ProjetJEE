@@ -3,7 +3,12 @@
 	<%@page	import="java.util.List,org.jee.Membre,org.jee.MainServlet" %>
 	
 	<%
-	Membre membre = (Membre)session.getAttribute("leMembre");
+	HttpSession maSession = request.getSession();
+	//System.out.println(maSession);
+	Membre membre = (Membre)maSession.getAttribute("membreModifie");
+	if(membre==null){
+		membre = (Membre)maSession.getAttribute("membreConnecte");
+	}
 	
 	String lemail = (String)request.getAttribute("lemail");
 	
@@ -195,6 +200,14 @@
 		</form>
 		
 		
+		<form method="post" action="MainServlet">
+		
+		<fieldset>
+				<legend>Accueil</legend>
+		<input color ="red" type="submit" value="Accueil" class="sansLabel" />
+					<br />
+		</fieldset>
+		</form>
 		
 
 
