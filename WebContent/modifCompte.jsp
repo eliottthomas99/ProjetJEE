@@ -135,6 +135,10 @@
 
 			</form>
 		</section>
+		
+		<hr>
+		
+		
 		<section class="modifAvanceeCompte">
 		<h1>Modification Avancée Compte</h1>
 			<form method="post" action="ModifAvanceeCompte">
@@ -167,12 +171,14 @@
 			</form>
 		
 		</section>
+		
+		</div>
 
 		<form method="get" action="suppression">
 		
 		<fieldset>
 				<legend>Supprimer compte</legend>
-		<input color ="red" type="submit" value="Supprimer compte" class="sansLabel" />
+		<input color ="red" type="submit" value="Supprimer compte" class="submitButton" />
 					<br />
 		</fieldset>
 		</form>
@@ -182,7 +188,7 @@
 		
 		<fieldset>
 				<legend>Accueil</legend>
-		<input color ="red" type="submit" value="Accueil" class="sansLabel" />
+		<input color ="red" type="submit" value="Accueil" class="submitButton" />
 					<br />
 		</fieldset>
 		</form>

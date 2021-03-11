@@ -9,13 +9,18 @@
 </head>
 <body>
 
+		<div class="corps">
+		<section class=confirmation>
 <form method="post" action="suppression">
 	<input type="submit" value="Oui je suis certain" class="dangereux" />
 </form>
+</section>
 
+<section class="confirmation">
 <a href="http://localhost:8080/ProjetJEE/MainServlet">
-	<input type="submit" value="Non je ne veux plus" class="sansLabel" />
+	<input type="submit" value="Non je ne veux plus" class="submitButton" />
 </a>
-
+</section>
+	</div>
 </body>
 </html>

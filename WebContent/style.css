@@ -17,7 +17,14 @@ body{
 }
 
 .dangereux{
-	background-color: #bf616a;	
+	font-size: big;
+    padding:5px 15px; 
+    background:#bf616a;; 
+	color: #eceff4;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
 }
 
 .corps {
@@ -27,9 +34,11 @@ body{
 	flex-direction: row;
 }
 
-.inscription, .visiteur {
+.inscription, .visiteur .modifCompte .modifAvanceeCompte .confirmation {
 	margin: auto;
 }
+
+
 
 .form__group {
   position: relative;
