@@ -46,10 +46,6 @@ public class MainServlet extends HttpServlet {
 		  ROCK
 		}
 	
-	
-	
-	
-	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -67,38 +63,17 @@ public class MainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// param1S Interface
-		
-		// Test : on va supposer qu'on connait déjà 2 membres 
-		
-		// Quand on arrive sur une page, peut être faire une requête , checker la liste des elements dans les playlists perso du membre avec la liste des elements présentes dans la page 
-		
-		// Si listPage(i) == getTitleByPlaylistPerso(i) ...................
-		
-		
-		
+
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre)maSession.getAttribute("leMembre");
-
-		System.out.println("coucou c le main : " + elMembre);
 		
-		
-		// Récupérer les paramètre dans jsp d'un des deux ou les deux 
-		Membre alex = new Membre(1,"THOMAS","Eliott");
-		Membre kevin = new Membre(13,"Dupond","Charles");
+		int idMembreActuel = elMembre.getId();
 		
 		CatalogueService catalogueElements = new CatalogueServiceImpl();
+		System.out.println(elMembre.getCivilite());
 		
-		int res = catalogueElements.isAnAdmin(1);
+		int res = catalogueElements.isAnAdmin(idMembreActuel);
 		request.setAttribute("res",res);
-		
-		
-		
-		int idAlex = alex.getId();
-		//int idAlex = kevin.getId();
-		
-		request.setAttribute("alex", alex);
-		request.setAttribute("kevin", kevin);
 		
 		
 		String param1 = request.getParameter("nomElement");
@@ -113,20 +88,12 @@ public class MainServlet extends HttpServlet {
 		
 		String param8 = request.getParameter("titresFromPlaylistPerso"); // A pour but d'aller chercher toutes les musiques relatives à une playlist Perso 
 		
-		System.out.println("param1---->"+param1);
-		System.out.println("param2---->"+param2);
-		
 		
 		if(param1 != null && param2 == null && param3 == null) {
 			
 				int i = 0;
 				if(param1.equals("Titres")) {
-					
-					System.out.println("okkkMusique");
-					
-					// Fonction pour check les titres qui sont déjà dans la playlist du membre 
-					//  ............
-					
+	
 					
 					List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
 					
@@ -144,7 +111,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<tr>\n"
 									+ "<td>"+title+"</td>\n"
 									+ "<td>"+author+"</td>\n"
-									+ "<td><button hidden = 'true' id='jouer"+i+"' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button style='color : red' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
+									+ "<td><button hidden = 'true' id='jouer"+i+"' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button style='color : red' id='"+param1+" "+title+" "+idMembreActuel+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
 									+ "</tr>");
 						
 						i = i + 1;
@@ -225,11 +192,7 @@ public class MainServlet extends HttpServlet {
 				}
 			}
 		}else if(param2 != null) {
-			
-			System.out.println("okk DEUXIEME PARAM la ");
-			
-			
-			
+
 			List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsOfCategorie(param1,param2);
 			
 			// Si la recherche n'a rien donné : 
@@ -255,7 +218,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<tr>\n"
 								+ "<td>"+title+"</td>\n"
 								+ "	<td id='Auteur'>"+author+"</td>\n"
-								+ " <td><button id='"+title+"' onclick= 'goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button  class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>"
+								+ " <td><button id='"+title+"'onclick= 'goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button  class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>"
 								+ "</tr>");
 				}
 				response.getWriter().write("</table>");
@@ -309,11 +272,8 @@ public class MainServlet extends HttpServlet {
 		}else if(param4!=null ) {
 			
 		
-			if(param4.equals("aChanger"))
-			{
-			 
 			  // execution de la requête 
-				  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idAlex);
+				  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(Integer.parseInt(param4));
 				  
 				  
 				  response.getWriter().write("<input name=\"search\" id= \"barre2\" type='text' placeholder='Nom de la playlist a creer ..'>\n"
@@ -341,25 +301,25 @@ public class MainServlet extends HttpServlet {
 				      
 							 response.getWriter().write("<tr>\n"
 										+ "<td>"+title+"</td>\n"
-										+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button class='buttonElements' id='"+title+"'onclick ='titresFromPlaylistPerso(this)'>parcourir</button></td> <td><button class='buttonElements' id='"+title+"'onclick ='deletePlaylistPerso(this)'>supprimer</button></td>"
+										+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button class='buttonElements' id='"+title+"'onclick ='titresFromPlaylistPerso(this)'>parcourir</button></td> <td><button id='"+title+"'onclick ='deletePlaylistPerso(this)'>supprimer</button></td>"
 										+ "</tr>");
 						}
 						
 						response.getWriter().write("</table>");
 				  
-				}
-			}
+				  }
+			
 			
 		}else if(param5!=null ) {
 			
 			  // execution de la requête :
 
 			  
-			  catalogueElements.newPlaylistMembre(param5,idAlex);
+			  catalogueElements.newPlaylistMembre(param5,idMembreActuel);
 			  
-			  System.out.println(idAlex);
+			  System.out.println("nnnoo"+idMembreActuel);
 			  
-			  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idAlex);
+			  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idMembreActuel);
 			  
 			  
 			  response.getWriter().write("<input id= \"barre2\" type='text' placeholder='Nom de la playlist a creer ..'>\n"
@@ -381,7 +341,7 @@ public class MainServlet extends HttpServlet {
 		      
 					 response.getWriter().write("<tr>\n"
 								+ "<td>"+title+"</td>\n"
-								+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>  <td><button class='buttonElements' id='"+title+"'onclick ='titresFromPlaylistPerso(this)'>parcourir</button></td> <td><button class='buttonElements' id='"+title+"'onclick ='deletePlaylistPerso(this)'>supprimer</button></td> "
+								+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td>  <td><button class='buttonElements' id='"+title+"' onclick ='titresFromPlaylistPerso(this)'>parcourir</button></td> <td><button id='"+title+"'onclick ='deletePlaylistPerso(this)'>supprimer</button></td> "
 								+ "</tr>");
 				}
 				
@@ -392,9 +352,9 @@ public class MainServlet extends HttpServlet {
 				  // execution de la requête :
 
 				  
-				  System.out.println(idAlex);
+				  System.out.println(idMembreActuel);
 				  
-				  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idAlex);
+				  List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idMembreActuel);
 				  
 				  response.getWriter().write("<h3> Choissisez la playlist dans laquel ajouter l'element .. </h3> ");
 				  
@@ -416,19 +376,23 @@ public class MainServlet extends HttpServlet {
 		}else if(param8 != null) {
 				
 				  // execution de la requête :
-				  
-				  List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPerso(idAlex,param8);
+				  System.out.println("id membre actu:"+idMembreActuel);
+				  List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPerso(idMembreActuel,param8);
 				 
-				  System.out.println(idAlex);
+				  System.out.println(idMembreActuel);
 				  
 				  String nomPlaylistPerso = param8;
 				  
-		
+				  for (ElementDeCatalogue cata:listElements) {
+			     		 String title = cata.getTitre();
+			     		 System.out.println(title);
+			     		 System.out.println("OUAIIIIIIIIIIIIIIS");
+				  }
 				  
 				  if(listElements.isEmpty() || listElements == null)
 				  {
 					  response.getWriter().write("<h1> Playlist vide .. </h1> ");
-					  response.getWriter().write("<button onclick ='mesPlaylists(this)'>Retour</button>");
+					  response.getWriter().write("<button id="+idMembreActuel+"onclick ='mesPlaylists(this)'>Retour</button>");
 				  }else 
 				  {
 					  for (ElementDeCatalogue cata:listElements) {
@@ -499,12 +463,13 @@ public class MainServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-
+		
+		
 		Membre alex = new Membre(1,"THOMAS","Eliott");
 		Membre kevin = new Membre(13,"Dupond","Charles");
 		
-		int idAlex = alex.getId();
-		//int idAlex = kevin.getId();
+		//nt idMembreActuel = alex.getId();
+		//int idMembreActuel = kevin.getId();
 		
 		
 		String param1 = request.getParameter("nomPlaylist");
@@ -531,9 +496,15 @@ public class MainServlet extends HttpServlet {
 		}else if(param4 != null && param5 !=null && param1 == null && param2 == null && param3 == null)
 		{
 			CatalogueService catalogueElements = new CatalogueServiceImpl();
-			catalogueElements.deleteTitreFromPlaylistPerso(idAlex, param4,param5);
+			HttpSession maSession = request.getSession();
+			Membre elMembre = (Membre)maSession.getAttribute("leMembre");
+			int idMembreActuel = elMembre.getId();
+			catalogueElements.deleteTitreFromPlaylistPerso(idMembreActuel, param4,param5);
 			response.getWriter().write("<h3> Le titre '"+param4+"' a bien ete supprime</h3> ");
 			response.getWriter().write("<button onclick ='mesPlaylists(this)'>Retour</button>");
+		}else {
+			
+			this.doGet(request, response);
 		}
 	}
 }

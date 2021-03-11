@@ -104,9 +104,8 @@ public class AdminModifCompte extends HttpServlet {
         Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement,
         												codePostal, ville, pays, preference, emailModif);
         		
-		request.setAttribute("leMembre", membreModif);		
-        //maSession.setAttribute("membre", membre);
-        		
+		//request.setAttribute("leMembre", membreModif);		
+        maSession.setAttribute("leMembre",membreModif); 
         //System.out.println(retour);
 		
         request.setAttribute("lemail", emailModif);

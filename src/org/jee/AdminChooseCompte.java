@@ -59,7 +59,8 @@ public class AdminChooseCompte extends HttpServlet {
 		}
 		else {
 			Membre membreVide = new Membre();
-			request.setAttribute("leMembre", membreVide);
+			//request.setAttribute("leMembre", membreVide);
+			//maSession.setAttribute("leMembre",membreVide);
 			request.setAttribute("lemail", emailModif); //pour l'affichage
 		}
 		

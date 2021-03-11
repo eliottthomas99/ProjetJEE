@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.jee.MainServlet;
 
 import java.util.List;
 
@@ -86,49 +87,26 @@ public class ConnectionMembreServlet extends HttpServlet {
 				// le passer en paramètre à la page suivante
 				
 				//request.setAttribute("leMembre", membre);
-				
-				
-				
-				
-				
-				
-				
+
 				//On va sur une page membre ou admin en fonction 
 				int adminCompte = membre.getAdminCompte();
 				
-				if(adminCompte==1) { //vers page adminMusique
-					//String pageName = "/adminModifCompte.jsp";
-					String pageName = "/Catalogue.jsp";
+	
+				if(adminCompte==1) { 
+					//String pageName = "/adminModifCompte.jsp"
 					Membre membreAdmin = Membre.getMembre(email);
-					//request.setAttribute("leMembre", membreAdmin);
-					
-					
-					//HttpSession maSession = request.getSession();
-					maSession.setAttribute("lemail", membreAdmin.getEmail());
-					
 					maSession.setAttribute("leMembre", membreAdmin);
-					
-					request.setAttribute("res", 1);
-					
-					List<ElementDeCatalogue> listElem = new ArrayList<>()  ;
-					
-					request.setAttribute("listElements", listElem);
-					
-					//request.setAttribute("lemail", membreAdmin.getEmail());
-					this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
+					rd.forward(request,response);
 					
 				}
 				else {
-					String pageName = "/modifCompte.jsp";
-					this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
-					
+					Membre membreAdmin = Membre.getMembre(email);
+					maSession.setAttribute("leMembre", membreAdmin);
+					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
+					rd.forward(request,response);	
 				}
-				
-				
-				
-				
-				
-				
+					
 			} else {
 				valideStr = "email ou mot de passe incorrect";
 				request.setAttribute("valideStr", valideStr);

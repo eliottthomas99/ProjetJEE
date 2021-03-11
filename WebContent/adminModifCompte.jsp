@@ -3,7 +3,7 @@
 	<%@page	import="java.util.List,org.jee.Membre,org.jee.MainServlet" %>
 	
 	<%
-	Membre membre = (Membre)request.getAttribute("leMembre");
+	Membre membre = (Membre)session.getAttribute("leMembre");
 	
 	String lemail = (String)request.getAttribute("lemail");
 	
