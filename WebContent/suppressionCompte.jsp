@@ -13,7 +13,7 @@
 	<input type="submit" value="Oui je suis certain" class="dangereux" />
 </form>
 
-<a href="http://localhost:8080/ProjetJEE/Visiteur">
+<a href="http://localhost:8080/ProjetJEE/MainServlet">
 	<input type="submit" value="Non je ne veux plus" class="sansLabel" />
 </a>
 

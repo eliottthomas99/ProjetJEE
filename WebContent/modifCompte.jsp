@@ -168,20 +168,16 @@
 		
 		</section>
 
+		<form method="get" action="suppression">
 		
-		<%
-		//Membre membre = (Membre)request.getAttribute("leMembre");
-		// String codeRetour = (String)request.getAttribute("codeRetour");
-		System.out.println(codeRetour);
-		if (codeRetour != null)
-		{ %>
-		<script>
-			console.log("<%= codeRetour%>");
-			alert("<%= codeRetour%>");
-		</script>
-		<%} %>
+		<fieldset>
+				<legend>Supprimer compte</legend>
+		<input color ="red" type="submit" value="Supprimer compte" class="sansLabel" />
+					<br />
+		</fieldset>
+		</form>
 
-
+		
 		<form method="post" action="MainServlet">
 		
 		<fieldset>
@@ -192,6 +188,21 @@
 		</form>
 
 
+
+		<%
+		/* A LAISSER A LA FIN DU CODE */
+		/* permet d'afficher la pop up APRES que la page ait chargee */
+		System.out.println(codeRetour);
+		if (codeRetour != null)
+		{ %>
+		<script>
+			console.log("<%= codeRetour%>");
+			alert("<%= codeRetour%>");
+		</script>
+		<%}
+		codeRetour = null;
+		maSession.setAttribute("codeRetour", codeRetour);
+		%>
 
 	</body>
 
