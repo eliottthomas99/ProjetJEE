@@ -44,7 +44,7 @@ public class AdminModifAvanceeCompte extends HttpServlet {
 		String codeRetourModifAvancee = null;
 		
 		HttpSession maSession = request.getSession();
-    	String emailModif = (String)maSession.getAttribute("lemail");
+    	String emailModif = (String)maSession.getAttribute("mailModif");
 		
 		Membre membre = Membre.getMembre(emailModif);
 		 //HttpSession maSession = request.getSession();
