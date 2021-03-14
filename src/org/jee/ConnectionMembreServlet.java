@@ -65,7 +65,7 @@ public class ConnectionMembreServlet extends HttpServlet {
         String motDePasse = request.getParameter( CHAMP_PASS );
         
         Boolean redo = true;
-        
+        HttpSession maSession = request.getSession();
         try {
 			Boolean valide = Membre.validerAuthentification(email, motDePasse);
 			
@@ -79,7 +79,7 @@ public class ConnectionMembreServlet extends HttpServlet {
 				Membre membre  =  Membre.getMembre(email);
 				
 				// creation session http
-				HttpSession maSession = request.getSession();
+				
 				maSession.setAttribute("membre", membre);
 				
 				
@@ -110,7 +110,27 @@ public class ConnectionMembreServlet extends HttpServlet {
 				}
 					
 			} else {
-				valideStr = "email ou mot de passe incorrect";
+				
+				
+				Membre membreTente = Membre.getMembre(email);
+				//vérifier si l'email existe
+				
+				
+				if(membreTente!=null &&  membreTente.getBloque()==1) {
+					valideStr = "compte bloque retente dans 1H";
+					
+				}
+				else {
+					valideStr = "Mauvaise combinaison identifiant mot de passe";
+					
+				}
+				
+				
+
+				maSession.setAttribute("codeRetour", valideStr);
+				
+				
+				
 				request.setAttribute("valideStr", valideStr);
 			}
 			

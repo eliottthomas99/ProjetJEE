@@ -570,12 +570,13 @@ public class Membre {
 				
 				int adminMusique = rs.getInt("adminMusique");
 				int adminCompte = rs.getInt("adminCompte");
-
+				int bloque  = rs.getInt("bloque");
 				
 				
 				membre = new Membre(id,civilite,nom,prenom,email,password,naissance,addr_rue,addr_complement,addr_code_postal,ville,pays,preference);
 				membre.setAdminMusique(adminMusique);
 				membre.setAdminCompte(adminCompte);
+				membre.setBloque(bloque);
 				
 				
 			}

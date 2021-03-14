@@ -3,11 +3,14 @@
 
 <%@page import="java.util.List,org.jee.Membre"%>
 
-<!-- %
+<%
 
-String str = (String)request.getAttribute("valideStr");
+//String str = (String)request.getAttribute("valideStr");
+HttpSession maSession = request.getSession();
 
-%-->
+String codeRetour = (String)maSession.getAttribute("codeRetour");
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -36,5 +39,21 @@ String str = (String)request.getAttribute("valideStr");
                 <br />
             </fieldset>
 	</form>
+	
+	<%
+		/* A LAISSER A LA FIN DU CODE */
+		/* permet d'afficher la pop up APRES que la page ait chargee */
+		System.out.println(codeRetour);
+		if (codeRetour != null)
+		{ %>
+		<script>
+			console.log("<%= codeRetour%>");
+			alert("<%= codeRetour%>");
+		</script>
+		<%}
+		codeRetour = null;
+		maSession.setAttribute("codeRetour", codeRetour);
+		%>
+	
 </body>
 </html>
