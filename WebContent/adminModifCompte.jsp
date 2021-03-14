@@ -10,10 +10,16 @@
 		membre = (Membre)maSession.getAttribute("membreConnecte");
 	}
 	
+	
+	
+	String codeRetour = (String)maSession.getAttribute("codeRetour");
+
+	
 	String lemail = (String)request.getAttribute("lemail");
 	
 	//System.out.println("lemail?" +lemail);
 
+	
 	
 	if(lemail==null){
 		lemail="";
@@ -209,6 +215,23 @@
 		</fieldset>
 		</form>
 		
+
+
+		<%
+		/* A LAISSER A LA FIN DU CODE */
+		/* permet d'afficher la pop up APRES que la page ait chargee */
+		System.out.println(codeRetour);
+		if (codeRetour != null)
+		{ %>
+		<script>
+			console.log("<%= codeRetour%>");
+			alert("<%= codeRetour%>");
+		</script>
+		<%}
+		codeRetour = null;
+		maSession.setAttribute("codeRetour", codeRetour);
+		%>
+
 
 
 	</body>

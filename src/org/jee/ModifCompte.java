@@ -74,7 +74,7 @@ public class ModifCompte extends HttpServlet {
         // String email = request.getParameter( "onFaitCommeOnPeut" );
 
         HttpSession maSession = request.getSession();
-    	Membre membre = (Membre)maSession.getAttribute("membre");
+    	Membre membre = (Membre)maSession.getAttribute("membreConnecte");
     	String email = membre.getEmail();
  
     	membre.setCivilite(civilite);
@@ -101,7 +101,7 @@ public class ModifCompte extends HttpServlet {
 		maSession.setAttribute("codeRetour", "la modification a échouée :-(");
 		}
         
-        maSession.setAttribute("membre", membre);
+        maSession.setAttribute("membreConnecte", membre);
         		
         System.out.println(retour);
 		

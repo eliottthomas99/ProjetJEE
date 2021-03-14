@@ -97,6 +97,7 @@ public class ConnectionMembreServlet extends HttpServlet {
 					Membre membreAdmin = Membre.getMembre(email);
 					maSession.setAttribute("membreConnecte", membreAdmin);
 					maSession.setAttribute("membreModifie", membreAdmin);
+					maSession.setAttribute("mailModif", email);
 					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
 					rd.forward(request,response);
 					

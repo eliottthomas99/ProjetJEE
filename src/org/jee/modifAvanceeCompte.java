@@ -45,7 +45,7 @@ public class modifAvanceeCompte extends HttpServlet {
 		
 
 		 HttpSession maSession = request.getSession();
-		 Membre membre = (Membre)maSession.getAttribute("membreModifie");
+		 Membre membre = (Membre)maSession.getAttribute("membreConnecte");
 		
 		String toto = null;
 		toto = "toto";
