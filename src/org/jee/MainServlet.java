@@ -72,7 +72,7 @@ public class MainServlet extends HttpServlet {
 		CatalogueService catalogueElements = new CatalogueServiceImpl();
 		//System.out.println(elMembre.getCivilite());
 		
-		int res = catalogueElements.isAnAdmin(idMembreActuel);
+		int res = catalogueElements.isAnAdminCompte(idMembreActuel);
 		request.setAttribute("res",res);
 		
 		

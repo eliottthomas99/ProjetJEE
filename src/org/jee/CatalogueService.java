@@ -55,6 +55,7 @@ public interface CatalogueService {
 	
 	//public List<ElementDeCatalogue> getTitreRock();
 	
-	public int isAnAdmin(int id);
+	public int isAnAdminMusique(int id);
+	public int isAnAdminCompte(int id);
 
 }

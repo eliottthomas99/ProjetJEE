@@ -585,7 +585,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
-	public int isAnAdmin(int id)
+	public int isAnAdminMusique(int id)
 	{
 		
 		try {
@@ -597,6 +597,30 @@ public class CatalogueServiceImpl implements CatalogueService {
 				 rs = stmt.executeQuery("select adminMusique from membres where id = "+id+"");
 				 rs.next();
 				 adminOrNo = rs.getInt("adminMusique");
+				 System.out.println(adminOrNo);
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+		
+		return adminOrNo;
+	}
+	
+	public int isAnAdminCompte(int id)
+	{
+		
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				 rs = stmt.executeQuery("select adminMusique from membres where id = "+id+"");
+				 rs.next();
+				 adminOrNo = rs.getInt("adminCompte");
 				 System.out.println(adminOrNo);
 			}
 			stmt.close();
