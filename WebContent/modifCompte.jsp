@@ -17,15 +17,15 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Modification Compte</title>
 		<link rel="stylesheet" href="style.css" />
+		<title>Modification Compte</title>	
 
 	</head>
 
 	<body>
 		<div class="corps">
 		<section class="modifCompte">
-			<h1>Modification Compte</h1>
+			<h1 class="title">Modification Compte</h1>
 			<form method="post" action="ModifCompte">
 				<fieldset>
 					<legend>Inscription</legend>
@@ -136,11 +136,10 @@
 			</form>
 		</section>
 		
-		<hr>
 		
 		
 		<section class="modifAvanceeCompte">
-		<h1>Modification Avancée Compte</h1>
+		<h1 class="title">Modification Avancée Compte</h1>
 			<form method="post" action="ModifAvanceeCompte">
 				<fieldset>
 				<legend>Modificaction Avancee</legend>
@@ -161,10 +160,10 @@
 					
 					<div class="form__group field">
 						<input type="password" class="form__field" placeholder="nouveauMotDePasse Confirmation" name="nouveauMotDePasseConfirmation" id="nouveauMotDePasseConfirmation" value="" required />
-						<label for="nouveauMotDePasse" class="form__label">nouveauMotDePasse Confirmation</label>
+						<label for="nouveauMotDePasse" class="form__label"> Confirmation</label>
 					</div>
 					
-					<input type="submit" value="ModificationAvancee" class="sansLabel" />
+					<input type="submit" value="ModificationAvancee" class="form_advanced_modif_button" />
 					<br />
 				</fieldset>
 
@@ -173,27 +172,29 @@
 		</section>
 		
 		</div>
-
-		<form method="get" action="suppression">
 		
-		<fieldset>
-				<legend>Supprimer compte</legend>
-		<input color ="red" type="submit" value="Supprimer compte" class="submitButton" />
+		<div class="buttonblock">
+		
+
+		<form method="get" action="suppression" class="supprimer">
+		
+			
+				<input color ="red" type="submit" value="Supprimer compte" class="submitButton" />
 					<br />
-		</fieldset>
+			
 		</form>
 
 		
-		<form method="post" action="MainServlet">
+		<form method="post" action="MainServlet" class="accueil" >
 		
-		<fieldset>
-				<legend>Accueil</legend>
+		
 		<input color ="red" type="submit" value="Accueil" class="submitButton" />
 					<br />
-		</fieldset>
+		
 		</form>
-
-
+		
+		</div>
+	
 
 		<%
 		/* A LAISSER A LA FIN DU CODE */

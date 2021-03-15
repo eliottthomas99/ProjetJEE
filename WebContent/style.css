@@ -5,6 +5,12 @@ body{
 	color: #eceff4;
 }
 
+.title{
+	font-family:system-ui;
+	color: #8FBCBB;
+;
+}
+
 .submitButton {
 	font-size: big;
     padding:5px 15px; 
@@ -32,10 +38,34 @@ body{
 	color: #eceff4 ; */
 	display: flex;
 	flex-direction: row;
+	justify-content: space-around;
+	/*flex-direction: auto;*/
 }
 
-.inscription, .visiteur .modifCompte .modifAvanceeCompte .confirmation {
+.button {
+	overflow: hidden;
+}
+
+.buttonblock {
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+}
+
+.accueil {
+	margin-left:10px;
+}
+
+.supprimer {
+	margin-left: 2px;
+}
+
+.inscription, .visiteur .modifCompte  .confirmation {
 	margin: auto;
+}
+
+.modifAvanceeCompte {
+	margin:  auto ;
 }
 
 
@@ -98,6 +128,9 @@ body{
 	  font-weight:700;    
   }
 
+.form_advanced_modif_button {
+	margin-top: 5px;
+}
 
 /* reset input 
 .form__field{
