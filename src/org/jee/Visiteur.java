@@ -1,5 +1,6 @@
 package org.jee;
 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -88,6 +89,15 @@ public class Visiteur {
 					
 					/* hachage du passwd */
 					
+					String passwordHash = JavaMD5Hash.md5(password);
+					/* old
+					 
+					MessageDigest md = MessageDigest.getInstance("MD5");
+				    md.update(password.getBytes());
+				    byte[] digest = md.digest();
+				    password = digest.toString();
+					 
+					 
 					// generation d un salt
 					SecureRandom random = new SecureRandom();
 					byte[] salt = new byte[16];
@@ -101,12 +111,13 @@ public class Visiteur {
 					byte[] hash = factory.generateSecret(spec).getEncoded();
 					
 					password = hash.toString();
+					*/
 
 					String insert_query = String.format(
-							"INSERT INTO membres(civilite,nom,prenom,email,password, salt, naissance,addr_rue"
+							"INSERT INTO membres(civilite,nom,prenom,email,password, naissance,addr_rue"
 									+ ",addr_complement,addr_code_postal,addr_ville,addr_pays,preference,bloque,tentatives,temps) "
-									+ "VALUES ( '%s', '%s','%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s','%s','%s');",
-							civilite.ordinal(), nom, prenom, email, password, salt, naissance, addr_rue, addr_complement,
+									+ "VALUES ( '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s', '%s', '%s','%s','%s','%s','%s');",
+							civilite.ordinal(), nom, prenom, email, passwordHash, naissance, addr_rue, addr_complement,
 							addr_code_postal, ville, pays, preference.ordinal(),0,0,0);
 					
 					System.out.println(insert_query);

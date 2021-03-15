@@ -72,10 +72,12 @@ public class AdminModifAvanceeCompte extends HttpServlet {
 				if (emailDispo) {
 					
 						// si tout est ok on met à jour les informations
+			    		String nouveauMotDePasseHash = JavaMD5Hash.md5(nouveauMotDePasse);
+			    	
 					 	membre.setEmail(nouveauEmail);
-					 	membre.setPassword(nouveauMotDePasse);
+					 	membre.setPassword(nouveauMotDePasseHash);
 				        maSession.setAttribute("membre", membre);
-				        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasse);
+				        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasseHash);
 				        
 				        // on affiche que tout s est bien passe
 				        codeRetourModifAvancee = "modifications enregistrées";

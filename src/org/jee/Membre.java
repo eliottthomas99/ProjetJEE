@@ -1,18 +1,17 @@
 package org.jee;
 
 
-import java.time.format.DateTimeFormatter;  
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.jee.Visiteur.returnStatement;
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 public class Membre {
 
@@ -270,7 +269,7 @@ public class Membre {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static Boolean validerAuthentification(String email, String password) throws InterruptedException {
+	public static Boolean validerAuthentification(String email, String password) throws InterruptedException, NoSuchAlgorithmException, InvalidKeySpecException {
 		/*
 		 * On regarde s'il exite quelqu'un avec la bonne combinaison id/mdp
 		 * 
@@ -287,11 +286,34 @@ public class Membre {
 		Boolean status = false;
 
 		Connection connexion = DBManager.getInstance().getConnection();
+		
+		/* old
+		// on recupere le salt
+		Membre membreTentative = Membre.getMembre(email);
+		byte[] saltByte = membreTentative.getSalt().getBytes();
+		
+		// on rehache le mdp
+		KeySpec spec = new PBEKeySpec(password.toCharArray(), saltByte, 65536, 128);
+		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		byte[] hash = factory.generateSecret(spec).getEncoded();
+		
+		
+
+		MessageDigest md = MessageDigest.getInstance("MD5");
+	    md.update(password.getBytes());
+	    byte[] digest = md.digest();
+	    password = digest.toString();
+	    
+	    
+		*/
+		
+		String passwordHash = JavaMD5Hash.md5(password);
 
 		// Créer un java.sql.Statement à partir de cette connexion en utilisant:
 		try (Statement stmt = connexion.createStatement()) {
 			// Exécuter la requête SQL et récupérer un java.sql.ResultSet
-			String query = "select * from membres where email='" + email + "' and password='" + password + "';";
+			System.out.println("mdp haché : " + passwordHash);
+			String query = "select * from membres where email='" + email + "' and password='" + passwordHash + "';";
 			//System.out.println(query);
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -311,6 +333,7 @@ public class Membre {
 			int bloqueV = -1;
 			int tentativesV = -1;
 			int tempsV = -1;
+			// String saltV = "-1";
 			
 			
 			int rowCount = 0;
@@ -333,6 +356,7 @@ public class Membre {
 				bloqueV = rs.getInt("bloque");
 				tentativesV = rs.getInt("tentatives");
 				tempsV = rs.getInt("temps");
+				//saltV = rs.getString("salt");
 				
 				//System.out.println(tempsV);
 				
@@ -577,8 +601,6 @@ public class Membre {
 				membre.setAdminMusique(adminMusique);
 				membre.setAdminCompte(adminCompte);
 				membre.setBloque(bloque);
-				
-				
 			}
 			
 		}catch(SQLException e) {
