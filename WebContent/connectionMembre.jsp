@@ -39,6 +39,17 @@ String codeRetour = (String)maSession.getAttribute("codeRetour");
          
 	</form>
 	
+	
+	<form method="get" action="Visiteur">
+		
+		<fieldset>
+				<legend>Creer un compte</legend>
+		<input color ="red" type="submit" value="Creer un compte" class="sansLabel" />
+					<br />
+		</fieldset>
+		</form>
+	
+	
 	<%
 		/* A LAISSER A LA FIN DU CODE */
 		/* permet d'afficher la pop up APRES que la page ait chargee */
