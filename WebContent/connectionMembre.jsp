@@ -20,10 +20,9 @@ String codeRetour = (String)maSession.getAttribute("codeRetour");
 	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-	<p>Connection</p>
 	
-	<form method="post" action="Connection">
-			<fieldset>
+	<form method="post" action="Connection" class="form">
+			
                 <legend>Connection</legend>
                 <p>Veuillez rentrer vos identifiants pour vous connecter.</p>
 
@@ -37,7 +36,7 @@ String codeRetour = (String)maSession.getAttribute("codeRetour");
 
                 <input type="submit" value="Connexion" class="sansLabel" />
                 <br />
-            </fieldset>
+         
 	</form>
 	
 	<%
