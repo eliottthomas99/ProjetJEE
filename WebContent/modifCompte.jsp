@@ -26,8 +26,7 @@
 		<div class="corps">
 		<section class="modifCompte">
 			<h1 class="title">Modification Compte</h1>
-			<form method="post" action="ModifCompte">
-				<fieldset>
+			<form method="post" action="ModifCompte" class="form" >
 					<legend>Inscription</legend>
 					<p>Veuillez remplire les champs nécessaires.</p>
 
@@ -56,6 +55,7 @@
 						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id="prenomInscription" value="<%=membre.getPrenom() %>" required />
 						<label for="prenomInscription" class="form__label">Prénom</label>
 					</div>
+					<br/>
 
 					<!--label for="c">prenom<span class="requis">*</span></label>
 					<input type="text" id="prenomInscription" name="prenom" value="" size="20" maxlength="20" />
@@ -108,11 +108,11 @@
 						<input type="text" class="form__field" placeholder="Pays" name="Pays" id='Pays' value="<%=membre.getPays() %>" required />
 						<label for="Pays" class="form__label">Pays</label>
 					</div>
-
+					<br/>
 					<!--label for="Pays">Pays<span class="requis">*</span></label>
 					<input type="text" id="Pays" name="Pays" value="" size="20" maxlength="60" />
 					<br /-->
-
+			
 
 					<label for="preference-select">Style de musique préféré:</label>
 					<select name="preference" id="preference-select">
@@ -131,7 +131,7 @@
 
 					<input type="submit" value="Modification" class="sansLabel" />
 					<br />
-				</fieldset>
+				
 
 			</form>
 		</section>
@@ -140,8 +140,8 @@
 		
 		<section class="modifAvanceeCompte">
 		<h1 class="title">Modification Avancée Compte</h1>
-			<form method="post" action="ModifAvanceeCompte">
-				<fieldset>
+			<form method="post" action="ModifAvanceeCompte" class="form">
+			
 				<legend>Modificaction Avancee</legend>
 					<div class="form__group field">
 						<input type="password" class="form__field" placeholder="ancienMotDePasse" name="ancienMotDePasse" id='nomInscription' value="" required />
@@ -165,7 +165,7 @@
 					
 					<input type="submit" value="ModificationAvancee" class="form_advanced_modif_button" />
 					<br />
-				</fieldset>
+			
 
 			</form>
 		
