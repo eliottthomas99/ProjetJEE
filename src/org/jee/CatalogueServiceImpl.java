@@ -618,7 +618,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 		
 			if (connexion != null)
 			{
-				 rs = stmt.executeQuery("select adminMusique from membres where id = "+id+"");
+				 rs = stmt.executeQuery("select adminCompte from membres where id = "+id+"");
 				 rs.next();
 				 adminOrNo = rs.getInt("adminCompte");
 				 System.out.println(adminOrNo);
