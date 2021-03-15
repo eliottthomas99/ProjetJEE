@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-
+body{
+	background-color: #2e3440;
+}
 #primary_nav_wrap
 {
 	margin-top:15px
@@ -94,7 +96,9 @@
 
 #musical{
 	display:block;
-	color:#333;
+	color: #5E81AC;
+	text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
+
 	text-decoration:none;
 	font-weight:700;
 	font-size:100px;

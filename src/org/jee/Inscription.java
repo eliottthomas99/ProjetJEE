@@ -1,6 +1,9 @@
 package org.jee;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -88,8 +91,14 @@ public class Inscription extends HttpServlet {
 
         
         
-        Visiteur.returnStatement retour = Visiteur.CreerCompte(civilite, nom, prenom,email, password, passwordConf, 
-        														naissance, rue, complement, codePostal, ville, pays, preference);
+        Visiteur.returnStatement retour = null;
+		try {
+			retour = Visiteur.CreerCompte(civilite, nom, prenom,email, password, passwordConf, 
+																	naissance, rue, complement, codePostal, ville, pays, preference);
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         System.out.println(retour);
 		doGet(request, response);

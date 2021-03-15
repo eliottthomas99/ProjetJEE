@@ -17,17 +17,16 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>Modification Compte</title>
 		<link rel="stylesheet" href="style.css" />
+		<title>Modification Compte</title>	
 
 	</head>
 
 	<body>
 		<div class="corps">
 		<section class="modifCompte">
-			<h1>Modification Compte</h1>
-			<form method="post" action="ModifCompte">
-				<fieldset>
+			<h1 class="title">Modification Compte</h1>
+			<form method="post" action="ModifCompte" class="form" >
 					<legend>Inscription</legend>
 					<p>Veuillez remplire les champs nécessaires.</p>
 
@@ -56,6 +55,7 @@
 						<input type="input" class="form__field" placeholder="Prénom" name="prenom" id="prenomInscription" value="<%=membre.getPrenom() %>" required />
 						<label for="prenomInscription" class="form__label">Prénom</label>
 					</div>
+					<br/>
 
 					<!--label for="c">prenom<span class="requis">*</span></label>
 					<input type="text" id="prenomInscription" name="prenom" value="" size="20" maxlength="20" />
@@ -108,11 +108,11 @@
 						<input type="text" class="form__field" placeholder="Pays" name="Pays" id='Pays' value="<%=membre.getPays() %>" required />
 						<label for="Pays" class="form__label">Pays</label>
 					</div>
-
+					<br/>
 					<!--label for="Pays">Pays<span class="requis">*</span></label>
 					<input type="text" id="Pays" name="Pays" value="" size="20" maxlength="60" />
 					<br /-->
-
+			
 
 					<label for="preference-select">Style de musique préféré:</label>
 					<select name="preference" id="preference-select">
@@ -131,18 +131,17 @@
 
 					<input type="submit" value="Modification" class="sansLabel" />
 					<br />
-				</fieldset>
+				
 
 			</form>
 		</section>
 		
-		<hr>
 		
 		
 		<section class="modifAvanceeCompte">
-		<h1>Modification Avancée Compte</h1>
-			<form method="post" action="ModifAvanceeCompte">
-				<fieldset>
+		<h1 class="title">Modification Avancée Compte</h1>
+			<form method="post" action="ModifAvanceeCompte" class="form">
+			
 				<legend>Modificaction Avancee</legend>
 					<div class="form__group field">
 						<input type="password" class="form__field" placeholder="ancienMotDePasse" name="ancienMotDePasse" id='nomInscription' value="" required />
@@ -161,39 +160,41 @@
 					
 					<div class="form__group field">
 						<input type="password" class="form__field" placeholder="nouveauMotDePasse Confirmation" name="nouveauMotDePasseConfirmation" id="nouveauMotDePasseConfirmation" value="" required />
-						<label for="nouveauMotDePasse" class="form__label">nouveauMotDePasse Confirmation</label>
+						<label for="nouveauMotDePasse" class="form__label"> Confirmation</label>
 					</div>
 					
-					<input type="submit" value="ModificationAvancee" class="sansLabel" />
+					<input type="submit" value="ModificationAvancee" class="form_advanced_modif_button" />
 					<br />
-				</fieldset>
+			
 
 			</form>
 		
 		</section>
 		
 		</div>
-
-		<form method="get" action="suppression">
 		
-		<fieldset>
-				<legend>Supprimer compte</legend>
-		<input color ="red" type="submit" value="Supprimer compte" class="submitButton" />
+		<div class="buttonblock">
+		
+
+		<form method="get" action="suppression" class="supprimer">
+		
+			
+				<input color ="red" type="submit" value="Supprimer compte" class="submitButton" />
 					<br />
-		</fieldset>
+			
 		</form>
 
 		
-		<form method="post" action="MainServlet">
+		<form method="post" action="MainServlet" class="accueil" >
 		
-		<fieldset>
-				<legend>Accueil</legend>
+		
 		<input color ="red" type="submit" value="Accueil" class="submitButton" />
 					<br />
-		</fieldset>
+		
 		</form>
-
-
+		
+		</div>
+	
 
 		<%
 		/* A LAISSER A LA FIN DU CODE */
