@@ -10,7 +10,8 @@
 List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAttribute("listElements");
 
 
-int res = (int)request.getAttribute("res");
+int resAdminCompteOrNo = (int)request.getAttribute("resAdminCompteOrNo");
+int resAdminMusiqueOrNo = (int)request.getAttribute("resAdminMusiqueOrNo");
 
 // On récupère les données des membres 
 //Membre alex = (Membre)request.getAttribute("alex");
@@ -20,6 +21,7 @@ Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
 int id = elMembre.getId();
 
 System.out.println("id membre"+id);
+
 %>  
 
  
@@ -68,7 +70,7 @@ System.out.println("id membre"+id);
 		  
 		  <li><a href='modifCompte.jsp'>Mon profil</a></li>
 		  <%
-				if (res == 1)
+				if (resAdminCompteOrNo == 1)
 				{
 		  %>
 		  
@@ -91,6 +93,28 @@ System.out.println("id membre"+id);
 	
 	<div id = "titreElem">
 	
+		  			<%
+					if (resAdminMusiqueOrNo == 1)
+					{
+		  			%>
+		  			  <h3>Modifier la playlist publique</h3>
+		  			  
+		  			  <h5>Titre :</h5>
+					  <input name='search' id= 'TitreBarre1' type='text' placeholder='Saisir un titre'>
+					  <h5>Interprete :</h5>
+					  <input name='search' id= 'InterpreteBarre2' type='text' placeholder='Saisir un interprete'>
+					  <h5>Type :</h5> 
+					  <select id ="type">
+						<option value=1>Album</option>
+						<option value=2>Titre</option>
+					  </select>
+					  <br>
+					  <br>
+			    	  <button onclick ='ajoutElementPlaylistPublique()'>Ajouter</button>
+	    	   		<%
+					}
+			   		%>
+    	  
 		<h3> Decouvrez notre playlist du moment </h3>
 		<br>
 		<table border="0">
@@ -99,6 +123,22 @@ System.out.println("id membre"+id);
 	            <th>Auteur</th>
 	            <th>Type</th>
 	      </tr>
+				<%
+				
+				if(listElements.isEmpty())
+				{
+				%>
+					<tr>
+						<td>vide</td>
+						<td>vide</td>
+						<td>vide</td>
+					</tr>
+						
+				<%
+				}
+				%>
+			
+				
 				<%
 				for (ElementDeCatalogue cata:listElements) {
 	    		 String title = cata.getTitre();
@@ -113,7 +153,7 @@ System.out.println("id membre"+id);
 					      <td><%=title%></td>
 					      <td><%=author %></td>
 					      <td>Album</td>
-					      <td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id="<%=title%>" onclick="goTitresAlbum(this)">Parcourir l'album</button></td>
+					      <td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id="<%=title%>" onclick="goTitresAlbum(this)">Parcourir l'album</button></td> <td><button id="playlistMomentAlbum <%=title%>" onclick ='deleteElement(this)'>supprimer</button></td>
 					 </tr>
 	      		<%
 				}else{
@@ -122,7 +162,7 @@ System.out.println("id membre"+id);
 					      <td><%=title %></td>
 					      <td><%=author%></td>
 					      <td>Titre muscial</td>
-					      <td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td>
+					      <td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td> <td><button id="playlistMomentTitre <%=title%>" onclick ='deleteElement(this)'>supprimer</button></td>
 					 </tr>
 				<%
 				}
@@ -148,6 +188,9 @@ System.out.println("id membre"+id);
 var xhr = new XMLHttpRequest();
 var object = '';
 var search = '';
+var titre ='';
+var interprete ='';
+
 var interpreteAlbum;
 var inStop = 0;
 
@@ -330,6 +373,72 @@ function majCatalogue() {
           '\n\nCode retour = ' + xhr.statusText);
     }
   }
+}
+
+function ajoutTitres()
+{	
+	  console.log('GO ajouter du contenu !');
+	  titre = document.getElementById('barreTitre1').value;
+	  interprete = document.getElementById('barreTitre2').value;
+	  xhr.open('GET', 'MainServlet?titreAjout=' + titre + '&interpreteAjout=' + interprete, true);
+	  xhr.onreadystatechange = majCatalogue;
+	  xhr.send();  // requête pret à étre envoyé
+}
+
+
+function ajoutAlbum()
+{	
+	  console.log('GO ajouter du contenu !');
+	  titre = document.getElementById('barreAlbum1').value;
+	  interprete = document.getElementById('barreAlbum2').value;
+	  xhr.open('GET', 'MainServlet?AlbumAjout=' + titre + '&interpreteAjout=' + interprete, true);
+	  xhr.onreadystatechange = majCatalogue;
+	  xhr.send();  // requête pret à étre envoyé
+}
+
+function ajoutElementPlaylistPublique()
+{
+	 var element ='';
+	 titre = document.getElementById('TitreBarre1').value;
+	 interprete = document.getElementById('InterpreteBarre2').value;
+	 type = document.getElementById('type').value;
+	 console.log("Type ->",type); // Album = 1 | titre = 2
+	 if(type == 1)
+	 {
+		 element = 'Albums'
+	 }else {
+		 element = 'Titres'
+	 }
+	 xhr.open('GET', 'MainServlet?titrePlaylistPublicAjout=' + titre + '&interpretePlaylistPublicAjout=' + interprete + '&typeAjout=' + element , true);
+	 xhr.onreadystatechange = majCatalogue;
+	 xhr.send();  // requête pret à étre envoyé
+}
+
+function deleteElement(object)
+{
+	 var str = (object.id).toString();
+	 console.log((object.id).toString());
+	 var wordsArray = str.split(' ');
+
+	  // wordsArray[0] -> Dans quelle section je suis ? Titre , albums ...
+	  // wordsArray[1] -> le nom de l'auteur
+	 console.log('premier mot:', wordsArray[0], 'deuxième mot:', wordsArray[1], 'troisième mot:',wordsArray[2]);
+	  
+	 	if(typeof wordsArray[2] == 'undefined')
+		{
+	 		 console.log('Undefined, premier mot:', wordsArray[0], 'deuxième mot:', wordsArray[1], 'troisième mot:',wordsArray[2]);
+	 		  
+			 xhr.open('GET', 'MainServlet?categorieBis=' +  wordsArray[0] + '&titreElement=' +  wordsArray[1], true);
+			 xhr.onreadystatechange = majCatalogue;
+			 xhr.send();  // requête pret à étre envoyé
+		}else{
+			
+			 xhr.open('GET', 'MainServlet?categorieBis=' +  wordsArray[0] + '&titreElement=' +  wordsArray[1] + '&catElement=' + wordsArray[2], true);
+			 xhr.onreadystatechange = majCatalogue;
+			 xhr.send();  // requête pret à étre envoyé
+		}
+	 
+	
 }
 
 </script>

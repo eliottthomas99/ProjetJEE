@@ -158,7 +158,13 @@ table  th {
   color: white;
 }
 
-h1, h3 {
+h1 h3 {
 	
 	font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+h4 h5 {
+	
+	font-family:"comic sans ms";
+	color: red;
 }

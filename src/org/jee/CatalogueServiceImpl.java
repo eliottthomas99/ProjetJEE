@@ -157,22 +157,18 @@ public class CatalogueServiceImpl implements CatalogueService {
 			if (connexion != null)
 			{
 			 stmt = connexion.createStatement();
+			 System.out.println("attt");
 			 rs = stmt.executeQuery("select * from "+table+" where type ="+"'"+categorie+"'");	
 			}
 			
 			// Itérer sur le resultSet : 
 			while (rs.next()) {
 			
-				//String titre, String interprete, int nombreDecoute, int id
-				// je ne récupère que les elements avec les attributs de la classe mère , les spécification de chaque classe ne sont pas interessantes ici 
-				int id = rs.getInt("id");
 				String titre = rs.getString("titre");
 				String interprete = rs.getString("interprete");
-				int nombreEcoutePeriode = rs.getInt("nbEcoutePeriode");
-				
 				//titre, interprete, nombreDecoute, type, annee, duree, idElement
 				
-				catalogueElements.add(new ElementDeCatalogue(titre, interprete,nombreEcoutePeriode ,id));	
+				catalogueElements.add(new ElementDeCatalogue(titre,interprete));	
 			}
 			
 			stmt.close();
@@ -406,7 +402,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			 stmt = connexion.createStatement();
 			 stmt3 = connexion.createStatement();
 			 //rs = stmt.executeQuery("Select Titres.titre, Titres.interprete, Titres.id, Titres.nbEcoutePeriode from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitres.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
-			  rs = stmt.executeQuery("Select DISTINCT Titres.titre  from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre,membres, PlaylistPerso, Albums where \n"
+			  rs = stmt.executeQuery("Select DISTINCT Titres.titre  from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre,membres, PlaylistPerso where \n"
 			  		+ "\n"
 			  		+ "Titres.id = lienPlaylistPersoTitres.idTitres AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND \n"
 			  		+ "\n"
@@ -585,7 +581,31 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
-	public int isAnAdmin(int id)
+	public int isAdminCompte(int id)
+	{
+		
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				 rs = stmt.executeQuery("select adminCompte from membres where id = "+id+"");
+				 rs.next();
+				 adminOrNo = rs.getInt("adminCompte");
+				 System.out.println(adminOrNo);
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+		
+		return adminOrNo;
+	}
+	
+	public int isAdminMusique(int id)
 	{
 		
 		try {
@@ -610,6 +630,114 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
+	public void addNewTitre(String nomTitre,String interprete)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				 stmt.executeUpdate("INSERT INTO Titres (titre,interprete) VALUES(('"+nomTitre+"'),('"+interprete+"'))");
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}
 	
+	public void addNewAlbum(String nomTitre,String interprete)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				 stmt.executeUpdate("INSERT INTO Albums (titre,interprete) VALUES(('"+nomTitre+"'),('"+interprete+"'))");
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}
+   
+	
+	public void addElementPlaylistPublic(String nomTitre,String interprete,String type)
+	{
+		System.out.println("AHHHHHHHHHHHHHHHHh");
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+		
+			System.out.println("je suis dans la méthode type vaut : "+type);
+			if (connexion != null)
+			{
+				  System.out.println("je suis dans la méthode type vaut : "+type);
+				  
+				  if(type.equals("Albums"))
+				  {
+					System.out.println("RENTRER DANS ALBUMS YES");
+					stmt.executeUpdate("INSERT INTO Albums (titre,interprete,inPb) VALUES('"+nomTitre+"','"+interprete+"',1)");
+					
+				  }else if (type.equals("Titres")){  
+					System.out.println("RENTRER DANS TITRE YES");
+					stmt.executeUpdate("INSERT INTO Titres (titre,interprete,inPb) VALUES('"+nomTitre+"','"+interprete+"',1)");  
+				  }	 
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}
+	
+	
+	public void suppElementByAdmin(String categorie,String titre)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			stmt = connexion.createStatement();
+			//stmt2 = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				System.out.println("attend juste.."+categorie);
+				if(categorie.equals("playlistMomentTitre"))
+				{
+					stmt.executeUpdate("delete from Titres where titre ='"+titre+"'");
+					
+				}else if(categorie.equals("playlistMomentAlbum")){
+					
+					stmt.executeUpdate("delete from Albums where titre ='"+titre+"'");
+					
+				}else if(categorie.equals("catTitres")){
+					System.out.println("OUAIIIS CATITRE");
+					stmt.executeUpdate("delete from Titres where titre ='"+titre+"'");
+					
+				}else if(categorie.equals("catAlbums")){
+					
+					System.out.println("OUAIIIS CATALBUM");
+					stmt.executeUpdate("delete from Albums where titre ='"+titre+"'");
+				}else {
+					
+					System.out.println("la cate:"+categorie);
+					//stmt.executeUpdate("SET SQL_SAFE_UPDATES=0");
+					stmt.executeUpdate("delete from "+categorie+" where titre ='"+titre+"'");
+				}
+				
+			}
+			stmt.close();
+			connexion.close(); 
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}
 }	
 	

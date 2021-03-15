@@ -55,6 +55,18 @@ public interface CatalogueService {
 	
 	//public List<ElementDeCatalogue> getTitreRock();
 	
-	public int isAnAdmin(int id);
+	public void addElementPlaylistPublic(String nomTitre,String interprete,String type);
+	
+	public int isAdminCompte(int id);
+	
+	public int isAdminMusique(int id);
+	
+	public void addNewTitre(String nomTitre,String interprete);
+	
+	public void addNewAlbum(String nomTitre,String interprete);
+	
+	public void suppElementByAdmin(String categorie,String titre);
+	
+	
 
 }
