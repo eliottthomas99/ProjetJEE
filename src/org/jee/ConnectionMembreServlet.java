@@ -1,6 +1,8 @@
 package org.jee;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +67,7 @@ public class ConnectionMembreServlet extends HttpServlet {
         String motDePasse = request.getParameter( CHAMP_PASS );
         
         Boolean redo = true;
-        
+        HttpSession maSession = request.getSession();
         try {
 			Boolean valide = Membre.validerAuthentification(email, motDePasse);
 			
@@ -79,7 +81,7 @@ public class ConnectionMembreServlet extends HttpServlet {
 				Membre membre  =  Membre.getMembre(email);
 				
 				// creation session http
-				HttpSession maSession = request.getSession();
+				
 				maSession.setAttribute("membre", membre);
 				
 				
@@ -97,6 +99,7 @@ public class ConnectionMembreServlet extends HttpServlet {
 					Membre membreAdmin = Membre.getMembre(email);
 					maSession.setAttribute("membreConnecte", membreAdmin);
 					maSession.setAttribute("membreModifie", membreAdmin);
+					maSession.setAttribute("mailModif", email);
 					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
 					rd.forward(request,response);
 					
@@ -109,11 +112,37 @@ public class ConnectionMembreServlet extends HttpServlet {
 				}
 					
 			} else {
-				valideStr = "email ou mot de passe incorrect";
+				
+				
+				Membre membreTente = Membre.getMembre(email);
+				//vérifier si l'email existe
+				
+				
+				if(membreTente!=null &&  membreTente.getBloque()==1) {
+					valideStr = "compte bloque retente dans 1H";
+					
+				}
+				else {
+					valideStr = "Mauvaise combinaison identifiant mot de passe";
+					
+				}
+				
+				
+
+				maSession.setAttribute("codeRetour", valideStr);
+				
+				
+				
 				request.setAttribute("valideStr", valideStr);
 			}
 			
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

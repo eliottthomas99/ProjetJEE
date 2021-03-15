@@ -67,8 +67,10 @@ public class SuppressionServlet extends HttpServlet {
 				System.out.println(e);
 			}
 		 
+		maSession.setAttribute("membre", null);
 		
-		doGet(request, response);
+		String pageName = "/accueil.jsp";
+		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 	}
 
 }

@@ -12,9 +12,8 @@
 	<body>
 		<div class="corps">
 		<section class="inscription">
-			<h1>Inscription</h1>
-			<form method="post" action="Inscription">
-				<fieldset>
+			<h1 class="title">Inscription</h1>
+			<form method="post" action="Inscription" class="form">
 					<legend>Inscription</legend>
 					<p>Veuillez remplire les champs nécessaires pour vous inscrire.</p>
 
@@ -70,7 +69,7 @@
 						<input type="password" class="form__field" placeholder="Confirmer mot de passe" name="confirmationMotdepasse" id='confirmationMotdepasse' required />
 						<label for="confirmationMotdepasse" class="form__label">Confirmer mot de passe</label>
 					</div>
-
+					<br/>
 					<!--label for="confirmationMotdepasse">Confirmer mot de passe<span class="requis">*</span></label>
 					<input type="password" id="confirmationMotdepasse" name="confirmationMotdepasse" value="" size="20"
 						maxlength="20" />
@@ -150,12 +149,12 @@
 			</form>
 		</section>
 
-		<hr>
+		
 		
 		<section class="visiteur">
-			<h1>Visiteur</h1>
-			<form method="post" action="ConnectionTemporaire">
-				<fieldset>
+			<h1 class="title">Visiteur</h1>
+			<form method="post" action="ConnectionTemporaire" class="form">
+				
 					<legend>Connection en tant qu'utilisateur invite</legend>
 					<p>Veuillez rentrer un nom et un prenom pour votre session.</p>
 
@@ -169,7 +168,7 @@
 
 					<input type="submit" value="Lancer la session" class="sansLabel" />
 					<br />
-				</fieldset>
+				
 
 			</form>
 		</section>

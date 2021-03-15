@@ -1,6 +1,8 @@
 package org.jee;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 
 import javax.servlet.ServletException;
@@ -45,7 +47,7 @@ public class modifAvanceeCompte extends HttpServlet {
 		
 
 		 HttpSession maSession = request.getSession();
-		 Membre membre = (Membre)maSession.getAttribute("membreModifie");
+		 Membre membre = (Membre)maSession.getAttribute("membreConnecte");
 		
 		String toto = null;
 		toto = "toto";
@@ -65,6 +67,7 @@ public class modifAvanceeCompte extends HttpServlet {
 		    	 String ancienEmail = membre.getEmail();
 		    	 
 		    	 // on verifie que le mdp entre soit le bon
+		    	 
 				 valid = Membre.validerAuthentification(ancienEmail, ancienMotDePasse);
 				 
 				if (valid) {
@@ -75,10 +78,13 @@ public class modifAvanceeCompte extends HttpServlet {
 					if (emailDispo) {
 						
 							// si tout est ok on met à jour les informations
+					    	String nouveauMotDePasseHash = JavaMD5Hash.md5(nouveauMotDePasse);
+					    	
 						 	membre.setEmail(nouveauEmail);
-						 	membre.setPassword(nouveauMotDePasse);
+						 	membre.setPassword(nouveauMotDePasseHash);
 					        maSession.setAttribute("membreModifie", membre);
-					        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasse);
+					        
+					        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasseHash);
 					        
 					        // on affiche que tout s est bien passe
 					        codeRetourModifAvancee = "modifications enregistrées";
@@ -96,6 +102,12 @@ public class modifAvanceeCompte extends HttpServlet {
 				}
 		
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeySpecException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -5,6 +5,24 @@ body{
 	color: #eceff4;
 }
 
+.title{
+	font-family:system-ui;
+	color: rgb(18, 107, 107);
+	
+    background: linear-gradient(to right, #36ecde, rgb(18, 107, 107));
+    background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+}
+
+
+.bodyaccueil {
+	display:flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
 .submitButton {
 	font-size: big;
     padding:5px 15px; 
@@ -17,7 +35,14 @@ body{
 }
 
 .dangereux{
-	background-color: #bf616a;	
+	font-size: big;
+    padding:5px 15px; 
+    background:#bf616a;; 
+	color: #eceff4;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
 }
 
 .corps {
@@ -25,30 +50,76 @@ body{
 	color: #eceff4 ; */
 	display: flex;
 	flex-direction: row;
+	justify-content: flex-start;
+	
+	/*flex-direction: auto;*/
 }
 
-.inscription, .visiteur {
-	margin: auto;
+.button {
+	overflow: hidden;
 }
+
+.buttonblock {
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+}
+
+.accueil {
+	margin-left:10px;
+}
+
+.supprimer {
+	margin-left: 2px;
+}
+
+.inscription .modifCompte  .confirmation {
+	margin: auto;
+	
+}
+
+.visiteur {
+	
+	margin-left:30px;
+}
+
+.modifAvanceeCompte {
+	
+	margin-left:30px;
+}
+
+.form{
+	border: 3px solid #88C0D0;
+	border-radius:5px;
+	font-family:system-ui;
+    box-shadow: .4rem .4rem 0 #5E81AC;
+}
+
 
 .form__group {
   position: relative;
   padding: 15px 0 0;
   margin-top: 10px;
   width: 50%;
+  margin-left:5px;
 }
 
 .form__field {
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid #4c566a;
+	position:relative;
+	top:4px;
+	
+  display:block;
+  font-family:system-ui;
+  width: 180%;
+  border: 3px solid currentColor;
+  border-radius: 6px;
   outline: 0;
   font-size: 1rem;
   color: #eceff4;
-  padding: 7px 0;
+  padding: 7px 2px;
   background: transparent;
   transition: border-color 0.2s;
+  
 
   /*&::placeholder {
     color: transparent;
@@ -67,7 +138,10 @@ body{
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #4c566a;
+  color: #8FBCBB;
+  margin-bottom:10px;
+  font-family:system-ui;
+ 
 }
 
 .form__field:focus {
@@ -88,6 +162,16 @@ body{
 	  color: #88c0d0;
 	  font-weight:700;    
   }
+
+.form_advanced_modif_button {
+	margin-top: 5px;
+	
+}
+
+legend {
+	font-family:system-ui;
+	
+}
 
 
 /* reset input 
