@@ -17,10 +17,9 @@ String str = (String)request.getAttribute("valideStr");
 	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-	<p>Connection</p>
 	
-	<form method="post" action="Connection">
-			<fieldset>
+	<form method="post" action="Connection" class="form">
+			
                 <legend>Connection</legend>
                 <p>Veuillez rentrer vos identifiants pour vous connecter.</p>
 
@@ -34,7 +33,7 @@ String str = (String)request.getAttribute("valideStr");
 
                 <input type="submit" value="Connexion" class="sansLabel" />
                 <br />
-            </fieldset>
+         
 	</form>
 </body>
 </html>

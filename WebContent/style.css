@@ -8,7 +8,7 @@ body{
 .title{
 	font-family:system-ui;
 	color: #8FBCBB;
-;
+
 }
 
 .submitButton {
@@ -61,9 +61,14 @@ body{
 	margin-left: 2px;
 }
 
-.inscription, .visiteur .modifCompte  .confirmation {
+.inscription .modifCompte  .confirmation {
 	margin: auto;
 	
+}
+
+.visiteur {
+	
+	margin-left:30px;
 }
 
 .modifAvanceeCompte {
@@ -72,10 +77,10 @@ body{
 }
 
 .form{
-	border: 3px solid #5E81AC;
+	border: 3px solid #88C0D0;
 	border-radius:5px;
-	
-    box-shadow: .4rem .4rem 0 #81A1C1;
+	font-family:system-ui;
+    box-shadow: .4rem .4rem 0 #5E81AC;
 }
 
 
@@ -84,6 +89,7 @@ body{
   padding: 15px 0 0;
   margin-top: 10px;
   width: 50%;
+  margin-left:5px;
 }
 
 .form__field {
@@ -91,7 +97,7 @@ body{
 	top:4px;
 	
   display:block;
-  font-family: inherit;
+  font-family:system-ui;
   width: 180%;
   border: 3px solid currentColor;
   border-radius: 6px;
@@ -152,11 +158,10 @@ body{
 
 legend {
 	font-family:system-ui;
-}
-
-fieldset {
 	
 }
+
+
 /* reset input 
 .form__field{
   &:required,&:invalid { box-shadow:none; }
