@@ -437,8 +437,25 @@ function deleteElement(object)
 			 xhr.onreadystatechange = majCatalogue;
 			 xhr.send();  // requête pret à étre envoyé
 		}
-	 
+}
+
+
+function ajoutTitresToAnAlbum(object)
+{
 	
+	// Recup le titre / interprete du titre a rajouter dans l'album 
+	
+	// 
+	titre = document.getElementById('barreTitreAlbum1').value;
+	interprete = document.getElementById('barreTitreAlbum2').value;
+	titreAlbum = object.id;
+	// Besoin aussi du titre de l'album en cours
+	 
+	console.log("Titre :"+ titre+"interprete qui va être rajouté : "+interprete+" titre de l'album en cours:"+titreAlbum);
+	
+	xhr.open('GET', 'MainServlet?titreOfAnAlbum=' + titre + '&InterpreteOfAnAlbum=' + interprete + '&ActualPlaylist=' + titreAlbum, true);
+	xhr.onreadystatechange = majCatalogue;
+	xhr.send();  // requête pret à étre envoyé
 }
 
 </script>

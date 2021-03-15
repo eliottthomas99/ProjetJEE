@@ -67,6 +67,6 @@ public interface CatalogueService {
 	
 	public void suppElementByAdmin(String categorie,String titre);
 	
-	
+	public void addNewTitreToAnAlbum(String titre,String interprete, String playlistActuelle);
 
 }

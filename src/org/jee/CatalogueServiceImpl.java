@@ -15,7 +15,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 	
 
 	
-	Statement stmt, stmt2,stmt3;
+	Statement stmt, stmt2,stmt3, stmt4;
 	ResultSet rs,rs2, rs3;
 	Connection connexion;
 	List<ElementDeCatalogue> catalogueElements = new ArrayList<>();
@@ -762,5 +762,43 @@ public class CatalogueServiceImpl implements CatalogueService {
 		
 		}
 	}
+	
+	public void addNewTitreToAnAlbum(String titre,String interprete, String playlistActuelle)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			stmt = connexion.createStatement();
+			stmt2 = connexion.createStatement();
+			stmt3 = connexion.createStatement();
+			stmt4 = connexion.createStatement();
+		
+			if (connexion != null)
+			{
+				stmt.executeUpdate("INSERT INTO Titres (titre,interprete) VALUES(('"+titre+"'),('"+interprete+"'))");
+				rs2 = stmt2.executeQuery("select id from Titres where titre = '"+titre+"'");
+				rs3 = stmt3.executeQuery("select id from Albums where titre = '"+playlistActuelle+"'");
+				
+				rs2.next();
+				rs3.next();
+				
+				int idTitre = rs2.getInt("id");
+				int idAlbum = rs3.getInt("id");
+				
+				stmt4.executeUpdate("INSERT INTO lienAlbumTitres (idTitre, idAlbum) VALUES ("+idTitre+","+idAlbum+");");
+			}
+			
+			stmt.close();
+			stmt2.close();
+			stmt3.close();
+			stmt4.close();
+			connexion.close(); 
+			
+		}catch(SQLException e) {
+		System.out.println("rrrooooooooh"+e);
+		
+		}
+	}
+	
 }	
 	

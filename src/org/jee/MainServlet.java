@@ -66,6 +66,7 @@ public class MainServlet extends HttpServlet {
 
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
+		Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
 		elMembre = Membre.getMembre(elMembre.getEmail());
 		int idMembreActuel = elMembre.getId();
 		
@@ -109,6 +110,10 @@ public class MainServlet extends HttpServlet {
 		String paramAdminMusique16 = request.getParameter("categorieBis"); 
 		
 		String paramAdminMusique17 = request.getParameter("catElement");
+		
+		String paramAdminMusique18 = request.getParameter("titreOfAnAlbum");
+		String paramAdminMusique19 = request.getParameter("InterpreteOfAnAlbum");
+		String paramAdminMusique20 = request.getParameter("ActualPlaylist");
 
 
 		
@@ -309,7 +314,6 @@ public class MainServlet extends HttpServlet {
 				  response.getWriter().write("<br>");
 				}
 			
-				
 				response.getWriter().write("<table border=\"0\">"
 						+ "<tr>\n"
 						+ "	            <th>Titre</th>\n"
@@ -339,7 +343,6 @@ public class MainServlet extends HttpServlet {
 					}
 				}
 					
-			
 			}else {
 				
 				if (resAdminMusiqueOrNo == 1)
@@ -397,13 +400,14 @@ public class MainServlet extends HttpServlet {
 			
 			if (resAdminMusiqueOrNo == 1)
 			{
-  			
+			
+			  System.out.println("param3: "+param3);
 			  response.getWriter().write("<h3>Ajouter des titres a cet album</h3>");
-			  response.getWriter().write("<h4>Titre</h4><input name='search' id= 'barreTitre1' type='text' placeholder='titre de la musique..'>");
-			  response.getWriter().write("<h4>Interprete</h4><input name='search' id= 'barreTitre2' type='text' placeholder='nom de l'interprete..'>");
+			  response.getWriter().write("<h4>Titre</h4><input name='search' id= 'barreTitreAlbum1' type='text' placeholder='titre de la musique..'>");
+			  response.getWriter().write("<h4>Interprete</h4><input name='search' id= 'barreTitreAlbum2' type='text' placeholder='nom de l'interprete..'>");
 			  response.getWriter().write("<br>");
 			  response.getWriter().write("<br>");
-			  response.getWriter().write("<button onclick ='ajoutTitres()'>Ajouter</button>");
+			  response.getWriter().write("<button id='"+param3+"' onclick ='ajoutTitresToAnAlbum(this)'>Ajouter</button>");
 			  response.getWriter().write("<br>");
 			  response.getWriter().write("<br>");
 			  response.getWriter().write("<br>");
@@ -1070,9 +1074,65 @@ public class MainServlet extends HttpServlet {
 					}	
 				}	
 		   }
-			
-
-		}else { // La page d'acceuil avec la playlist public en quelque sorte 
+		}else if(paramAdminMusique18 != null && paramAdminMusique19 != null && paramAdminMusique20 != null)
+		{
+			   // Ajouter le titre en question : 
+			   // 18 -> titre
+			   // 19 -> interprete
+			   // 20 -> actualPlaylist 
+			   
+			   catalogueElements.addNewTitreToAnAlbum(paramAdminMusique18,paramAdminMusique19, paramAdminMusique20);
+			   
+			   List<ElementDeCatalogue> listElements = catalogueElements.titreBelongingToAnAlbum(paramAdminMusique20);
+			   
+			   if (resAdminMusiqueOrNo == 1)
+				{
+				
+				  System.out.println("param3: "+param3);
+				  response.getWriter().write("<h3>Ajouter des titres a cet album</h3>");
+				  response.getWriter().write("<h4>Titre</h4><input name='search' id= 'barreTitreAlbum1' type='text' placeholder='titre de la musique..'>");
+				  response.getWriter().write("<h4>Interprete</h4><input name='search' id= 'barreTitreAlbum2' type='text' placeholder='nom de l'interprete..'>");
+				  response.getWriter().write("<br>");
+				  response.getWriter().write("<br>");
+				  response.getWriter().write("<button id='"+param3+"' onclick ='ajoutTitresToAnAlbum(this)'>Ajouter</button>");
+				  response.getWriter().write("<br>");
+				  response.getWriter().write("<br>");
+				  response.getWriter().write("<br>");
+				}
+				
+				
+				System.out.println("Titre de l'album ->"+param3);
+				
+				if(listElements.isEmpty())
+				{
+					response.getWriter().write("<h1> Album vide .. </h1> ");
+					response.getWriter().write("<button id="+idMembreActuel+"onclick ='mesPlaylists(this)'>Retour</button>");	
+				}
+				
+				response.getWriter().write("<br>");
+				response.getWriter().write("<br>");
+				response.getWriter().write("<br>");
+				
+				response.getWriter().write("<table border=\"0\">"
+						+ "<tr>\n"
+						+ "	            <th>Titre</th>\n"
+						+ "	            <th>Auteur</th>\n"
+						+ "</tr>");
+				
+				for (ElementDeCatalogue cata:listElements) {
+		     		 String title = cata.getTitre();
+		      		 String author = cata.getInterprete();
+		      		 
+		      		System.out.println(title);
+					response.getWriter().write("<tr>\n"
+								+ "<td>"+title+"</td>\n"
+								+ "	<td>"+author+"</td>\n"
+								+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td><td><button class='buttonElements' id='Titres "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>"
+								+ "</tr>");
+				}
+				response.getWriter().write("</table>");	
+				
+		    }else { // La page d'acceuil avec la playlist public en quelque sorte 
 				
 			
 				List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPublic();
