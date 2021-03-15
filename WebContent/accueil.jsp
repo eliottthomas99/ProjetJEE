@@ -10,7 +10,7 @@
         <title>Accueil</title>
         <link rel="stylesheet" href="style.css" />
     </head>
-    <body>
+    <body class="bodyaccueil">
 		<a href="http://localhost:8080/ProjetJEE/Visiteur">
 			<input type="submit" value="Visiteur" class="submitButton" />
      	</a>
