@@ -66,7 +66,7 @@ public class MainServlet extends HttpServlet {
 
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
-		Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
+		//Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
 		elMembre = Membre.getMembre(elMembre.getEmail());
 		int idMembreActuel = elMembre.getId();
 		
@@ -717,7 +717,7 @@ public class MainServlet extends HttpServlet {
 				response.getWriter().write("<tr>\n"
 							+ "<td>"+title+"</td>\n"
 							+ "<td>"+author+"</td>\n"
-							+ "<td><button id= '"+title+"'onclick='goTitresAlbum(this)'>Parcourir l'album</button></td><td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button id='\"+title+\"'onclick ='deletePlaylistPerso(this)'>supprimer</button></td>"
+							+ "<td><button id= '"+title+"'onclick='goTitresAlbum(this)'>Parcourir l'album</button></td><td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button class='buttonElements' id='"+param1+" "+title+"' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button id='Albums "+title+"'onclick ='deleteElement(this)'>supprimer</button></td>"
 							+ "</tr>");
 				}else {
 				response.getWriter().write("<tr>\n"
@@ -776,7 +776,7 @@ public class MainServlet extends HttpServlet {
 		      				+ "<td>"+title+"</td>"
 		      				+ "<td>"+author+"</td>"
 		      				+ "<td>Album</td>"
-		      				+ "<td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id='"+title+"' onclick='goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button id='Titres "+title+"'onclick ='deleteElement(this)'>supprimer</button></td>"
+		      				+ "<td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id='"+title+"' onclick='goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button id='playlistMomentAlbum "+title+"'onclick ='deleteElement(this)'>supprimer</button></td>"
 		      				+ "</tr>"
 		      				+ "</tr>");
 				}else{
@@ -785,7 +785,7 @@ public class MainServlet extends HttpServlet {
 							+ "<td>"+title+"</td>"
 		      				+ "<td>"+author+"</td>"
 							+ "<td>Titre muscial</td>"
-							+ "<td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td> <td><button id='Albums "+title+"'onclick ='deleteElement(this)'>supprimer</button></td>"
+							+ "<td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td> <td><button id='playlistMomentTitre "+title+"'onclick ='deleteElement(this)'>supprimer</button></td>"
 							+ "</tr>");
 				}
 			}
@@ -903,6 +903,8 @@ public class MainServlet extends HttpServlet {
 				
 			}else if(paramAdminMusique16.equals("playlistMomentTitre") || paramAdminMusique16.equals("playlistMomentAlbum"))
 			{
+				
+				System.out.println("je dois aller la param15 :"+paramAdminMusique15);
 				catalogueElements.suppElementByAdmin(paramAdminMusique16,paramAdminMusique15);
 				List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPublic();
 				
