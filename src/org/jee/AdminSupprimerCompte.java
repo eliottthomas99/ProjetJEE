@@ -51,15 +51,27 @@ public class AdminSupprimerCompte extends HttpServlet {
 
 		// pour que le .jsp ne soit pas perdu dans ses affichages
 		Membre membre = Membre.getMembre(emailModif);
-		request.setAttribute("leMembre", membre);
-		request.setAttribute("lemail", emailModif); // pour l'affichage de lemail à choisir, c'est plus propre
-
-		Boolean retour = Membre.supprimerCompte(emailModif);
-
-		if (retour) {
-			maSession.setAttribute("codeRetour", "Suppression prise en compte !");
-		} else {
-			maSession.setAttribute("codeRetour", "la suppression a échouée :'-(");
+		
+		if(membre==null) {
+			
+			 
+			maSession.setAttribute("codeRetour", "email mal renseigné");
+			
+		}else {
+		
+		
+		
+			request.setAttribute("leMembre", membre);
+			request.setAttribute("lemail", emailModif); // pour l'affichage de lemail à choisir, c'est plus propre
+	
+			Boolean retour = Membre.supprimerCompte(emailModif);
+	
+			if (retour) {
+				maSession.setAttribute("codeRetour", "Suppression prise en compte !");
+			} else {
+				maSession.setAttribute("codeRetour", "la suppression a échouée :'-(");
+			}
+			
 		}
 
 		doGet(request, response);
