@@ -16,7 +16,7 @@
      	</a>
 		<br />
 		<a href="http://localhost:8080/ProjetJEE/Connection">
-			<input type="submit" value="Membre" class="submitButton" />
+			<input type="submit" value="Membre" class="bigButton" />
      	</a>
         <!--form method="post" action="inscription">
             <fieldset>

@@ -35,18 +35,23 @@ body{
     border-radius: 5px; 
 }
 
+.red-text {
+  color: red;
+}
 
-.bigButton {
+.bigButton{
+	position: relative;
+	top: 250px;
 	font-size: big;
-    padding:5px 15px; 
-    background:#4c566a; 
-	color: #eceff4;
+    padding:100px 300px; 
+    background:#4c566a;
+	 color: #eceff4;
     border:0 none;
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
+    font-size : xx-large;
 }
-
 
 .dangereux{
 	font-size: big;
@@ -186,6 +191,8 @@ legend {
 	font-family:system-ui;
 	
 }
+
+
 
 
 /* reset input 
