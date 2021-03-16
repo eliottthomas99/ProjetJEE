@@ -58,6 +58,13 @@ public class AdminModifAvanceeCompte extends HttpServlet {
         //String nouveauMotDePasseConfirmation = request.getParameter( "nouveauMotDePasseConfirmation" );
 		Boolean valid = false;
 		
+		if(membre==null) {
+			
+			codeRetourModifAvancee = "email mal renseigné";
+
+			
+		}else {
+			
 		
 			
 			String ancienEmail = membre.getEmail();
@@ -79,6 +86,13 @@ public class AdminModifAvanceeCompte extends HttpServlet {
 				        maSession.setAttribute("membre", membre);
 				        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasseHash);
 				        
+				        
+				        
+				        membre.setEmail(nouveauEmail);
+						membre.setPassword(nouveauMotDePasse);
+						request.setAttribute("leMembre", membre);		
+						request.setAttribute("lemail", emailModif);
+				        
 				        // on affiche que tout s est bien passe
 				        codeRetourModifAvancee = "modifications enregistrées";
 				}
@@ -88,19 +102,15 @@ public class AdminModifAvanceeCompte extends HttpServlet {
 					codeRetourModifAvancee = "email non disponible";
 				}
 		
-		
-		
+				
+		}
 		
 		
 
-				
-				System.out.println(codeRetourModifAvancee);
-			maSession.setAttribute("codeRetour", codeRetourModifAvancee);
 			
-			membre.setEmail(nouveauEmail);
-			membre.setPassword(nouveauMotDePasse);
-			request.setAttribute("leMembre", membre);		
-			request.setAttribute("lemail", emailModif);
+		maSession.setAttribute("codeRetour", codeRetourModifAvancee); //Affiche un message d'information pour l'utilisateur
+		
+		
 		
 		
 		doGet(request, response);
