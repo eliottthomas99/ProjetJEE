@@ -12,7 +12,7 @@
     </head>
     <body class="bodyaccueil">
 		<a href="http://localhost:8080/ProjetJEE/Visiteur">
-			<input type="submit" value="Visiteur" class="submitButton" />
+			<input type="submit" value="Visiteur" class="bigButton" />
      	</a>
 		<br />
 		<a href="http://localhost:8080/ProjetJEE/Connection">

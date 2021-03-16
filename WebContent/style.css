@@ -17,6 +17,7 @@ body{
 }
 
 
+
 .bodyaccueil {
 	display:flex;
 	flex-direction: row;
@@ -33,6 +34,19 @@ body{
     -webkit-border-radius: 5px;
     border-radius: 5px; 
 }
+
+
+.bigButton {
+	font-size: big;
+    padding:5px 15px; 
+    background:#4c566a; 
+	color: #eceff4;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
 
 .dangereux{
 	font-size: big;
