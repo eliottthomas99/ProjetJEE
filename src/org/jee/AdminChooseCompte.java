@@ -31,7 +31,7 @@ public class AdminChooseCompte extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		
+		//on affiche la page administrateur de modification de compte
 		String pageName = "/adminModifCompte.jsp";
 
 		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
@@ -46,11 +46,11 @@ public class AdminChooseCompte extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		String emailModif = request.getParameter( "email" );
-		Membre membreModif = Membre.getMembre(emailModif);
-		HttpSession maSession = request.getSession();
+		String emailModif = request.getParameter( "email" ); //l'email du compte a modifier
+		Membre membreModif = Membre.getMembre(emailModif); // l'objet membre correspondant au compte à modifier
+		HttpSession maSession = request.getSession(); // on récupère la session
 		
-		if(membreModif!=null) {
+		if(membreModif!=null) { //cas général
 			request.setAttribute("leMembre", membreModif);
 			
 			
@@ -60,9 +60,19 @@ public class AdminChooseCompte extends HttpServlet {
 		}
 		else {
 			Membre membreVide = new Membre();
+			membreVide.setCivilite(MainServlet.civilite.MONSIEUR);
+			membreVide.setNom("");
+			membreVide.setPrenom("");
+			membreVide.setNaissance("1111-11-11");
+			membreVide.setAddr_rue("");
+			membreVide.setAddr_complement("");
+			membreVide.setAddr_code_postal(0);
+			membreVide.setVille("");
+			membreVide.setPays("");
+			membreVide.setPreference(MainServlet.preference.CLASSIQUE);
 			//request.setAttribute("leMembre", membreVide);
 			//maSession.setAttribute("leMembre",membreVide);
-			maSession.setAttribute("membreModifie", membreModif);
+			maSession.setAttribute("membreModifie", membreVide);
 			maSession.setAttribute("mailModif", emailModif);
 			request.setAttribute("lemail", emailModif); //pour l'affichage
 		}

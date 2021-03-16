@@ -67,47 +67,56 @@ public class AdminModifCompte extends HttpServlet {
 		Membre membreModif = (Membre) maSession.getAttribute("membreModifie");
 		// request.setAttribute("leMembre", membreModif);
 
-		int civiliteInt = Integer.parseInt(request.getParameter(CHAMP_CIVILITE));
-		MainServlet.civilite civilite = MainServlet.civilite.values()[civiliteInt];
-
-		String nom = request.getParameter(CHAMP_NOM);
-		String prenom = request.getParameter(CHAMP_PRENOM);
-		String naissance = request.getParameter(CHAMP_NAISSANCE);
-		String rue = request.getParameter(CHAMP_RUE);
-		String complement = request.getParameter(CHAMP_COMPLEMENT);
-		int codePostal = Integer.parseInt(request.getParameter(CHAMP_CODEPOSTAL));
-		String ville = request.getParameter(CHAMP_VILLE);
-		String pays = request.getParameter(CHAMP_PAYS);
-
-		int preferenceInt = Integer.parseInt(request.getParameter(CHAMP_PREFERENCE));
-		MainServlet.preference preference = MainServlet.preference.values()[preferenceInt];
-
-		// String email = request.getParameter( "onFaitCommeOnPeut" );
-
-		// HttpSession maSession = request.getSession();
-		// Membre membre = (Membre)maSession.getAttribute("membre");
-		// String email = membreModif.getEmail();
-
-		membreModif.setCivilite(civilite);
-		membreModif.setNom(nom);
-		membreModif.setPrenom(prenom);
-		membreModif.setNaissance(naissance);
-		membreModif.setAddr_rue(rue);
-		membreModif.setAddr_complement(complement);
-		membreModif.setAddr_code_postal(codePostal);
-		membreModif.setVille(ville);
-		membreModif.setPays(pays);
-		membreModif.setPreference(preference);
-
-		// System.out.println("nom : " + nom + "\nprenom : " + prenom);
-		Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement, codePostal, ville, pays,
-				preference, emailModif);
-
-		if (retour) {
-			maSession.setAttribute("codeRetour", "modification prise en compte :-)");
-		} else {
-			maSession.setAttribute("codeRetour", "la modification a échouée :-(");
+		if(Membre.getMembre(emailModif)==null) {
+			
+			maSession.setAttribute("codeRetour", "email mal renseigné");
+			
+		}else {
+		
+			int civiliteInt = Integer.parseInt(request.getParameter(CHAMP_CIVILITE));
+			MainServlet.civilite civilite = MainServlet.civilite.values()[civiliteInt];
+	
+			String nom = request.getParameter(CHAMP_NOM);
+			String prenom = request.getParameter(CHAMP_PRENOM);
+			String naissance = request.getParameter(CHAMP_NAISSANCE);
+			String rue = request.getParameter(CHAMP_RUE);
+			String complement = request.getParameter(CHAMP_COMPLEMENT);
+			int codePostal = Integer.parseInt(request.getParameter(CHAMP_CODEPOSTAL));
+			String ville = request.getParameter(CHAMP_VILLE);
+			String pays = request.getParameter(CHAMP_PAYS);
+	
+			int preferenceInt = Integer.parseInt(request.getParameter(CHAMP_PREFERENCE));
+			MainServlet.preference preference = MainServlet.preference.values()[preferenceInt];
+	
+			// String email = request.getParameter( "onFaitCommeOnPeut" );
+	
+			// HttpSession maSession = request.getSession();
+			// Membre membre = (Membre)maSession.getAttribute("membre");
+			// String email = membreModif.getEmail();
+	
+			membreModif.setCivilite(civilite);
+			membreModif.setNom(nom);
+			membreModif.setPrenom(prenom);
+			membreModif.setNaissance(naissance);
+			membreModif.setAddr_rue(rue);
+			membreModif.setAddr_complement(complement);
+			membreModif.setAddr_code_postal(codePostal);
+			membreModif.setVille(ville);
+			membreModif.setPays(pays);
+			membreModif.setPreference(preference);
+	
+			// System.out.println("nom : " + nom + "\nprenom : " + prenom);
+			Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement, codePostal, ville, pays,
+					preference, emailModif);
+			
+			if (retour) {
+				maSession.setAttribute("codeRetour", "modification prise en compte :-)");
+			} else {
+				maSession.setAttribute("codeRetour", "la modification a échouée :-(");
+			}
+		
 		}
+		
 		// request.setAttribute("leMembre", membreModif);
 		maSession.setAttribute("membreModifie", membreModif);
 		// System.out.println(retour);

@@ -8,18 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class AccueilServlet
+ * Servlet implementation class ConnectionTemporaire
  */
-@WebServlet("/Accueil")
-public class AccueilServlet extends HttpServlet {
+@WebServlet("/ConnectionTemporaire")
+public class ConnectionTemporaire extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AccueilServlet() {
+    public ConnectionTemporaire() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,37 +30,36 @@ public class AccueilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		//On affiche la page de choix entre visiteur et membre
-		String pageName = "/accueil.jsp";
+		String pageName = "/visiteur.jsp";
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-
-		String connect = request.getParameter("connect");
-		
-		try {
-
-			rd.forward(request, response);
-
-		} catch (ServletException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
-		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String nom = request.getParameter( "nom" );
+        String prenom = request.getParameter( "prenom" );
+		
+        Visiteur visiteurConnecte = new Visiteur(nom, prenom);
+        
+        Boolean redo = true;
+        
+        if(nom != null && prenom != null) {
+        	redo =false;
+            HttpSession maSession = request.getSession();
+            maSession.setAttribute("visiteurConnecte", visiteurConnecte);
+			maSession.setAttribute("membreConnecte", null);
+			RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
+			rd.forward(request,response);
+        	
+        }
+        
+		if(redo) {
+			doGet(request, response);
+
+		}
 	}
 
 }

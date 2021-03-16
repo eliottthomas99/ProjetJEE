@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class VisiteurServlet
@@ -33,23 +34,7 @@ public class VisiteurServlet extends HttpServlet {
 		
 		String pageName = "/visiteur.jsp";
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-
-		String connect = request.getParameter("connect");
-		
-		try {
-
-			rd.forward(request, response);
-
-		} catch (ServletException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
+		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 	}
 
 	/**
@@ -57,7 +42,12 @@ public class VisiteurServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		
+		
+			doGet(request, response);
+
+		
 	}
 
 }

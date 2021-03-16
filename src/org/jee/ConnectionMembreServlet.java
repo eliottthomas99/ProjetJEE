@@ -97,6 +97,10 @@ public class ConnectionMembreServlet extends HttpServlet {
 				if(adminCompte==1) { 
 					//String pageName = "/adminModifCompte.jsp"
 					Membre membreAdmin = Membre.getMembre(email);
+					
+					//Pour que l'application sache qu'elle a affaire à un membre
+					maSession.setAttribute("visiteurConnecte", null);
+
 					maSession.setAttribute("membreConnecte", membreAdmin);
 					maSession.setAttribute("membreModifie", membreAdmin);
 					maSession.setAttribute("mailModif", email);
@@ -105,6 +109,8 @@ public class ConnectionMembreServlet extends HttpServlet {
 					
 				}
 				else {
+					//Pour que l'application sache qu'elle a affaire à un membre
+					maSession.setAttribute("visiteurConnecte", null);
 					Membre membreNormal = Membre.getMembre(email);
 					maSession.setAttribute("membreConnecte", membreNormal);
 					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");

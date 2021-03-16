@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body{
-	background-color: white;
+	background-color: #2E3440;
 }
 #primary_nav_wrap
 {
@@ -26,7 +26,7 @@ body{
 	font-size:12px;
 	line-height:32px;
 	padding:0 15px;
-	font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
+	font-family:system-ui;
 }
 
 #primary_nav_wrap ul li
@@ -39,12 +39,18 @@ body{
 
 #primary_nav_wrap ul li.current-menu-item
 {
-	background:#ddd
+	background:#5E81AC;
+	color: white;
+	border:hidden;
+	
+	border-radius: 6px;
 }
 
-#primary_nav_wrap ul li:hover
+#primary_nav_wrap ul li:hover :not(button):not(input)
 {
-	background:#f6f6f6
+	background:#81A1C1;
+	border:hidden;
+	border-radius: 6px;
 }
 
 #primary_nav_wrap ul ul
@@ -80,6 +86,12 @@ body{
 	display:block
 }
 
+#primary_nav_wrap ul li a {
+	color: white;
+}
+
+
+
 #barre{
 	line-height:120%;
 	width:300px;
@@ -97,7 +109,7 @@ body{
 #musical{
 	display:block;
 	color: #5E81AC;
-	text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0,0,0,0.15);
+	text-shadow:  6px 5px 0px #3d5676;
 
 	text-decoration:none;
 	font-weight:700;
@@ -109,7 +121,7 @@ body{
 
 #table{
 	
-	color:#333;
+	color:#8FBCBB;
 	text-decoration:none;
 	font-weight:700;
 	font-size:100px;
@@ -120,21 +132,22 @@ body{
 
 
 button {
-	  background-color: white;
+	  background-color: #ECEFF4;
   	  color: black;
-  	  border: 2px solid #555555;
+  	  border: 3px solid #88C0D0;
   	  border-radius: 12px;
   	  padding: 5px 16px;
   	  text-align: center;
       text-decoration: none;
       display: inline-block;
-      font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-family:system-ui;
       font-size: 12px;
 }
 
 
  button:hover {
-  background-color: #555555;
+  background-color: #5E81AC;
+ 
   color: white;
 }
 
