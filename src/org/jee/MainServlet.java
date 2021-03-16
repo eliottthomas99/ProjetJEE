@@ -66,7 +66,18 @@ public class MainServlet extends HttpServlet {
 
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
-		//Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
+		
+		Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
+		
+		System.out.println("visiteur ->"+visiteur);
+		
+		/*if(visiteur != null)
+		{
+			request.setAttribute("visiteurCo", 1);
+		}else {
+			request.setAttribute("visiteurCo", 0);
+		}*/
+		
 		elMembre = Membre.getMembre(elMembre.getEmail());
 		int idMembreActuel = elMembre.getId();
 		
@@ -117,16 +128,11 @@ public class MainServlet extends HttpServlet {
 
 
 		
-		
-		System.out.println("chelou...");
-		
 		if(param1 != null && param2 == null && param3 == null) {
 			
 				int i = 0;
 				if(param1.equals("Titres")) {
 	
-					System.out.println("chelou...");
-					
 					if (resAdminMusiqueOrNo == 1)
 					{
 		  			
@@ -245,9 +251,20 @@ public class MainServlet extends HttpServlet {
 					
 				}else { // On sait qu'on est dans la barre de recherche 
 			
+				List<ElementDeCatalogue> listElements;
 				System.out.println("recherche:"+param1);
 				
-				List<ElementDeCatalogue> listElements = catalogueElements.getElementByresearch(param1);
+				if(param1.contains("Visiteur"))
+				{
+					System.out.println("du visiteur ->"+param1);
+					String[] parts = param1.split("V");
+					String part1 = parts[0];// param1
+					System.out.println("la première partie du mot:"+part1);
+				    listElements = catalogueElements.getElementByresearchVisiteur(part1);
+					
+				}else {
+				    listElements = catalogueElements.getElementByresearch(param1);
+				}
 				
 				// Si la recherche n'a rien donné : 
 				
@@ -1107,19 +1124,24 @@ public class MainServlet extends HttpServlet {
 				
 				if(listElements.isEmpty())
 				{
-					response.getWriter().write("<h1> Album vide .. </h1> ");
-					response.getWriter().write("<button id="+idMembreActuel+"onclick ='mesPlaylists(this)'>Retour</button>");	
+					response.getWriter().write("<tr>\n"
+							+ "<td>vide</td>\n"
+							+ "<td>vide</td>\n"
+							+ "<td>vide</td>\n"
+							+ "</tr>");	
+				}else {
+					response.getWriter().write("<table border=\"0\">"
+							+ "<tr>\n"
+							+ "	            <th>Titre</th>\n"
+							+ "	            <th>Auteur</th>\n"
+							+ "</tr>");
 				}
 				
 				response.getWriter().write("<br>");
 				response.getWriter().write("<br>");
 				response.getWriter().write("<br>");
 				
-				response.getWriter().write("<table border=\"0\">"
-						+ "<tr>\n"
-						+ "	            <th>Titre</th>\n"
-						+ "	            <th>Auteur</th>\n"
-						+ "</tr>");
+				
 				
 				for (ElementDeCatalogue cata:listElements) {
 		     		 String title = cata.getTitre();
@@ -1199,6 +1221,7 @@ public class MainServlet extends HttpServlet {
 			HttpSession maSession = request.getSession();
 			Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
 			int idMembreActuel = elMembre.getId();
+			System.out.println("valeur param"+param5);
 			catalogueElements.deleteTitreFromPlaylistPerso(idMembreActuel, param4,param5);
 			response.getWriter().write("<h3> Le titre '"+param4+"' a bien ete supprime</h3> ");
 			response.getWriter().write("<button onclick ='mesPlaylists(this)'>Retour</button>");

@@ -5,6 +5,7 @@
 <%@page import="java.util.List,org.jee.CatalogueServiceImpl"%>
 <%@page import="java.util.List,org.jee.Membre"%>
 <%@page import="java.util.List,org.jee.Album"%>
+<%@page import="java.util.List,org.jee.Visiteur"%>
 <%
 
 List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAttribute("listElements");
@@ -12,7 +13,7 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAtt
 
 int resAdminCompteOrNo = (int)request.getAttribute("resAdminCompteOrNo");
 int resAdminMusiqueOrNo = (int)request.getAttribute("resAdminMusiqueOrNo");
-//int resVisiteur = (int)request.getAttribute("visiteurConnecte");
+//int visiteur = (int)request.getAttribute("visiteurCo");
 
 // On récupère les données des membres 
 //Membre alex = (Membre)request.getAttribute("alex");
@@ -20,9 +21,13 @@ int resAdminMusiqueOrNo = (int)request.getAttribute("resAdminMusiqueOrNo");
 HttpSession maSession = request.getSession();
 Membre elMembre = (Membre)maSession.getAttribute("membreConnecte");
 int id = elMembre.getId();
-
 System.out.println("id membre"+id);
 
+
+// Le visiteur 
+Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
+
+//System.out.println("visiteur"+visiteur.getPrenom());
 %>  
 
  
@@ -37,64 +42,69 @@ System.out.println("id membre"+id);
 </head>
 <body>
 	<h1 id="musical">Catalogue Musical</h1>
-	<nav id="primary_nav_wrap">
-		<ul>
-		  <li class="current-menu-item"><a href="MainServlet">La playlist du moment</a></li>
-		  
-		  <li><li  ><a id ='<%=id%>' onclick ="mesPlaylists(this)">Mes playlists</a></li>
-		  
-		  <li><a href="#" id ='"<%=id%>"' onclick ="goAccueil(this)">Titres</a>
-		    <ul id = "Titres">
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rock</a>
-		      </li>
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap Francais</a></li>
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap US</a></li>
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Classique</a></li>
-		    </ul>
-		  </li>
-		  <li id = "album"><a  onclick ="goAccueil(this)">Albums</a>
-		    <ul id = "Albums">
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rock</a></li>
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap Francais</a></li>
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap US</a></li>
-		      <li>
-		      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Classique</a></li>
-		    </ul>
-		  </li>
-		  
-		  <li><a href='modifCompte.jsp'>Mon profil</a></li>
+		
+		
 		  <%
-				if (resAdminCompteOrNo == 1)
+				if (visiteur == null)
 				{
 		  %>
-		  
-		  	<li id = "album"><a href='adminModifCompte.jsp'>Gestion Clients</a></li>
-		  
-		  <%
-				}else{}
-		  %>
-		  <li><input name="search" id= "barre" type='text' placeholder='Rechercher un element avec son titre ..'></input>
-		  <button onclick ="goAccueil(this)">Recherche</button></li>
-		  
-		</ul>
-		 
-	</nav>
-	
-	
-	<br>
-	<br>
-	<br>
-		
-	<div id = "titreElem">
+				<nav id="primary_nav_wrap">
+				<ul>
+
+					  <li class="current-menu-item"><a href="MainServlet">La playlist du moment</a></li>
+					  <li><li  ><a id ='<%=id%>' onclick ="mesPlaylists(this)">Mes playlists</a></li>
+					  
+					  <li><a href="#" id ='"<%=id%>"' onclick ="goAccueil(this)">Titres</a>
+					    <ul id = "Titres">
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rock</a>
+					      </li>
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap Francais</a></li>
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap US</a></li>
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Classique</a></li>
+					    </ul>
+					  </li>
+					  <li id = "album"><a  onclick ="goAccueil(this)">Albums</a>
+					    <ul id = "Albums">
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rock</a></li>
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap Francais</a></li>
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Rap US</a></li>
+					      <li>
+					      	<a id ='"<%=id%>"' onclick ="goAccueil(this)">Classique</a></li>
+					    </ul>
+					  </li>
+					  
+					  <li><a href='modifCompte.jsp'>Mon profil</a></li>
+					  <%
+							if (resAdminCompteOrNo == 1)
+							{
+					  %>
+					  
+					  	<li id = "album"><a href='adminModifCompte.jsp'>Gestion Clients</a></li>
+					  
+					  <%
+							}else{}
+					  %>
+					  <li><input name="search" id= "barre" type='text' placeholder='Rechercher un element avec son titre ..'></input>
+					  <button onclick ="goAccueil(this)">Recherche</button></li>
+							  
+				  </ul>			 
+				  </nav>
+				
+				
+				<br>
+				<br>
+				<br>
 					
-	
+				<div id = "titreElem">
+								
+				
 		  			<%
 					if (resAdminMusiqueOrNo == 1)
 					{
@@ -116,65 +126,168 @@ System.out.println("id membre"+id);
 	    	   		<%
 					}
 			   		%>
-    	  
-		<h3> Decouvrez notre playlist du moment </h3>
-		<br>
-		<table border="0">
-	      <tr>
-	            <th>Titre</th>
-	            <th>Auteur</th>
-	            <th>Type</th>
-	      </tr>
-				<%
-				
-				if(listElements.isEmpty())
-				{
-				%>
-					<tr>
-						<td>vide</td>
-						<td>vide</td>
-						<td>vide</td>
-					</tr>
+			    	  
+					<h3> Decouvrez notre playlist du moment </h3>
+					<br>
+					<table border="0">
+				      <tr>
+				            <th>Titre</th>
+				            <th>Auteur</th>
+				            <th>Type</th>
+				      </tr>
+							<%
+							
+							if(listElements.isEmpty())
+							{
+							%>
+								<tr>
+									<td>vide</td>
+									<td>vide</td>
+									<td>vide</td>
+								</tr>
+									
+							<%
+							}
+							%>
 						
-				<%
-				}
-				%>
+							
+							<%
+							for (ElementDeCatalogue cata:listElements)
+							{
+				    		 String title = cata.getTitre();
+				     		 String author = cata.getInterprete();
+					      	%>
+					      	
+						      	<%
+						      	if(cata instanceof Album)
+						      	{
+						      	%>
+							      	 <tr>
+									      <td><%=title%></td>
+									      <td><%=author %></td>
+									      <td>Album</td>
+									      
+									      <%
+										  if (resAdminMusiqueOrNo == 1)
+										  {
+								  		  %>
+									      <td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id="<%=title%>" onclick="goTitresAlbum(this)">Parcourir l'album</button></td> <td><button id="playlistMomentAlbum <%=title%>" onclick ='deleteElement(this)'>supprimer</button></td>
+									      <%
+										   }else{
+										  %>
+										   <td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id="<%=title%>" onclick="goTitresAlbum(this)">Parcourir l'album</button></td>
+									      <%
+											}
+										  %>
+									 </tr>
+					      		<%
+								}else{
+								%>
+									  <tr>
+									      <td><%=title %></td>
+									      <td><%=author%></td>
+									      <td>Titre muscial</td>
+									       <%
+										  if (resAdminMusiqueOrNo == 1)
+										  {
+								  		  %>
+									      <td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td> <td><button id="playlistMomentTitre <%=title%>" onclick ='deleteElement(this)'>supprimer</button></td>
+									      <%
+										   }else{
+										  %>
+										  <td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td>
+										  <%
+											}
+										  %>
+									 </tr>
+								<%
+								}
+								%>
+							<%
+							}
+							%>
+					</table>	
+				</div>
 			
-				
-				<%
-				for (ElementDeCatalogue cata:listElements) {
-	    		 String title = cata.getTitre();
-	     		 String author = cata.getInterprete();
-		      	%>
-		      	
-		      	<%
-		      	if(cata instanceof Album)
-		      		{
-		      	%>
-			      	 <tr>
-					      <td><%=title%></td>
-					      <td><%=author %></td>
-					      <td>Album</td>
-					      <td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id="<%=title%>" onclick="goTitresAlbum(this)">Parcourir l'album</button></td> <td><button id="playlistMomentAlbum <%=title%>" onclick ='deleteElement(this)'>supprimer</button></td>
-					 </tr>
-	      		<%
-				}else{
-				%>
-					  <tr>
-					      <td><%=title %></td>
-					      <td><%=author%></td>
-					      <td>Titre muscial</td>
-					      <td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td> <td><button id="playlistMomentTitre <%=title%>" onclick ='deleteElement(this)'>supprimer</button></td>
-					 </tr>
-				<%
-				}
-				%>
-			<%
-			}
-			%>
-		</table>	
-</div>
-
+		<%
+		} else {
+		%>		 
+				<nav id="primary_nav_wrap">
+				<ul>
+					 <li class="current-menu-item"><a href="MainServlet">La playlist du moment</a></li>
+					 <li ><a href="MainServlet">m'inscrire</a></li>
+					 <li><input name="search" id= "barre" type='text' placeholder='Rechercher un element avec son titre ..'></input>
+					 <button id ="visiteur" onclick ="searchByVisiteur(this)">Recherche</button></li>
+				</ul>
+				</nav>
+				<br>
+				<br>
+				<br>
+					
+				<div id = "titreElem">
+								
+					<h3> Decouvrez notre playlist du moment </h3>
+					<br>
+					<table border="0">
+				      <tr>
+				            <th>Titre</th>
+				            <th>Auteur</th>
+				            <th>Type</th>
+				      </tr>
+							<%
+							
+							if(listElements.isEmpty())
+							{
+							%>
+								<tr>
+									<td>vide</td>
+									<td>vide</td>
+									<td>vide</td>
+								</tr>
+									
+							<%
+							}
+							%>
+						
+							
+							<%
+							for (ElementDeCatalogue cata:listElements) {
+				    		 String title = cata.getTitre();
+				     		 String author = cata.getInterprete();
+					      	%>
+					      	
+					      	<%
+						      	if(cata instanceof Album)
+						      		{
+						      	%>
+							      	 <tr>
+									      <td><%=title%></td>
+									      <td><%=author %></td>
+									      <td>Album</td>
+									      <td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id="<%=title%>" onclick="goTitresAlbum(this)">Parcourir l'album</button></td>
+									 </tr>
+					      		<%
+								}else{
+								%>
+									  <tr>
+									      <td><%=title %></td>
+									      <td><%=author%></td>
+									      <td>Titre muscial</td>
+									      <td><button>Jouer <i style='font-size:10px'class='fa'>&#xf04b;</i></button></td>
+									 </tr>
+								<%
+								}
+								%>
+							<%
+							}
+							%>
+					<%
+					}
+					%>
+		
+					</table>	
+				</div>
+			
 </body>
 </html>
 
@@ -241,6 +354,15 @@ function goAccueil(object) {
       console.log('hey y\'a 2 paramètre\'');
     }
   }
+}
+
+function searchByVisiteur(object)
+{
+  search = document.getElementById('barre').value;
+  console.log(search);
+  xhr.open('GET', 'MainServlet?nomElement='+search+"Visiteur", true);
+  xhr.onreadystatechange = majCatalogue;
+  xhr.send();  // requête pret à étre envoyé
 }
 
 
@@ -351,6 +473,8 @@ function deleteTitreFromPlaylistPerso(object) {
   var wordsArray = str.split(' ');
   console.log('premier mot:', wordsArray[0], 'deuxième mot:', wordsArray[1]);
   // Je suis censé aussi récup l'id du MEMBRE!!!!
+  
+  
   xhr.open(
       'POST',
       'MainServlet?TitreFromPlaylistPerso=' + wordsArray[0] +
@@ -457,5 +581,7 @@ function ajoutTitresToAnAlbum(object)
 	xhr.onreadystatechange = majCatalogue;
 	xhr.send();  // requête pret à étre envoyé
 }
+
+
 
 </script>
