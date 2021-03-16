@@ -8,11 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class VisiteurServlet
  */
-@WebServlet("/Visiteur")
+@WebServlet("/ConnectionTemporaire")
 public class VisiteurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,23 +34,7 @@ public class VisiteurServlet extends HttpServlet {
 		
 		String pageName = "/visiteur.jsp";
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-
-		String connect = request.getParameter("connect");
-		
-		try {
-
-			rd.forward(request, response);
-
-		} catch (ServletException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
+		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 	}
 
 	/**
@@ -57,7 +42,29 @@ public class VisiteurServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		
+		String nom = request.getParameter( "nom" );
+        String prenom = request.getParameter( "prenom" );
+		
+        Visiteur visiteurConnecte = new Visiteur(nom, prenom);
+        
+        Boolean redo = true;
+        
+        if(nom != null && prenom != null) {
+        	redo =false;
+            HttpSession maSession = request.getSession();
+            maSession.setAttribute("visiteurConnecte", visiteurConnecte);
+			maSession.setAttribute("membreConnecte", null);
+			RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
+			rd.forward(request,response);
+        	
+        }
+        
+		if(redo) {
+			doGet(request, response);
+
+		}
 	}
 
 }
