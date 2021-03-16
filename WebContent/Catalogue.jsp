@@ -12,6 +12,7 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>)request.getAtt
 
 int resAdminCompteOrNo = (int)request.getAttribute("resAdminCompteOrNo");
 int resAdminMusiqueOrNo = (int)request.getAttribute("resAdminMusiqueOrNo");
+//int resVisiteur = (int)request.getAttribute("visiteurConnecte");
 
 // On récupère les données des membres 
 //Membre alex = (Membre)request.getAttribute("alex");
@@ -90,8 +91,9 @@ System.out.println("id membre"+id);
 	<br>
 	<br>
 	<br>
-	
+		
 	<div id = "titreElem">
+					
 	
 		  			<%
 					if (resAdminMusiqueOrNo == 1)
@@ -172,9 +174,7 @@ System.out.println("id membre"+id);
 			%>
 		</table>	
 </div>
-	
 
-	
 </body>
 </html>
 
