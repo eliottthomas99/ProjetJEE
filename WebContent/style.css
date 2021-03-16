@@ -17,6 +17,7 @@ body{
 }
 
 
+
 .bodyaccueil {
 	display:flex;
 	flex-direction: row;
@@ -32,6 +33,24 @@ body{
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
+}
+
+.red-text {
+  color: red;
+}
+
+.bigButton{
+	position: relative;
+	top: 250px;
+	font-size: big;
+    padding:100px 300px; 
+    background:#4c566a;
+	 color: #eceff4;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    font-size : xx-large;
 }
 
 .dangereux{
@@ -172,6 +191,8 @@ legend {
 	font-family:system-ui;
 	
 }
+
+
 
 
 /* reset input 

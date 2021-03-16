@@ -12,11 +12,11 @@
     </head>
     <body class="bodyaccueil">
 		<a href="http://localhost:8080/ProjetJEE/Visiteur">
-			<input type="submit" value="Visiteur" class="submitButton" />
+			<input type="submit" value="Visiteur" class="bigButton" />
      	</a>
 		<br />
 		<a href="http://localhost:8080/ProjetJEE/Connection">
-			<input type="submit" value="Membre" class="submitButton" />
+			<input type="submit" value="Membre" class="bigButton" />
      	</a>
         <!--form method="post" action="inscription">
             <fieldset>
