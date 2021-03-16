@@ -31,48 +31,36 @@ public class AdminModifCompte extends HttpServlet {
 	 */
 	public AdminModifCompte() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String pageName = "/adminModifCompte.jsp";
-
+		String pageName = "/adminModifCompte.jsp"; // on affiche la page administrateur de modification de compte
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
 
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession maSession = request.getSession();
-		String emailModif = (String) maSession.getAttribute("mailModif");
-		System.out.println("emod :" + emailModif);
+		HttpSession maSession = request.getSession(); // on récupère la session
+		String emailModif = (String) maSession.getAttribute("mailModif"); // on recupère lemail du compte à modifier
+		Membre membreModif = (Membre) maSession.getAttribute("membreModifie"); // on récupère l'objet membre qui correspond au compte à modifier
 
-		// String emailModif = request.getParameter( "lemail" );
-		// System.out.println("emodif : " + emailModif );
-		// Membre membreModif = Membre.getMembre(emailModif);
-		Membre membreModif = (Membre) maSession.getAttribute("membreModifie");
-		// request.setAttribute("leMembre", membreModif);
-
-		if(Membre.getMembre(emailModif)==null) {
+		if(Membre.getMembre(emailModif)==null) { // si l'email a été mal renseigné
 			
 			maSession.setAttribute("codeRetour", "email mal renseigné");
 			
 		}else {
 		
+			// on récupère tous les champs qui ont été entrés dans le formulaire
 			int civiliteInt = Integer.parseInt(request.getParameter(CHAMP_CIVILITE));
 			MainServlet.civilite civilite = MainServlet.civilite.values()[civiliteInt];
 	
@@ -88,12 +76,7 @@ public class AdminModifCompte extends HttpServlet {
 			int preferenceInt = Integer.parseInt(request.getParameter(CHAMP_PREFERENCE));
 			MainServlet.preference preference = MainServlet.preference.values()[preferenceInt];
 	
-			// String email = request.getParameter( "onFaitCommeOnPeut" );
-	
-			// HttpSession maSession = request.getSession();
-			// Membre membre = (Membre)maSession.getAttribute("membre");
-			// String email = membreModif.getEmail();
-	
+			// on modifie l'objet car on va devoir le transmettre 
 			membreModif.setCivilite(civilite);
 			membreModif.setNom(nom);
 			membreModif.setPrenom(prenom);
@@ -105,7 +88,7 @@ public class AdminModifCompte extends HttpServlet {
 			membreModif.setPays(pays);
 			membreModif.setPreference(preference);
 	
-			// System.out.println("nom : " + nom + "\nprenom : " + prenom);
+			//on modifie le compte
 			Boolean retour = Membre.modifCompte(civilite, nom, prenom, naissance, rue, complement, codePostal, ville, pays,
 					preference, emailModif);
 			
@@ -117,13 +100,11 @@ public class AdminModifCompte extends HttpServlet {
 		
 		}
 		
-		// request.setAttribute("leMembre", membreModif);
-		maSession.setAttribute("membreModifie", membreModif);
-		// System.out.println(retour);
+		maSession.setAttribute("membreModifie", membreModif); // on transmet l'information du membre modifie
 
-		request.setAttribute("lemail", emailModif);
+		request.setAttribute("lemail", emailModif); // pour laffichage
 
-		doGet(request, response);
+		doGet(request, response); // on affiche la page
 	}
 
 }
