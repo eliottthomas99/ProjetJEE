@@ -29,21 +29,18 @@ public class AdminChooseCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		//on affiche la page administrateur de modification de compte
 		String pageName = "/adminModifCompte.jsp";
 
 		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		
 		String emailModif = request.getParameter( "email" ); //l'email du compte a modifier
@@ -51,16 +48,15 @@ public class AdminChooseCompte extends HttpServlet {
 		HttpSession maSession = request.getSession(); // on récupère la session
 		
 		if(membreModif!=null) { //cas général
-			request.setAttribute("leMembre", membreModif);
+			request.setAttribute("leMembre", membreModif);// pour l'affichage dans jsp
+			request.setAttribute("lemail", emailModif); //pour l'affichage dans jsp
+			maSession.setAttribute("membreModifie", membreModif); //pour un usage ultérieur dans java
+			maSession.setAttribute("mailModif", emailModif); //pour un usage ultérieur dans java
 			
-			
-			maSession.setAttribute("membreModifie", membreModif);
-			maSession.setAttribute("mailModif", emailModif);
-			request.setAttribute("lemail", emailModif); //pour l'affichage
 		}
-		else {
-			Membre membreVide = new Membre();
-			membreVide.setCivilite(MainServlet.civilite.MONSIEUR);
+		else { //cas ou l'administrateur a rentré un email qui n'existe pas dans la base de données
+			Membre membreVide = new Membre(); // on cree un memebre "vide" et on remplie les champs qui vont devoir apparaitre dans le formulaire
+			membreVide.setCivilite(MainServlet.civilite.NE_SE_PRONONCE_PAS);
 			membreVide.setNom("");
 			membreVide.setPrenom("");
 			membreVide.setNaissance("1111-11-11");
@@ -70,18 +66,17 @@ public class AdminChooseCompte extends HttpServlet {
 			membreVide.setVille("");
 			membreVide.setPays("");
 			membreVide.setPreference(MainServlet.preference.CLASSIQUE);
-			//request.setAttribute("leMembre", membreVide);
-			//maSession.setAttribute("leMembre",membreVide);
-			maSession.setAttribute("membreModifie", membreVide);
-			maSession.setAttribute("mailModif", emailModif);
+			
+			
+			maSession.setAttribute("membreModifie", membreVide); //pour un usage ultérieur dans java
+			maSession.setAttribute("mailModif", emailModif); //pour un usage ultérieur dans java
 			request.setAttribute("lemail", emailModif); //pour l'affichage
 		}
 		
-		//System.out.println("chosed" +emailModif);
  
 		
 		
-		doGet(request, response);
+		doGet(request, response); // on affiche la page
 	}
 
 }

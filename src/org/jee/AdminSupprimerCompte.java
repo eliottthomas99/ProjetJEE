@@ -20,37 +20,28 @@ public class AdminSupprimerCompte extends HttpServlet {
 	 */
 	public AdminSupprimerCompte() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String pageName = "/adminModifCompte.jsp";
-
+		String pageName = "/adminModifCompte.jsp"; // on affiche la page administrateur de modification de compte
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
 
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession maSession = request.getSession();
-		String emailModif = (String) maSession.getAttribute("mailModif");
-
-		// pour que le .jsp ne soit pas perdu dans ses affichages
-		Membre membre = Membre.getMembre(emailModif);
+		HttpSession maSession = request.getSession(); // on récupère la session
+		String emailModif = (String) maSession.getAttribute("mailModif");  // on récupère l'email du compte à supprimer
+		Membre membre = Membre.getMembre(emailModif); // on récupère l'objet membre qui correspond à l'email fourni
 		
 		if(membre==null) {
 			
