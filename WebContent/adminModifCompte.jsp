@@ -31,24 +31,26 @@ if (lemail == null) {
 </head>
 
 <body>
-	<div class="corps">
+	<div class="corpsAdmin">
 
 		<section class="modifCompte">
-			<h1>Modification Compte Admin</h1>
+			<h1 class="title">Modification Compte Admin</h1>
 
-			<form method="post" action="AdminChooseCompte">
+			<form method="post" action="AdminChooseCompte" class="form" >
 
 				<div class="form__group field">
 					<input type="input" class="form__field" placeholder="email"
 						name="email" id="email" value="<%=lemail%>" required /> <label
 						for="email" class="form__label">Email</label>
 				</div>
-
-				<input type="submit" value="Choisir" class="sansLabel" /> <br />
+				<br>
+				<input type="submit" value="Choisir" class="button" /> <br />
+<br>
 
 			</form>
-			<form method="post" action="AdminModifCompte">
-				<fieldset>
+			<br>
+			<form method="post" action="AdminModifCompte" class="form">
+				
 					<legend>Modification Compte Admin</legend>
 
 					<p>Veuillez remplir les champs nécessaires.</p>
@@ -74,7 +76,7 @@ if (lemail == null) {
 							value="<%=membre.getPrenom()%>" required /> <label
 							for="prenomInscription" class="form__label">Prénom</label>
 					</div>
-
+					<br>
 					<label for="dateDeNaissance">Entrez votre date de naissance<span
 						class="requis">*</span></label> <input type="date" id="dateDeNaissance"
 						name="dateDeNaissance" value="<%=membre.getNaissance()%>"
@@ -110,7 +112,7 @@ if (lemail == null) {
 							name="Pays" id='Pays' value="<%=membre.getPays()%>" required />
 						<label for="Pays" class="form__label">Pays</label>
 					</div>
-
+					<br>
 					<label for="preference-select">Style de musique préféré:</label> <select
 						name="preference" id="preference-select">
 						<option value="<%=membre.getPreference().ordinal()%>"><%=membre.getPreference()%></option>
@@ -120,17 +122,17 @@ if (lemail == null) {
 						<option value=3>Métal</option>
 						<option value=4>Pop</option>
 						<option value=5>Rock</option>
-					</select> <br /> <input type="submit" value="Modification"
-						class="sansLabel" /> <br />
-				</fieldset>
+					</select> <br /> <br> <input type="submit" value="Modification"
+						class="button" /> <br />
+			
 
 			</form>
 		</section>
 
 		<section class="AdminModifAvanceeCompte">
-			<h1>Modification Avancée Compte</h1>
-			<form method="post" action="AdminModifAvanceeCompte">
-				<fieldset>
+			<h1 class="title">Modification Avancée Compte</h1>
+			<form method="post" action="AdminModifAvanceeCompte" class="form" id="modifAv">
+				
 					<legend>Modificaction Avancee Admin Compte</legend>
 
 					<div class="form__group field">
@@ -145,33 +147,33 @@ if (lemail == null) {
 							id="nouveauMotDePasse" value="" required /> <label
 							for="nouveauMotDePasse" class="form__label">nouveauMotDePasse</label>
 					</div>
-
-					<input type="submit" value="ModificationAvancee" class="sansLabel" />
+					<br>
+					<input type="submit" value="ModificationAvancee" class="button" />
 					<br />
-				</fieldset>
+				
 
 			</form>
 
 		</section>
 
 
-		<form method="post" action="AdminSupprimerCompte">
+		<form method="post" action="AdminSupprimerCompte" >
 
-			<fieldset>
+			
 				<legend>Suppression du Compte</legend>
-				<input color="red" type="submit" value="Supprimer" class="sansLabel" />
+				<input color="red" type="submit" value="Supprimer" class="button" />
 				<br />
-			</fieldset>
+			
 		</form>
 
 
 		<form method="post" action="MainServlet">
 
-			<fieldset>
+		
 				<legend>Accueil</legend>
-				<input color="red" type="submit" value="Accueil" class="sansLabel" />
+				<input color="red" type="submit" value="Accueil" class="button" />
 				<br />
-			</fieldset>
+			
 		</form>
 
 

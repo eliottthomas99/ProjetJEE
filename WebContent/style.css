@@ -71,9 +71,15 @@ body{
 	flex-direction: row;
 	justify-content: flex-start;
 	
+	
 	/*flex-direction: auto;*/
 }
 
+.corpsAdmin {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
 .button {
 	overflow: hidden;
 }
@@ -206,7 +212,9 @@ legend {
       font-size: 12px;
 }
 
-
+#modifAv {
+	margin-left:10px;
+}
  .button:hover {
   background-color: #5E81AC;
  
