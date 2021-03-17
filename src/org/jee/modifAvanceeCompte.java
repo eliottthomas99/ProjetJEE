@@ -18,89 +18,93 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/ModifAvanceeCompte")
 public class modifAvanceeCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public modifAvanceeCompte() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String pageName = "/modifCompte.jsp";
-
-		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+	public modifAvanceeCompte() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String codeRetourModifAvancee = null;
-		
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
+		String pageName = "/modifCompte.jsp";
 
-		 HttpSession maSession = request.getSession();
-		 Membre membre = (Membre)maSession.getAttribute("membreConnecte");
+		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		
-		String toto = null;
-		toto = "toto";
-		System.out.println(toto);
-		
-		String ancienMotDePasse = request.getParameter( "ancienMotDePasse" );
-        String nouveauEmail = request.getParameter( "nouveauEmail" );
-        String nouveauMotDePasse = request.getParameter( "nouveauMotDePasse" );
-        String nouveauMotDePasseConfirmation = request.getParameter( "nouveauMotDePasseConfirmation" );
+		String codeRetourModifAvancee = null;
+
+		HttpSession maSession = request.getSession();
+		Membre membre = (Membre) maSession.getAttribute("membreConnecte");
+
+		// On recupere les infos du formulaire
+		String ancienMotDePasse = request.getParameter("ancienMotDePasse");
+		String nouveauEmail = request.getParameter("nouveauEmail");
+		String nouveauMotDePasse = request.getParameter("nouveauMotDePasse");
+		String nouveauMotDePasseConfirmation = request.getParameter("nouveauMotDePasseConfirmation");
 		Boolean valid = false;
-		
-		// les nouveaux mdp correspondent
+
+		// on verifie si les nouveaux mdp correspondent
 		if (nouveauMotDePasse.equals(nouveauMotDePasseConfirmation)) {
-			
+			// si oui
 			// on recupere l ancien email
 			try {
-		    	 String ancienEmail = membre.getEmail();
-		    	 
-		    	 // on verifie que le mdp entre soit le bon
-		    	 
-				 valid = Membre.validerAuthentification(ancienEmail, ancienMotDePasse);
-				 
-				if (valid) {
+				String ancienEmail = membre.getEmail();
 
-					Connection connexion = DBManager.getInstance().getConnection();					
-					Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail);
-					// on verifie que l email choisit soit : sois l ancien soit un nouveau email disponible
+				// on verifie que le mdp entre soit le bon
+				valid = Membre.validerAuthentification(ancienEmail, ancienMotDePasse);
+
+				if (valid) {
+					// si oui
+					
+					// on verifie qu'en cas de changement d'email le nouvel email soit valide
+					Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail)
+							|| nouveauEmail.equals(ancienEmail);
+					
 					if (emailDispo) {
-						
-							// si tout est ok on met à jour les informations
-					    	String nouveauMotDePasseHash = JavaMD5Hash.md5(nouveauMotDePasse);
-					    	
-						 	membre.setEmail(nouveauEmail);
-						 	membre.setPassword(nouveauMotDePasseHash);
-					        maSession.setAttribute("membreModifie", membre);
-					        
-					        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasseHash);
-					        
-					        // on affiche que tout s est bien passe
-					        codeRetourModifAvancee = "modifications enregistrées";
+						// Si oui
+						// on met a jour les donnees du client
+						String nouveauMotDePasseHash = JavaMD5Hash.md5(nouveauMotDePasse);
+
+						membre.setEmail(nouveauEmail);
+						membre.setPassword(nouveauMotDePasseHash);
+						maSession.setAttribute("membreModifie", membre);
+
+						Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail, nouveauMotDePasseHash);
+
+						// on affiche que tout s est bien passe
+						codeRetourModifAvancee = "modifications enregistrées";
 					}
-					// sinon si l email n'est pas dispo
+					// sinon
+					// l email n'est pas dispo
 					else {
-						// TODO : message email non disponible
+						// on affiche que l'email n'est pas disponible
 						codeRetourModifAvancee = "email non disponible";
 					}
-				} 
-				// sinon si l ancien mdp n'est pas bon
+				}
+				// sinon
+				// l ancien mdp n'est pas bon
 				else {
-					// TODO : message mdp incorrect
+					// on affiche que le mdp est incorrect
 					codeRetourModifAvancee = "mot de passe actuel incorrect";
 				}
-		
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -112,21 +116,17 @@ public class modifAvanceeCompte extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		// sinon si les mdps ne correspondent pas
+		// sinon
+		// les mdps ne correspondent pas
 		else {
-			// TODO : message les mdps ne correspondent pas
+			// on affiche que les mdps ne correspondent pas
 			codeRetourModifAvancee = "les mots de passe de passe ne correspondent pas";
 		}
-		
-		
-		
 
-				
-			System.out.println(codeRetourModifAvancee);
-			maSession.setAttribute("codeRetour", codeRetourModifAvancee);
-		
-		
-		
+		// on envoie le code retour
+		System.out.println(codeRetourModifAvancee);
+		maSession.setAttribute("codeRetour", codeRetourModifAvancee);
+
 		doGet(request, response);
 	}
 
