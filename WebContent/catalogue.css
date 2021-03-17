@@ -110,12 +110,25 @@ body{
 	display:block;
 	color: #5E81AC;
 	text-shadow:  6px 5px 0px #3d5676;
-
 	text-decoration:none;
 	font-weight:700;
 	font-size:100px;
 	line-height:32px;
 	padding:0 15px;
+	font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+#musicalPetit{
+	
+	display:block;
+	color: #5E81AC;
+	/*text-shadow:  6px 5px 0px #3d5676;*/
+	text-decoration:none;
+	font-weight:300;
+	font-size:50px;
+	padding:0 22px;
+	line-height:15px;
+	
 	font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
@@ -161,7 +174,7 @@ table  {
 table  td {
   border: 1px solid #ddd;
   padding: 8px;
-  font-family:"comic sans ms";
+  font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 12px;
 }
 

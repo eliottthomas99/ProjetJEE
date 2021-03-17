@@ -59,7 +59,27 @@ public class MainServlet extends HttpServlet {
 		 * if(visiteur != null) { request.setAttribute("visiteurCo", 1); }else {
 		 * request.setAttribute("visiteurCo", 0); }
 		 */
+		
+		if(visiteur != null)
+		{
+			CatalogueService catalogueElements = new CatalogueServiceImpl();
+			List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPublic();
 
+			request.setAttribute("listElements", listElements);
+
+			String pageName = "/Catalogue.jsp";
+
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
+
+			try {
+				rd.forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			
 		elMembre = Membre.getMembre(elMembre.getEmail());
 		int idMembreActuel = elMembre.getId();
 
@@ -1035,6 +1055,7 @@ public class MainServlet extends HttpServlet {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		  }
 		}
 	}
 
@@ -1049,46 +1070,55 @@ public class MainServlet extends HttpServlet {
 		CatalogueService catalogueElements = new CatalogueServiceImpl();
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
-		int idMembreActuel = elMembre.getId();
-
-		// nt idMembreActuel = alex.getId();
-		// int idMembreActuel = kevin.getId();
-
-		String param1 = request.getParameter("nomPlaylist");
-		String param2 = request.getParameter("section");
-		String param3 = request.getParameter("titre");
-		String param4 = request.getParameter("TitreFromPlaylistPerso");
-		String param5 = request.getParameter("PlaylistPerso");
-		// String param6 = request.getParameter("nomPlaylistPerso");
-
-		if (param1 != null && param2 != null && param3 != null && param4 == null && param5 == null) {
-		    catalogueElements = new CatalogueServiceImpl();
-			catalogueElements.newElementInPrivatePlaylist(param1, param2, param3);
-			response.getWriter().write("<h3> Votre element a bien ete insere dans la playlist :" + param1 + " </h3> ");
-			//response.getWriter().write("<button id="+idMembreActuel+" onclick ='MainServlet'>Acceuil</button>");
-			response.getWriter().write("<form action = 'MainServlet'>"
-					+ "<button <input type='submit'value='Go to Google'/>Accueil</button>"
-					+ " </form>");
-		    
-
-		} else if (param5 != null && param2 == null && param3 == null && param4 == null && param1 == null) {
-		    catalogueElements = new CatalogueServiceImpl();
-			catalogueElements.deletePlaylistMembre(param5);
-			response.getWriter().write("<h3> Votre playlist :" + param5 + " a bien ete supprime</h3> ");
-			response.getWriter().write("<button id="+idMembreActuel+" onclick ='mesPlaylists(this)'>Retour</button>");
-
-		} else if (param4 != null && param5 != null && param1 == null && param2 == null && param3 == null) {
-			
-			/*CatalogueService catalogueElements = new CatalogueServiceImpl();
-			HttpSession maSession = request.getSession();
-			Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
+		Visiteur elVisiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
+		
+		if(elMembre != null) {
 			int idMembreActuel = elMembre.getId();
-			System.out.println("valeur param" + param5);*/
-			catalogueElements.deleteTitreFromPlaylistPerso(idMembreActuel, param4, param5);
-			response.getWriter().write("<h3> Le titre '" + param4 + "' a bien ete supprime</h3> ");
-			response.getWriter().write("<button id="+idMembreActuel+" onclick ='mesPlaylists(this)'>Retour</button>");
-		} else {
-
+		
+			
+	
+			// nt idMembreActuel = alex.getId();
+			// int idMembreActuel = kevin.getId();
+	
+			String param1 = request.getParameter("nomPlaylist");
+			String param2 = request.getParameter("section");
+			String param3 = request.getParameter("titre");
+			String param4 = request.getParameter("TitreFromPlaylistPerso");
+			String param5 = request.getParameter("PlaylistPerso");
+			// String param6 = request.getParameter("nomPlaylistPerso");
+	
+			if (param1 != null && param2 != null && param3 != null && param4 == null && param5 == null) {
+			    catalogueElements = new CatalogueServiceImpl();
+				catalogueElements.newElementInPrivatePlaylist(param1, param2, param3);
+				response.getWriter().write("<h3> Votre element a bien ete insere dans la playlist :" + param1 + " </h3> ");
+				//response.getWriter().write("<button id="+idMembreActuel+" onclick ='MainServlet'>Acceuil</button>");
+				response.getWriter().write("<form action = 'MainServlet'>"
+						+ "<button <input type='submit'value='Go to Google'/>Accueil</button>"
+						+ " </form>");
+			    
+	
+			} else if (param5 != null && param2 == null && param3 == null && param4 == null && param1 == null) {
+			    catalogueElements = new CatalogueServiceImpl();
+				catalogueElements.deletePlaylistMembre(param5);
+				response.getWriter().write("<h3> Votre playlist :" + param5 + " a bien ete supprime</h3> ");
+				response.getWriter().write("<button id="+idMembreActuel+" onclick ='mesPlaylists(this)'>Retour</button>");
+	
+			} else if (param4 != null && param5 != null && param1 == null && param2 == null && param3 == null) {
+				
+				/*CatalogueService catalogueElements = new CatalogueServiceImpl();
+				HttpSession maSession = request.getSession();
+				Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
+				int idMembreActuel = elMembre.getId();
+				System.out.println("valeur param" + param5);*/
+				catalogueElements.deleteTitreFromPlaylistPerso(idMembreActuel, param4, param5);
+				response.getWriter().write("<h3> Le titre '" + param4 + "' a bien ete supprime</h3> ");
+				response.getWriter().write("<button id="+idMembreActuel+" onclick ='mesPlaylists(this)'>Retour</button>");
+			} else {
+	
+				this.doGet(request, response);
+			}
+		}else {
+			
 			this.doGet(request, response);
 		}
 	}
