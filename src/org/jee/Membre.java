@@ -212,7 +212,6 @@ public class Membre {
 	
 	
 	// Pour tester l'admin en dur !! 
-	
 	public Membre(int id, String prenom, int adminMusique)
 	{
 		super();
@@ -276,47 +275,20 @@ public class Membre {
 		 * 
 		 * */
 		
-		  
-		/*
-		long millis1 = System.currentTimeMillis();
-		Thread.sleep(2000);
-		long millis2 = System.currentTimeMillis();
-		System.out.println(millis2-millis1);*/
 		
-		Boolean status = false;
+		Boolean status = false; // le booleen qui précise si la combinaison est validee
 
-		Connection connexion = DBManager.getInstance().getConnection();
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD
 		
-		/* old
-		// on recupere le salt
-		Membre membreTentative = Membre.getMembre(email);
-		byte[] saltByte = membreTentative.getSalt().getBytes();
-		
-		// on rehache le mdp
-		KeySpec spec = new PBEKeySpec(password.toCharArray(), saltByte, 65536, 128);
-		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-		byte[] hash = factory.generateSecret(spec).getEncoded();
-		
-		
-
-		MessageDigest md = MessageDigest.getInstance("MD5");
-	    md.update(password.getBytes());
-	    byte[] digest = md.digest();
-	    password = digest.toString();
-	    
-	    
-		*/
-		
-		String passwordHash = JavaMD5Hash.md5(password);
+		String passwordHash = JavaMD5Hash.md5(password); // on hash le mot de passe fourni
 
 		// Créer un java.sql.Statement à partir de cette connexion en utilisant:
 		try (Statement stmt = connexion.createStatement()) {
 			// Exécuter la requête SQL et récupérer un java.sql.ResultSet
-			System.out.println("mdp haché : " + passwordHash);
 			String query = "select * from membres where email='" + email + "' and password='" + passwordHash + "';";
-			//System.out.println(query);
 			ResultSet rs = stmt.executeQuery(query);
 
+			// initialisation des variables
 			int idV = -1;
 			int civiliteV = -1;
 			String nomV  = "-1";
@@ -333,13 +305,13 @@ public class Membre {
 			int bloqueV = -1;
 			int tentativesV = -1;
 			int tempsV = -1;
-			// String saltV = "-1";
-			
 			
 			int rowCount = 0;
+			
 			while (rs.next()) {
 				rowCount++;
 
+				// on récupère les informations dans la BDD
 				idV = rs.getInt("id");
 				civiliteV = rs.getInt("civilite");
 				nomV = rs.getString("nom");
@@ -356,18 +328,13 @@ public class Membre {
 				bloqueV = rs.getInt("bloque");
 				tentativesV = rs.getInt("tentatives");
 				tempsV = rs.getInt("temps");
-				//saltV = rs.getString("salt");
 				
-				//System.out.println(tempsV);
 				
 				
 			}
 
-			//System.out.println(idV + " " + civiliteV + " " + nomV + " " + prenomV+" "+naissanceV);
-			//System.out.println("Total number of rows in ResultSet object = " + rowCount);
-
 			
-			try (Statement stmt2 = connexion.createStatement()) {
+			try (Statement stmt2 = connexion.createStatement()) { // on regarde si l'email existe
 
 				String insert_query = "select * from membres where email='" + email + "';";
 				ResultSet rs2 = stmt2.executeQuery(insert_query);
@@ -376,31 +343,28 @@ public class Membre {
 				int bloqueV2 = 0;
 				int tempsV2 = 0;
 				while (rs2.next()) {
-					bloqueV2 = rs2.getInt("bloque");
-					tempsV2 = rs2.getInt("temps");
-					
-					
+					bloqueV2 = rs2.getInt("bloque"); // on regarde si le compte a été bloque
+					tempsV2 = rs2.getInt("temps"); // on regarde quand le compte a été bloqué
 					rowCount2++;						
 					
 				}
 				
-				if(rowCount2==1) { //si l'email appartient à quelqu'un
+				if(rowCount2==1) { // si l'email appartient à quelqu'un
 					
-					if( bloqueV2==1 ) {//si le compte est bloque
+					if( bloqueV2==1 ) { // si le compte est bloque
 						
-						int maintenant = (int)(System.currentTimeMillis()/1000); //on met en secondes
+						int maintenant = (int)(System.currentTimeMillis()/1000); //on met en secondes le temps courant. Plus facile à stocker
 						
-						if(maintenant-tempsV2>=3600) { //si le temps de bloquage est ecoulé
+						if(maintenant-tempsV2>=3600) { //si le temps de bloquage (1H)  est ecoulé
 							
 							//on passe bloque à 0
-							
 							insert_query = "UPDATE  membres SET bloque=0 where email='"+emailV+"';";
 							int rs3 = stmt2.executeUpdate(insert_query);
 							
 							
 						}
 						else {
-							//il reste bloqué
+							//le compte reste bloqué
 							return false;
 						}
 						
@@ -420,7 +384,7 @@ public class Membre {
 			
 			
 			
-			if (rowCount == 1 ) {
+			if (rowCount == 1 ) { // si la combinaison est correcte
 				
 				
 				
@@ -428,15 +392,14 @@ public class Membre {
 				
 				
 				
-				if(bloqueV == 0) {
-					status = true;
-					//ecrire dans la base
+				if(bloqueV == 0) { // si le compte n'est pas bloqué
 					
-					//Connection connexion2 = DBManager.getInstance().getConnection();
-					
+					status = true; // la combinaison est valide
+					//ecrire dans la base				
 					try (Statement stmt1 = connexion.createStatement()) {
 
-						String insert_query = "UPDATE  membres SET tentatives=0 where email='"+emailV+"';";
+						
+						String insert_query = "UPDATE  membres SET tentatives=0 where email='"+emailV+"';"; // on remet à 0 le nombres de tentatives sur ce compte
 						int rs2 = stmt1.executeUpdate(insert_query);
 						
 						
@@ -454,9 +417,7 @@ public class Membre {
 			}
 			else { //la combinaison n'exite pas
 				
-				System.out.println("la combi nexiste pas");
-				//Si l'email existe malgré tout 
-				
+				//L'email existe il malgré tout ? 
 				try (Statement stmt2 = connexion.createStatement()) {
 
 					String insert_query = "select * from membres where email='" + email + "';";
@@ -466,47 +427,34 @@ public class Membre {
 					int tentativesV2 = 0;
 				
 					while (rs2.next()) {
-						tentativesV2 = rs2.getInt("tentatives");
+						tentativesV2 = rs2.getInt("tentatives"); // on veut voir combien de fois une personne tente de se connecter à ce compte
 						
 						rowCount2++;						
 						
 					}
 					if(rowCount2==1) { //là il existe
 						
-						System.out.println("ca existe");
 						
 						//mise à jour tentative et temps
-						
 						try (Statement stmt1 = connexion.createStatement()) {
 
 							
 							int calcul = tentativesV2+1;
+							int cast = (int)(System.currentTimeMillis()/1000); //on met en secondes le temps actuel
 							
-							
-							int cast = (int)(System.currentTimeMillis()/1000); //on met en secondes
-							//System.out.println("cast :" + cast);
-							
-							String insert_query2 = "UPDATE  membres SET tentatives="+calcul+" , temps="+ cast+"  where email='"+email+"';";
+							String insert_query2 = "UPDATE  membres SET tentatives="+calcul+" , temps="+ cast+"  where email='"+email+"';"; // on met à jour les tentatives et l'heure de la dernière tentative
 							int rs3 = stmt1.executeUpdate(insert_query2);
 							
-							if(calcul>=3) {
+							if(calcul>=3) { // au bout de 3 tentatives le compte est bloqué 
 								String insert_query3 = "UPDATE  membres SET bloque=1  where email='"+email+"';";
 								rs3 = stmt1.executeUpdate(insert_query3);
 							}
-							
-							System.out.println("ça update");
-							
+														
 
 						} catch (SQLException e) {
 							System.out.println(e);
 						}
-						
-						
-						
-						
-						
-						
-						
+								
 					}
 					
 					
@@ -514,11 +462,7 @@ public class Membre {
 				} catch (SQLException e) {
 					System.out.println(e);
 				}
-				
-				
-				
-				
-				
+					
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -533,14 +477,11 @@ public class Membre {
 	public static Boolean modifCompte(MainServlet.civilite civilite, String nom, String prenom, String naissance, String addr_rue, String addr_complement, int addr_code_postal,
 			String ville, String pays, MainServlet.preference preference, String email) {
 
-		// 1) Vérifier que tous les champs sont remplis
-
-		Connection connexion = DBManager.getInstance().getConnection();
-
-		// 2) Vérifier que l'email est dispo
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD
 
 		try (Statement stmt = connexion.createStatement()) {
 
+			// on modifie la BDD en fonction des entrées. Les vérifications éventuelles sont faites avant
 			String insert_query = String.format(
 					"UPDATE membres set civilite='%s',nom='%s',prenom='%s',naissance='%s',addr_rue='%s'"
 							+ ",addr_complement='%s',addr_code_postal='%s',addr_ville='%s',addr_pays='%s',preference='%s'"
@@ -548,7 +489,7 @@ public class Membre {
 					civilite.ordinal(), nom, prenom , naissance, addr_rue, addr_complement,
 					addr_code_postal, ville, pays, preference.ordinal(),email);
 			
-			System.out.println(insert_query);
+			
 			
 			int rs = stmt.executeUpdate(insert_query);
 			return true;
@@ -561,23 +502,22 @@ public class Membre {
 	
 	
 	public static Membre getMembre(String emailP) {
-		// TODO Auto-generated method stub
 		
-		Connection connexion = DBManager.getInstance().getConnection();
+		// Récupérer  le membre qui correspond à un email avec ses données dans la BDD
 		
-		int compteur = 1;
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD
 		
 		Membre membre = null;
 		
 		//Créer un java.sql.Statement à partir de cette connexion en utilisant: 
 		try(Statement stmt = connexion.createStatement()){
 			//  Exécuter la requête SQL  et récupérer un java.sql.ResultSet
-			ResultSet rs = stmt.executeQuery("select * from membres where email='"+emailP
-					+ "' ;");
+			ResultSet rs = stmt.executeQuery("select * from membres where email='"+emailP+ "' ;");
 			
 			// Itérer sur le resultSet : 
 			while (rs.next()) {
 				
+				// on récupère les données dans la BDD
 				int id = rs.getInt("id");
 				MainServlet.civilite civilite = MainServlet.civilite.values()[rs.getInt("civilite")] ; // Peut ralentir les performance, à voir si cela nous gène
 				String nom = rs.getString("nom");
@@ -597,6 +537,7 @@ public class Membre {
 				int bloque  = rs.getInt("bloque");
 				
 				
+				// on crée un objet membre avec ces infos
 				membre = new Membre(id,civilite,nom,prenom,email,password,naissance,addr_rue,addr_complement,addr_code_postal,ville,pays,preference);
 				membre.setAdminMusique(adminMusique);
 				membre.setAdminCompte(adminCompte);
@@ -608,36 +549,30 @@ public class Membre {
 			
 		}
 		
-		
-		
 		return membre;
 		
-		
-	
 	}
 
 			
 
 	public static Boolean modifAvanceeCompte(String ancienEmail, String nouveauEmail, String nouveauMotDePasse) {
 
-		// 1) Vérifier que tous les champs sont remplis
-
-		Connection connexion = DBManager.getInstance().getConnection();
-
-		// 2) Vérifier que l'email est dispo
+		// modification de l email et/ou du mot de passe d un compte
 		
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD
+
+		//Vérifier que l'email est dispo
 		Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail);
 		
 		if (emailDispo) {
 			try (Statement stmt = connexion.createStatement()) {
 	
+				// on met à jour la BDD avec es données fournies. Les éventuelles vérifications sont faites avant l'appel de la fonction
 				String insert_query = String.format(
 						"UPDATE membres set email='%s',password='%s'"
 								+ "where email='%s';",
 						nouveauEmail, nouveauMotDePasse, ancienEmail);
-				
-				System.out.println(insert_query);
-				
+								
 				int rs = stmt.executeUpdate(insert_query);
 				return true;
 			} catch (SQLException e) {
@@ -655,40 +590,23 @@ public class Membre {
 	public static Boolean supprimerCompte( String emailSup) {
 
 
-		Connection connexion = DBManager.getInstance().getConnection();
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD 
 
-		
-		
+		try (Statement stmt = connexion.createStatement()) {
 	
-			try (Statement stmt = connexion.createStatement()) {
-	
-				String delete_query = String.format(
-						"DELETE FROM membres where email='%s';",emailSup);
+			String delete_query = String.format("DELETE FROM membres where email='%s';",emailSup); // on supprime le compte qui correspond à lemail fourni, les vérifications sont faites avant			
+			int rs = stmt.executeUpdate(delete_query);
+			return true;
+			
+		} catch (SQLException e) {
 				
-				System.out.println(delete_query);
-				
-				int rs = stmt.executeUpdate(delete_query);
-				return true;
-			} catch (SQLException e) {
-				
-				System.out.println(e);
-				return false;
-			}
+			System.out.println(e);
+			return false;
+		}
 		
 		
 	}
 			
-				
-				
-				
-				
-				
 
-		
-		 
-
-	
-	
-	
 
 }

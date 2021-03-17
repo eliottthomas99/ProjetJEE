@@ -22,7 +22,6 @@ public class AdminChooseCompte extends HttpServlet {
      */
     public AdminChooseCompte() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

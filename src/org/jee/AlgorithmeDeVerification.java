@@ -8,16 +8,14 @@ import java.sql.Statement;
 public class AlgorithmeDeVerification {
 
 	public static Boolean emailDispo(String email) {
-		
+		//vérifie si un email est disponible
 
-		Connection connexion = DBManager.getInstance().getConnection();
-
-		int rowCount = 0;
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD
+		int rowCount = 0; // on compte le nombre de lignes de la requete
 
 		try (Statement stmt = connexion.createStatement()) {
 
 			ResultSet rs = stmt.executeQuery("select * from membres where email ='" + email + "';");
-
 			while (rs.next()) {
 				rowCount++;
 
@@ -28,15 +26,11 @@ public class AlgorithmeDeVerification {
 		}
 
 		switch (rowCount) {
-		//case -1:
-			//System.out.println("ERREUR");
-			//break;
+		
 		case 0:
-			//System.out.println("dispo");
-			return true;
+			return true; //l'email est disponible
 		case 1:
-			//System.out.println("pas dispo!!");
-			return false;
+			return false; // l'email n'est pas disponible
 			
 
 		}
