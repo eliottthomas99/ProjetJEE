@@ -1,7 +1,9 @@
 @charset "UTF-8";
 
 body{
-	background-color: #2E3440;
+	background: rgb(94,129,172);
+background: linear-gradient(90deg, rgba(94,129,172,1) 0%, rgba(136,192,208,1) 79%, rgba(143,188,187,1) 100%);
+background-clip:border-box;
 }
 #primary_nav_wrap
 {
@@ -166,12 +168,12 @@ table  td {
 }
 
 table  tr:nth-child(even){background-color: #f2f2f2;}
-
+table  tr:nth-child(odd){background-color: #E5E9F0;}
 table  th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #333;
+  background-color: #434C5E;
   color: white;
 }
 
