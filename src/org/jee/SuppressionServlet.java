@@ -24,36 +24,31 @@ public class SuppressionServlet extends HttpServlet {
 	 */
 	public SuppressionServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String pageName = "/suppressionCompte.jsp";
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String pageName = "/suppressionCompte.jsp"; // affichage de la page de suppression de compte
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// on recupere l email du client
-		HttpSession maSession = request.getSession();
+		HttpSession maSession = request.getSession(); // on récupère la session
 		Membre membre = (Membre) maSession.getAttribute("membre");
 		String emailMembre = membre.getEmail();
 
-		// connection a la BDD
-		Connection connexion = DBManager.getInstance().getConnection();
+		Connection connexion = DBManager.getInstance().getConnection(); // connection a la BDD
 		try (Statement stmt = connexion.createStatement()) {
 			// suppression de la table du membre en question
 			String insert_query = String.format("DELETE FROM membres " + "where email='%s';", emailMembre);
@@ -66,7 +61,7 @@ public class SuppressionServlet extends HttpServlet {
 		// mise a jour du "cookie" du client
 		maSession.setAttribute("membre", null);
 
-		// redirection vers l'accueil
+		// redirection vers l'accueil (le choix memebre ou visiteur)
 		String pageName = "/accueil.jsp";
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
 	}
