@@ -595,6 +595,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 				 int idPlaylistPerso = rs.getInt("id");
 				 System.out.println("je suis avant ?");
 				 
+				 
+				 
 				 if(rs2.next())
 				 {
 					 //rs2.beforeFirst();

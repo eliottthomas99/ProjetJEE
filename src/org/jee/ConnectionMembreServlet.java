@@ -111,6 +111,7 @@ public class ConnectionMembreServlet extends HttpServlet {
 					
 				}
 				else {
+					
 					//Pour que l'application sache qu'elle a affaire à un membre
 					maSession.setAttribute("visiteurConnecte", null);
 					Membre membreNormal = Membre.getMembre(email);
