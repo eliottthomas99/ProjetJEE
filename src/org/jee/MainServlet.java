@@ -17,11 +17,6 @@ import org.jee.ClientServiceImpl;
 
 
 
-
-
-
-
-
 /**
  * Servlet implementation class MainServlet
  */
