@@ -7,5 +7,4 @@ import org.jee.Membre;
 public interface ClientService {
 	public List<Membre>  getAllMembre();
 	
-	//public List<Membre> getMembreByTitle(String searchText);
 }

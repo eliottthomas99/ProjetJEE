@@ -22,85 +22,77 @@ public class AdminModifAvanceeCompte extends HttpServlet {
      */
     public AdminModifAvanceeCompte() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		String pageName = "/adminModifCompte.jsp";
-
+		
+		String pageName = "/adminModifCompte.jsp"; // on affiche la page qui correspond à la modification des comptes par un administrateur
 		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String codeRetourModifAvancee = null;
-		
-		HttpSession maSession = request.getSession();
-    	String emailModif = (String)maSession.getAttribute("mailModif");
-		
-		Membre membre = Membre.getMembre(emailModif);
-		 //HttpSession maSession = request.getSession();
-		 //Membre membre = (Membre)maSession.getAttribute("membre");
 		
 		
 		
-		//String ancienMotDePasse = request.getParameter( "ancienMotDePasse" );
-        String nouveauEmail = request.getParameter( "nouveauEmail" );
-        String nouveauMotDePasse = request.getParameter( "nouveauMotDePasse" );
-        //String nouveauMotDePasseConfirmation = request.getParameter( "nouveauMotDePasseConfirmation" );
-		Boolean valid = false;
+		String codeRetourModifAvancee = null; // initilialisation de la chaine de caractères
+		HttpSession maSession = request.getSession(); // on récupère la session
+    	String emailModif = (String)maSession.getAttribute("mailModif"); // on recupère dans la session l'email du compte qui doit être modifié
+		Membre membre = Membre.getMembre(emailModif); // on récupère l'objet membre qui correspond à cet email
+		
+        String nouveauEmail = request.getParameter( "nouveauEmail" ); // on récupère le nouvel email renseigné
+        String nouveauMotDePasse = request.getParameter( "nouveauMotDePasse" ); // et le nouveau mot de passe
 		
 		
+		if(membre==null) { // si le membre est nul c'est qu'un mauvais email a été renseigné
 			
-			String ancienEmail = membre.getEmail();
-			 
-			 // on verifie que le mdp entre soit le bon
-			 
+			codeRetourModifAvancee = "email mal renseigné";
+
 			
-
-				Connection connexion = DBManager.getInstance().getConnection();					
-				Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail);
-				// on verifie que l email choisit soit : sois l ancien soit un nouveau email disponible
-				if (emailDispo) {
-					
-						// si tout est ok on met à jour les informations
-			    		String nouveauMotDePasseHash = JavaMD5Hash.md5(nouveauMotDePasse);
-			    	
-					 	membre.setEmail(nouveauEmail);
-					 	membre.setPassword(nouveauMotDePasseHash);
-				        maSession.setAttribute("membre", membre);
-				        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasseHash);
-				        
-				        // on affiche que tout s est bien passe
-				        codeRetourModifAvancee = "modifications enregistrées";
-				}
-				// sinon si l email n'est pas dispo
-				else {
-					// TODO : message email non disponible
-					codeRetourModifAvancee = "email non disponible";
-				}
+		}else {
+			
 		
-		
-		
-		
-		
-
+			String ancienEmail = membre.getEmail(); // l'email du compte a modifier
+			Connection connexion = DBManager.getInstance().getConnection();	// on se connecte à la BDD				
+			Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail) || nouveauEmail.equals(ancienEmail); // on regarde si l'email est disponible 
+			if (emailDispo) {
 				
-				System.out.println(codeRetourModifAvancee);
-			maSession.setAttribute("codeRetour", codeRetourModifAvancee);
+					// si tout est ok on met à jour les informations
+		    		String nouveauMotDePasseHash = JavaMD5Hash.md5(nouveauMotDePasse); // on HASH le mot de passe
+		    	
+				 	membre.setEmail(nouveauEmail); //on met à jour les données du membre pour l'affichage
+			        membre.setEmail(nouveauEmail); // idem
+
+				 	
+			        Boolean retour = Membre.modifAvanceeCompte(ancienEmail, nouveauEmail,  nouveauMotDePasseHash); // on modifie les données dans la BDD
+			        
+					request.setAttribute("leMembre", membre);	// on envoie vers le jsp	
+					request.setAttribute("lemail", emailModif); //idem
+			        
+			        // on affiche que tout s est bien passe
+			        codeRetourModifAvancee = "modifications enregistrées";
+			}
+			// sinon si l email n'est pas dispo
+			else {
+				//  message email non disponible
+				codeRetourModifAvancee = "email non disponible";
+			}
+		
+				
+		}
+		
+		
+
 			
-			membre.setEmail(nouveauEmail);
-			membre.setPassword(nouveauMotDePasse);
-			request.setAttribute("leMembre", membre);		
-			request.setAttribute("lemail", emailModif);
+		maSession.setAttribute("codeRetour", codeRetourModifAvancee); //Affiche un message d'information pour l'utilisateur
+		
+		
 		
 		
 		doGet(request, response);

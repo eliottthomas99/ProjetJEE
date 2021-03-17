@@ -149,6 +149,49 @@ public class CatalogueServiceImpl implements CatalogueService {
 	}
 	
 	
+	public List<ElementDeCatalogue> getElementByresearchVisiteur(String search)
+	{
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 stmt2 = connexion.createStatement();
+			 rs = stmt.executeQuery("Select Titres.titre, Titres.interprete from Titres where titre like '%"+search+"%' AND inPb = 1");	
+			 rs2 = stmt2.executeQuery("select Albums.titre, Albums.interprete from Albums where titre like '%"+search+"%' AND inPb = 1");	
+		
+			}
+			
+			while (rs.next()) {
+				
+				String titre = rs.getString("titre");
+				String interprete = rs.getString("interprete");	
+				
+				catalogueElements.add(new Titre(titre,interprete));
+			}
+			
+			while (rs2.next()) { 
+
+				String titre = rs2.getString("titre");
+				String interprete= rs2.getString("interprete");
+				
+				catalogueElements.add(new Album(titre,interprete));
+			}
+			
+			stmt.close();
+			stmt2.close();
+			connexion.close();
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+		return catalogueElements;
+	}
+	
+	
 	public List<ElementDeCatalogue> getAllElementsOfCategorie(String table,String categorie)
 	{
 		try {
@@ -551,6 +594,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				 int idPlaylistPerso = rs.getInt("id");
 				 System.out.println("je suis avant ?");
+				 
+				 
 				 
 				 if(rs2.next())
 				 {
