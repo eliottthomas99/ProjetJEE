@@ -52,23 +52,21 @@ public class SuppressionServlet extends HttpServlet {
 		Membre membre = (Membre) maSession.getAttribute("membre");
 		String emailMembre = membre.getEmail();
 
-		// connection BDD
+		// connection a la BDD
 		Connection connexion = DBManager.getInstance().getConnection();
 		try (Statement stmt = connexion.createStatement()) {
-
 			// suppression de la table du membre en question
 			String insert_query = String.format("DELETE FROM membres " + "where email='%s';", emailMembre);
 
-			System.out.println(insert_query);
-
 			int rs = stmt.executeUpdate(insert_query);
 		} catch (SQLException e) {
-
 			System.out.println(e);
 		}
 
+		// mise a jour du "cookie" du client
 		maSession.setAttribute("membre", null);
 
+		// redirection vers l'accueil
 		String pageName = "/accueil.jsp";
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
 	}
