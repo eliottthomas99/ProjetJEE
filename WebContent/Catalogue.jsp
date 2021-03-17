@@ -228,10 +228,10 @@ Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
 	<br>
 	<br>
 
-	<div id="titreElem">
+	<div id="titreElem" >
 
-		<h3>Decouvrez notre playlist du moment</h3>
-		<br>
+		<h3 >Decouvrez notre playlist du moment</h3>
+		
 		<table border="0">
 			<tr>
 				<th>Titre</th>

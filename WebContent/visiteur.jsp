@@ -113,9 +113,9 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 					<option value=4>Pop</option>
 					<option value=5>Rock</option>
 
-				</select> <br /> <input type="submit" value="Inscription" class="sansLabel" />
+				</select> <br /> <input type="submit" value="Inscription" class="button" />
 				<br />
-				</fieldset>
+				
 
 			</form>
 		</section>
@@ -133,7 +133,7 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 				<br /> <label for="prenom">prenom<span class="requis">*</span></label>
 				<input type="text" id="prenom" name="prenom" value="" size="20"
 					maxlength="20" /> <br /> <input type="submit"
-					value="Lancer la session" class="sansLabel" /> <br />
+					value="Lancer la session" class="button" /> <br />
 
 
 			</form>

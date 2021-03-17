@@ -169,17 +169,19 @@ public class MainServlet extends HttpServlet {
 				int i = 0;
 				
 				if (resAdminMusiqueOrNo == 1) {
+					response.getWriter().write("<div class='form'>");
 					response.getWriter().write("<h3>Ajouter des Albums</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreAlbum1' type='text' placeholder='titre album..'>");
 					response.getWriter().write(
-							"<h4>Interprete</h4><input name='search' id= 'barreAlbum2' type='text' placeholder='nom de l'interprete..'>");
+							"<h4>Interprete</h4><input name='search' id= 'barreAlbum2' type='text' placeholder='Saisir un interprete..'>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<button onclick ='ajoutAlbum()'>Ajouter</button>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 				}
 
 				List<ElementDeCatalogue> listElements = catalogueElements.getAllAlbums();

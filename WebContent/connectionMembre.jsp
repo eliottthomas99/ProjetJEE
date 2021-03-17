@@ -25,11 +25,11 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 
 		<label for="email">Adresse email <span class="requis">*</span></label>
 		<input type="text" id="email" name="email" value="" size="20"
-			maxlength="60" /> <br /> <label for="motdepasse">Mot de
+			maxlength="60"  /> <br /> <label for="motdepasse">Mot de
 			passe <span class="requis">*</span>
 		</label> <input type="password" id="motdepasse" name="motdepasse" value=""
 			size="20" maxlength="20" /> <br /> <input type="submit"
-			value="Connexion" class="sansLabel" /> <br />
+			value="Connexion" class="button" /> <br />
 	</form>
 	<br/>
 
@@ -38,7 +38,7 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 		
 			<legend>Creer un compte</legend>
 			<input color="red" type="submit" value="Creer un compte"
-				class="sansLabel" /> <br />
+				class="button" /> <br />
 		
 	</form>
 
