@@ -179,7 +179,6 @@ if (lemail == null) {
 		<%
 		/* A LAISSER A LA FIN DU CODE */
 		/* permet d'afficher la pop up APRES que la page ait chargee */
-		System.out.println(codeRetour);
 		if (codeRetour != null) {
 		%>
 		<script>
