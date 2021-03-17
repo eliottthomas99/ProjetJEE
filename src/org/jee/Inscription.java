@@ -87,6 +87,9 @@ public class Inscription extends HttpServlet {
 			if(retour==Visiteur.returnStatement.OK) {
 				maSession.setAttribute("codeRetour", "Creation de compte valide"); // pour afficher une pop up informative
 
+				
+			}else if(retour==Visiteur.returnStatement.EMAIL_NON_DISPO) {
+				maSession.setAttribute("codeRetour", "email non disponible"); // pour afficher une pop up informative
 			}else {
 				maSession.setAttribute("codeRetour", "La creation de compte a échoué"); // pour afficher une pop up informative
 
