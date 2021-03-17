@@ -11,20 +11,28 @@ List<ElementDeCatalogue> listElements = (List<ElementDeCatalogue>) request.getAt
 
 
 int i = 0;
-int resAdminCompteOrNo = (int) request.getAttribute("resAdminCompteOrNo");
-int resAdminMusiqueOrNo = (int) request.getAttribute("resAdminMusiqueOrNo");
-//int visiteur = (int)request.getAttribute("visiteurCo");
-
-// On récupère les données des membres 
-//Membre alex = (Membre)request.getAttribute("alex");
 
 HttpSession maSession = request.getSession();
-Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
-int id = elMembre.getId();
-System.out.println("id membre" + id);
+Visiteur visiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
 
-// Le visiteur 
-Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
+int resAdminCompteOrNo = 0;
+int resAdminMusiqueOrNo = 0;
+int id = 0;
+String prenom = "";
+String nom = "";
+if(visiteur == null){
+	
+	resAdminCompteOrNo = (int) request.getAttribute("resAdminCompteOrNo");
+	resAdminMusiqueOrNo = (int) request.getAttribute("resAdminMusiqueOrNo");
+	Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
+	id = elMembre.getId();
+	System.out.println("id membre" + id);
+	prenom = elMembre.getPrenom();
+	nom = elMembre.getNom();
+}else{
+	prenom = visiteur.getPrenom();
+	nom = visiteur.getNom();
+}
 
 //System.out.println("visiteur"+visiteur.getPrenom());
 %>
@@ -40,9 +48,10 @@ Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
 	<h1 id="musical">Catalogue Musical</h1>
-
+	<h6 id="musicalPetit">Bienvenue <%=nom%> <%= prenom%></h6>
 
 	<%
 	if (visiteur == null) {
@@ -56,21 +65,21 @@ Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
 			<li><a id='<%=id%>' onclick="mesPlaylists(this)">Mes
 					playlists</a></li>
 
-			<li><a href="#" id='"<%=id%>"' onclick="goAccueil(this)">Titres</a>
+			<li><a href="#"  onclick="goAccueil(this)">Titres</a>
 				<ul id="Titres">
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Rock</a></li>
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Rap
+					<li><a  onclick="goAccueil(this)">Rock</a></li>
+					<li><a  onclick="goAccueil(this)">Rap
 							Francais</a></li>
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Rap US</a></li>
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Classique</a></li>
+					<li><a  onclick="goAccueil(this)">Rap US</a></li>
+					<li><a  onclick="goAccueil(this)">Classique</a></li>
 				</ul></li>
 			<li id="album"><a onclick="goAccueil(this)">Albums</a>
 				<ul id="Albums">
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Rock</a></li>
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Rap
+					<li><a  onclick="goAccueil(this)">Rock</a></li>
+					<li><a  onclick="goAccueil(this)">Rap
 							Francais</a></li>
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Rap US</a></li>
-					<li><a id='"<%=id%>"' onclick="goAccueil(this)">Classique</a></li>
+					<li><a  onclick="goAccueil(this)">Rap US</a></li>
+					<li><a  onclick="goAccueil(this)">Classique</a></li>
 				</ul></li>
 
 			<li><a href='modifCompte.jsp'>Mon profil</a></li>

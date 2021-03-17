@@ -52,7 +52,7 @@ public class ConnectionTemporaire extends HttpServlet {
         	redo =false; // on ne doit pas re afficher cette page après puisque l'on ouvre l'application a proprement parler
             HttpSession maSession = request.getSession(); // on récupère la session
             maSession.setAttribute("visiteurConnecte", visiteurConnecte); // on transmet le visiteur à travers la session
-			maSession.setAttribute("membreConnecte", null); // on transmet un membre nul pour que l'applicatio sache que c'est un visiteur
+			//maSession.setAttribute("membreConnecte", null); // on transmet un membre nul pour que l'applicatio sache que c'est un visiteur
 			RequestDispatcher rd = request.getRequestDispatcher("/MainServlet"); // on cahnge de page
 			rd.forward(request,response);
         	
