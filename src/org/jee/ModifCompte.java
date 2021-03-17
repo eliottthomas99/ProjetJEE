@@ -31,28 +31,24 @@ public class ModifCompte extends HttpServlet {
 	 */
 	public ModifCompte() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String pageName = "/modifCompte.jsp";
+		String pageName = "/modifCompte.jsp"; // on affiche la page de modification de compte personnel
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// recuperation du formulaire
 		int civiliteInt = Integer.parseInt(request.getParameter(CHAMP_CIVILITE));
