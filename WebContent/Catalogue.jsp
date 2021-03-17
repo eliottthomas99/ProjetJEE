@@ -99,7 +99,7 @@ Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
 
 	<div id="titreElem">
 
-
+		<div class="form">
 		<%
 		if (resAdminMusiqueOrNo == 1) {
 		%>
@@ -120,7 +120,8 @@ Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
 		<%
 		}
 		%>
-
+		<br/>
+		</div>
 		<h3>Decouvrez notre playlist du moment</h3>
 		<br>
 		<table border="0">

@@ -31,15 +31,15 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 			size="20" maxlength="20" /> <br /> <input type="submit"
 			value="Connexion" class="sansLabel" /> <br />
 	</form>
+	<br/>
 
+	<form method="get" action="Visiteur" class="form">
 
-	<form method="get" action="Visiteur">
-
-		<fieldset>
+		
 			<legend>Creer un compte</legend>
 			<input color="red" type="submit" value="Creer un compte"
 				class="sansLabel" /> <br />
-		</fieldset>
+		
 	</form>
 
 

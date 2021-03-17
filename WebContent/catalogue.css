@@ -187,4 +187,11 @@ h4 h5 {
 	font-family:"comic sans ms";
 	color: red;
 }
-
+.form{
+	color:#ECEFF4;
+	border: 3px solid #2E3440;
+	border-radius:5px;
+	background:#4C566A;
+	font-family:system-ui;
+    box-shadow: .4rem .4rem 0 #3B4252;
+}
