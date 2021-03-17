@@ -107,6 +107,8 @@ if(visiteur == null){
 	<br>
 
 	<div id="titreElem">
+
+		<div class="form">
 		<%
 		if (resAdminMusiqueOrNo == 1) {
 		%>
@@ -127,7 +129,8 @@ if(visiteur == null){
 		<%
 		}
 		%>
-
+		<br/>
+		</div>
 		<h3>Decouvrez notre playlist du moment</h3>
 		<br>
 		<table border="0">
