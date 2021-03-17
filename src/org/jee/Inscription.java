@@ -36,7 +36,6 @@ public class Inscription extends HttpServlet {
 	 */
 	public Inscription() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -45,7 +44,6 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		String pageName = "/visiteur.jsp";
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
@@ -59,7 +57,6 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		// recuperation des champs du formulaire
 		int civiliteInt = Integer.parseInt(request.getParameter(CHAMP_CIVILITE));
