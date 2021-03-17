@@ -16,13 +16,11 @@ public class ClientServiceImpl implements ClientService{
 	
 
 	@Override
-	public List<Membre> getAllMembre() {
-		// TODO Auto-generated method stub
+	public List<Membre> getAllMembre() { //récupère tous les membres de la BDD
 		
-		Connection connexion = DBManager.getInstance().getConnection();
+		Connection connexion = DBManager.getInstance().getConnection(); // on se connecte à la BDD
 		
-		List<Membre> membres = new ArrayList<>();
-		int compteur = 1;
+		List<Membre> membres = new ArrayList<>(); //la liste des membres dans la BDD
 		
 		//Créer un java.sql.Statement à partir de cette connexion en utilisant: 
 		try(Statement stmt = connexion.createStatement()){
@@ -56,7 +54,7 @@ public class ClientServiceImpl implements ClientService{
 		}
 		
 		
-		return membres;
+		return membres; // on retourne la liste des membres
 		
 		
 	

@@ -5,7 +5,6 @@
 
 <%
 
-//String str = (String)request.getAttribute("valideStr");
 HttpSession maSession = request.getSession();
 
 String codeRetour = (String)maSession.getAttribute("codeRetour");

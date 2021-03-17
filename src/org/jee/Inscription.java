@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Inscription
@@ -36,7 +37,6 @@ public class Inscription extends HttpServlet {
 	 */
 	public Inscription() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -45,12 +45,10 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		String pageName = "/visiteur.jsp";
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
 
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -59,7 +57,6 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		// recuperation des champs du formulaire
 		int civiliteInt = Integer.parseInt(request.getParameter(CHAMP_CIVILITE));
@@ -85,8 +82,21 @@ public class Inscription extends HttpServlet {
 			// insertion dans la base de donnees
 			retour = Visiteur.CreerCompte(civilite, nom, prenom, email, password, passwordConf, naissance, rue,
 					complement, codePostal, ville, pays, preference);
+			
+			HttpSession maSession = request.getSession();
+			if(retour==Visiteur.returnStatement.OK) {
+				maSession.setAttribute("codeRetour", "Creation de compte valide"); // pour afficher une pop up informative
+
+				
+			}else if(retour==Visiteur.returnStatement.EMAIL_NON_DISPO) {
+				maSession.setAttribute("codeRetour", "email non disponible"); // pour afficher une pop up informative
+			}else {
+				maSession.setAttribute("codeRetour", "La creation de compte a échoué"); // pour afficher une pop up informative
+
+			}
+			
+			
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

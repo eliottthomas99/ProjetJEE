@@ -35,20 +35,15 @@ public class ConnectionMembreServlet extends HttpServlet {
      */
     public ConnectionMembreServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String pageName = "/connectionMembre.jsp";
-
+		String pageName = "/connectionMembre.jsp"; // on se connecte à la page de connection à son compte
 		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
-		
 		
 	}
 
@@ -56,53 +51,35 @@ public class ConnectionMembreServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
-        
 		String valideStr = "";
-        
         
         /* Récupération des champs du formulaire. */
         String email = request.getParameter( CHAMP_EMAIL );
         String motDePasse = request.getParameter( CHAMP_PASS );
         
-        Boolean redo = true;
-        HttpSession maSession = request.getSession();
+        Boolean redo = true; // faudra-t-il refaire ce bout de code suivant ?
+        HttpSession maSession = request.getSession(); // on recupère la session
         try {
-			Boolean valide = Membre.validerAuthentification(email, motDePasse);
+			Boolean valide = Membre.validerAuthentification(email, motDePasse); // on vérifie que la personne tente de s'identifier avec une combinaison email/motDePasse correcte
 			
-			if (valide) {
+			if (valide) { // si la combinaison est vaidée
 				valideStr = "c'est bon";
 				request.setAttribute("valideStr", valideStr);
 				
-				redo = false;
+				redo = false; // pour ne pas afficher la même page après, puisque l'on se connecte
 				
-				//creer un objet membre
-				Membre membre  =  Membre.getMembre(email);
-				
-				// creation session http
-				
-				maSession.setAttribute("membre", membre);
-				
-				
-				//System.out.println(membre);
-				// le passer en paramètre à la page suivante
-				
-				//request.setAttribute("leMembre", membre);
+				Membre membre  =  Membre.getMembre(email); //creer un objet membre basé sur l'email et les données de la BDD
+
 
 				//On va sur une page membre ou admin en fonction 
 				int adminCompte = membre.getAdminCompte();
 				
 	
 				if(adminCompte==1) { 
-					//String pageName = "/adminModifCompte.jsp"
-					Membre membreAdmin = Membre.getMembre(email);
+					Membre membreAdmin = membre;
 					
-					//Pour que l'application sache qu'elle a affaire à un membre
-					
-					//Visiteur visiteur = new Visiteur("FULBERT","ALEX");
-					maSession.setAttribute("visiteurConnecte",null );
-
+					maSession.setAttribute("visiteurConnecte",null ); //Pour que l'application sache qu'elle a affaire à un membre
 					maSession.setAttribute("membreConnecte", membreAdmin);
 					maSession.setAttribute("membreModifie", membreAdmin);
 					maSession.setAttribute("mailModif", email);
@@ -111,21 +88,18 @@ public class ConnectionMembreServlet extends HttpServlet {
 					
 				}
 				else {
-					//Pour que l'application sache qu'elle a affaire à un membre
-					maSession.setAttribute("visiteurConnecte", null);
-					Membre membreNormal = Membre.getMembre(email);
+					
+					maSession.setAttribute("visiteurConnecte", null); //Pour que l'application sache qu'elle a affaire à un membre
+					Membre membreNormal = membre;
 					maSession.setAttribute("membreConnecte", membreNormal);
 					RequestDispatcher rd = request.getRequestDispatcher("/MainServlet");
 					rd.forward(request,response);	
 				}
 					
-			} else {
+			} else { // la combinaison est mauvaise
 				
-				
-				Membre membreTente = Membre.getMembre(email);
-				//vérifier si l'email existe
-				
-				
+				Membre membreTente = Membre.getMembre(email); //vérifier si l'email existe
+
 				if(membreTente!=null &&  membreTente.getBloque()==1) {
 					valideStr = "compte bloque retente dans 1H";
 					
@@ -135,27 +109,19 @@ public class ConnectionMembreServlet extends HttpServlet {
 					
 				}
 				
-				
-
-				maSession.setAttribute("codeRetour", valideStr);
-				
-				
-				
+				maSession.setAttribute("codeRetour", valideStr); // pour afficher une pop up informative
 				request.setAttribute("valideStr", valideStr);
 			}
 			
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
-        if(redo) {
+        if(redo) { // s'il y a eu une erreur on relance la même page
 		doGet(request, response);
         }
 	}

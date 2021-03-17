@@ -51,7 +51,6 @@ public class Visiteur {
 		// si l'email n'est pas dispo
 		if (!emailDispo) {
 			// ANNULER LA PROCEDURE
-			// AFFICHER UN MESSAGE DERREUR DANS L'INTERFACE
 			return returnStatement.EMAIL_NON_DISPO;
 		} else {
 			// sinon
@@ -62,8 +61,6 @@ public class Visiteur {
 				// si les mots de passe sont differents
 				
 				// ANNULER LA PROCEDURE
-				// AFFICHER UN MESSAGE DERREUR DANS LINTERFACE
-				System.out.println("mots de passes non identiques");
 				return returnStatement.MDP_DIFF;
 
 			} else {

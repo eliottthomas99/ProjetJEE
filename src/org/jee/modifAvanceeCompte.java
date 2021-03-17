@@ -24,19 +24,15 @@ public class modifAvanceeCompte extends HttpServlet {
 	 */
 	public modifAvanceeCompte() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		String pageName = "/modifCompte.jsp";
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String pageName = "/modifCompte.jsp"; // on affiche la page de modification de compte personel
 		this.getServletContext().getRequestDispatcher(pageName).forward(request, response);
 	}
 
@@ -44,14 +40,12 @@ public class modifAvanceeCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String codeRetourModifAvancee = null;
 
-		HttpSession maSession = request.getSession();
-		Membre membre = (Membre) maSession.getAttribute("membreConnecte");
+		HttpSession maSession = request.getSession(); // on récupère la session
+		Membre membre = (Membre) maSession.getAttribute("membreConnecte"); // on récupère l'objet membre qui correspond à la personne connectée
 
 		// On recupere les infos du formulaire
 		String ancienMotDePasse = request.getParameter("ancienMotDePasse");
@@ -74,8 +68,7 @@ public class modifAvanceeCompte extends HttpServlet {
 					// si oui
 					
 					// on verifie qu'en cas de changement d'email le nouvel email soit valide
-					Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail)
-							|| nouveauEmail.equals(ancienEmail);
+					Boolean emailDispo = AlgorithmeDeVerification.emailDispo(nouveauEmail)|| nouveauEmail.equals(ancienEmail);
 					
 					if (emailDispo) {
 						// Si oui
@@ -106,13 +99,10 @@ public class modifAvanceeCompte extends HttpServlet {
 				}
 
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidKeySpecException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -124,7 +114,6 @@ public class modifAvanceeCompte extends HttpServlet {
 		}
 
 		// on envoie le code retour
-		System.out.println(codeRetourModifAvancee);
 		maSession.setAttribute("codeRetour", codeRetourModifAvancee);
 
 		doGet(request, response);

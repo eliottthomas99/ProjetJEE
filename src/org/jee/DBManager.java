@@ -48,9 +48,7 @@ public class DBManager {
 			
 
 		} catch (SQLException sqle) {
-			//System.out.println(properties.getString("JDBC_URL"));
-			//System.out.println(properties.getString("DB_LOGIN"));
-			//System.out.println( properties.getString("DB_PASSWORD"));
+			
 			
 			sqle.printStackTrace();
 		}
