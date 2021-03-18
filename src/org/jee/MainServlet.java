@@ -330,7 +330,7 @@ public class MainServlet extends HttpServlet {
 					// Si la recherche n'a rien donné :
 
 					if (listElements.isEmpty()) {
-						response.getWriter().write("<h1 color='red'> Aucun titre n'a ete trouve" + "</h1>");
+						response.getWriter().write("<h1 class='title'> Aucun titre n'a ete trouve" + "</h1>");
 					} else {
 
 						response.getWriter().write("<table border=\"0\">" + "<tr>\n"
@@ -371,11 +371,12 @@ public class MainServlet extends HttpServlet {
 				// Si la recherche n'a rien donné :
 				int i = 0;
 				if (listElements.isEmpty()) {
-					response.getWriter().write("<h1 color='red'> Aucun titre n'a ete trouve" + "</h1>");
+					response.getWriter().write("<h1 class='title'> Aucun titre n'a ete trouve" + "</h1>");
 
 				} else if (param1.equals("Albums")) {
 
 					if (resAdminMusiqueOrNo == 1) {
+						response.getWriter().write("<div class='form'>");
 						response.getWriter().write("<h3>Ajouter des Albums</h3>");
 						response.getWriter().write(
 								"<h4>Titre</h4><input name='search' id= 'barreAlbum1' type='text' placeholder='titre album..'>");
@@ -387,6 +388,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<br>");
 						response.getWriter().write("<br>");
 						response.getWriter().write("<br>");
+						response.getWriter().write("</div>");
 					}
 
 					response.getWriter().write("<table border=\"0\">" + "<tr>\n" + "	            <th>Titre</th>\n"
@@ -420,7 +422,8 @@ public class MainServlet extends HttpServlet {
 				} else {
 
 					if (resAdminMusiqueOrNo == 1) {
-
+						
+						response.getWriter().write("<div class='form'>");
 						response.getWriter().write("<h3>Ajouter des Titres</h3>");
 						response.getWriter().write(
 								"<h4>Titre</h4><input name='search' id= 'barreTitre1' type='text' placeholder='titre de la musique..'>");
@@ -432,6 +435,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<br>");
 						response.getWriter().write("<br>");
 						response.getWriter().write("<br>");
+						response.getWriter().write("</div>");
 					}
 
 					response.getWriter().write("<table border=\"0\">" + "<tr border ='1'>\n"
@@ -473,6 +477,7 @@ public class MainServlet extends HttpServlet {
 				if (resAdminMusiqueOrNo == 1) {
 
 					System.out.println("param3: " + param3);
+					response.getWriter().write("<div class='form'>");
 					response.getWriter().write("<h3>Ajouter des titres a cet album</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreTitreAlbum1' type='text' placeholder='titre de la musique..'>");
@@ -485,6 +490,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 				}
 
 				List<ElementDeCatalogue> listElements = null;
@@ -629,7 +635,7 @@ public class MainServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 
-				response.getWriter().write("<h3> Choissisez la playlist dans laquel ajouter l'element .. </h3> ");
+				response.getWriter().write("<h3 class='title'> Choissisez la playlist dans laquel ajouter l'element .. </h3> ");
 
 				response.getWriter().write("<table border=\"0\">");
 
@@ -704,7 +710,8 @@ public class MainServlet extends HttpServlet {
 				}
 
 				if (resAdminMusiqueOrNo == 1) {
-
+					
+					response.getWriter().write("<div class='form'>");
 					response.getWriter().write("<h3>Ajouter des Titres</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreTitre1' type='text' placeholder='titre de la musique..'>");
@@ -716,6 +723,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 				}
 
 				List<ElementDeCatalogue> listElements;
@@ -772,6 +780,7 @@ public class MainServlet extends HttpServlet {
 				}
 
 				if (resAdminMusiqueOrNo == 1) {
+					response.getWriter().write("<div class='form'>");
 					response.getWriter().write("<h3>Ajouter des Albums</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreAlbum1' type='text' placeholder='titre album..'>");
@@ -783,6 +792,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 				}
 
 				List<ElementDeCatalogue> listElements = null;
@@ -846,9 +856,11 @@ public class MainServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				
 				response.getWriter()
-						.write(" <h3 style = 'font-family:'comic sans ms' '>Modifier la playlist publique</h3>");
+				.write("<div class='form'>");
+				response.getWriter()
+						.write(" <h3 class='title'>Modifier la playlist publique</h3>");
 
 				response.getWriter().write("<h5>Titre :</h5>");
 				response.getWriter()
@@ -863,13 +875,19 @@ public class MainServlet extends HttpServlet {
 				response.getWriter().write("</select>");
 				response.getWriter().write(" <br>");
 				response.getWriter().write("<br>");
-
 				response.getWriter().write("<button onclick ='ajoutElementPlaylistPublique()'>Ajouter</button>");
-
-				response.getWriter().write("<h3> Decouvrez notre playlist du moment </h3>");
+				response.getWriter()
+				.write("</div>");
+				response.getWriter().write("<h3 class='title'> Decouvrez notre playlist du moment </h3>");
 				response.getWriter().write("<br>");
 				response.getWriter().write("<table border='0'>");
-				response.getWriter().write(" <tr>" + "<th>Titre</th>" + "<th>Auteur</th>" + "<th>Type</th>" + "</tr>");
+				response.getWriter()
+						.write(" <tr>" + "<th>Titre</th>" + "<th>Auteur</th>" + "<th>Type</th>" + "</tr>");
+
+				if (listElements.isEmpty()) {
+					response.getWriter()
+							.write("<tr>\n" + "<td>vide</td>\n" + "<td>vide</td>\n" + "<td>vide</td>\n" + "</tr>");
+				}
 
 				for (ElementDeCatalogue cata : listElements) {
 					String title = cata.getTitre();
@@ -879,8 +897,8 @@ public class MainServlet extends HttpServlet {
 					if (cata instanceof Album) {
 
 						response.getWriter().write("<tr>" + "<td>" + title + "</td>" + "<td>" + author + "</td>"
-								+ "<td>Album</td>" + "<td><button id='jouer" + i
-								+ "' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <button id='"
+								+ "<td>Album</td>"
+								+ "<td><button>Jouer <i style= 'font-size:10px' class='fa'>&#xf04b;</i></button> <button id='"
 								+ title
 								+ "' onclick='goTitresAlbum(this)'>Parcourir l'album</button></td> <td><button id='playlistMomentAlbum "
 								+ title + "'onclick ='deleteElement(this)'>supprimer</button></td>" + "</tr>"
@@ -895,6 +913,7 @@ public class MainServlet extends HttpServlet {
 
 					i = i + 1;
 				}
+				response.getWriter().write("</table>");
 
 			} else if (paramAdminMusique15 != null && paramAdminMusique16 != null) {
 				// Check le param Titres ou Albums
@@ -908,7 +927,8 @@ public class MainServlet extends HttpServlet {
 					}
 					int i = 0;
 					if (resAdminMusiqueOrNo == 1) {
-
+						
+						response.getWriter().write("<div class='form'>");
 						response.getWriter().write("<h3>Ajouter des Titres</h3>");
 						response.getWriter().write(
 								"<h4>Titre</h4><input name='search' id= 'barreTitre1' type='text' placeholder='titre de la musique..'>");
@@ -920,6 +940,7 @@ public class MainServlet extends HttpServlet {
 						response.getWriter().write("<br>");
 						response.getWriter().write("<br>");
 						response.getWriter().write("<br>");
+						response.getWriter().write("</div>");
 					}
 
 					List<ElementDeCatalogue> listElements = null;
@@ -976,7 +997,7 @@ public class MainServlet extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					response.getWriter().write("<div class='form'>");
 					response.getWriter().write("<h3>Ajouter des Albums</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreAlbum1' type='text' placeholder='titre album..'>");
@@ -988,6 +1009,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 
 					List<ElementDeCatalogue> listElements = null;
 					try {
@@ -1041,9 +1063,11 @@ public class MainServlet extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					
 					response.getWriter()
-							.write(" <h3 style = 'font-family:'comic sans ms' '>Modifier la playlist publique</h3>");
+					.write("<div class='form'>");
+					response.getWriter()
+							.write(" <h3 class='title'>Modifier la playlist publique</h3>");
 
 					response.getWriter().write("<h5>Titre :</h5>");
 					response.getWriter()
@@ -1059,7 +1083,9 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write(" <br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<button onclick ='ajoutElementPlaylistPublique()'>Ajouter</button>");
-					response.getWriter().write("<h3> Decouvrez notre playlist du moment </h3>");
+					response.getWriter()
+					.write("</div>");
+					response.getWriter().write("<h3 class='title'> Decouvrez notre playlist du moment </h3>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<table border='0'>");
 					response.getWriter()
@@ -1238,6 +1264,7 @@ public class MainServlet extends HttpServlet {
 				if (resAdminMusiqueOrNo == 1) {
 
 					System.out.println("param3: " + param3);
+					response.getWriter().write("<div class='form'>");
 					response.getWriter().write("<h3>Ajouter des titres a cet album</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreTitreAlbum1' type='text' placeholder='titre de la musique..'>");
@@ -1250,6 +1277,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 				}
 
 				System.out.println("Titre de l'album ->" + param3);
@@ -1364,7 +1392,7 @@ public class MainServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				response.getWriter().write("<h3> Votre playlist :" + param5 + " a bien ete supprime</h3> ");
+				response.getWriter().write("<h3 class='title'> Votre playlist :" + param5 + " a bien ete supprime</h3> ");
 				response.getWriter()
 						.write("<button id=" + idMembreActuel + " onclick ='mesPlaylists(this)'>Retour</button>");
 
@@ -1376,7 +1404,7 @@ public class MainServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				response.getWriter().write("<h3> Le titre '" + param4 + "' a bien ete supprime</h3> ");
+				response.getWriter().write("<h3 class='title'> Le titre '" + param4 + "' a bien ete supprime</h3> ");
 				response.getWriter()
 						.write("<button id=" + idMembreActuel + " onclick ='mesPlaylists(this)'>Retour</button>");
 			} else {
