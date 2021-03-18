@@ -300,12 +300,6 @@ if(visiteur == null){
 		</table>
 	</div>
 
-
-
-
-
-
-
 	<script>
 	
 		var xhr = new XMLHttpRequest();
