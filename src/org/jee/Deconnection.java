@@ -29,12 +29,22 @@ public class Deconnection extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession maSession = request.getSession(); // on récupère la session
+		Membre membre = (Membre) maSession.getAttribute("membreConnecte");
+		String pageName = "";
+		if(membre==null) { // un visiteur est connecté
+			pageName = "/visiteur.jsp";
+
+		}
+		else {
+			pageName = "/accueil.jsp";
+
+		}
+
 		maSession.setAttribute("membreConnecte", null); //pour un usage ultérieur dans java
 		maSession.setAttribute("membreModifie", null); //pour un usage ultérieur dans java
 		maSession.setAttribute("visiteurConnecte", null); //pour un usage ultérieur dans java
 		
 		
-		String pageName = "/accueil.jsp";
 		this.getServletContext().getRequestDispatcher( pageName ).forward( request, response );
 	}
 

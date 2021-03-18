@@ -148,9 +148,20 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 	<section class="Connection">
 
 		<a href="http://localhost:8080/ProjetJEE/Connection"> <input
-			type="submit" value="J'ai déjà un compte" class="sansLabel" />
+			type="submit" value="J'ai déjà un compte" class="button" />
 		</a> <br />
 
+
+	<br />
+
+	<form method="get" action="Accueil" >
+
+		
+			
+			<input color="red" type="submit" value="Accueil du site"
+				class="button" /> <br />
+		
+	</form>
 
 	</section>
 

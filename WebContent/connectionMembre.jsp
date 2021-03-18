@@ -33,11 +33,20 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 	</form>
 	<br/>
 
-	<form method="get" action="Visiteur" class="form">
+	<form method="get" action="Visiteur" >
 
 		
-			<legend>Creer un compte</legend>
 			<input color="red" type="submit" value="Creer un compte"
+				class="button" /> <br />
+		
+	</form>
+	
+	<br />
+	<form method="get" action="Accueil" >
+
+		
+			
+			<input color="red" type="submit" value="Accueil du site"
 				class="button" /> <br />
 		
 	</form>
