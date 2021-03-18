@@ -203,9 +203,7 @@ if(visiteur == null){
 				<%
 				} else {
 				%>
-				<td><button>
-						Jouer <i style='font-size: 10px' class='fa'>&#xf04b;</i>
-					</button></td>
+				<td><button id='jouer"<%=i%>"' onclick='goSwitch(this)'>Jouer <i style='font-size:10px' class='fa'>&#xf04b;</i></button></td>
 				<%
 				}
 				%>
@@ -213,10 +211,11 @@ if(visiteur == null){
 			<%
 			}
 			%>
-			<%
-			i = i + 1;
-			}
-			%>
+		<%
+		System.out.println("i ->"+i);
+		i = i + 1;
+		}
+		%>
 		</table>
 	</div>
 
@@ -394,45 +393,121 @@ if(visiteur == null){
 		}
 
 		function choosePlaylist(object) {
-			var str = (object.id).toString();
-			console.log((object.id).toString());
+			
+			//var str = (object.id).toString();
+			var myArray = ((object.id).toString()).split(/([0-9]+)/)
+			
+			// myarray en 1 c'est l'id
+			console.log("NOOOON ->"+myArray[1]);
+			console.log("OUIIII ->"+myArray[0]);
+			
+			var str = (myArray[0]).toString();
 			var wordsArray = str.split(' ');
-
-			// wordsArray[0] -> Dans quelle section je suis ? Titre , albums ...
-			// wordsArray[1] -> le nom de l'auteur
-			// id du membre actuel wordsArray[2]
-
-			console.log('premier mot:', wordsArray[0], 'deuxième mot:',
-					wordsArray[1], " et l'id du membre:", wordsArray[2]);
-			console.log(object.id);
-			xhr.open('GET', 'MainServlet?section=' + wordsArray[0]
-					+ '&chanteur=' + wordsArray[1], true); // Potentiellement récupérer les données stockées dans le
-			// navigateur pour un utilisateur (à la place de aChanger) à ce
-			// moment là? (idée julien)
-			xhr.onreadystatechange = majCatalogue;
-			xhr.send(); // requête pret à étre envoyé
+			
+			// EN 0 c'est tjr la catégorie
+			
+			console.log('premier mot eheh:', wordsArray[0], 'deuxième mot eheh:',
+					wordsArray[1]);
+			var n = 0;
+			if(typeof wordsArray[2] != 'undefined')
+			{
+		
+			    console.log("je suis rentré ici ? putin");
+				for(var k = 1; k < wordsArray.length; k++)
+				{
+					if(n == 0)
+					{
+						titreMusique = wordsArray[k];
+						
+						n = n + 1;
+						
+					}else{
+						titreMusique= titreMusique + " " +  wordsArray[k];
+					}
+					
+				}
+				
+				console.log("titreFINAL MUSIQUE ->",titreMusique);
+				xhr.open('GET', 'MainServlet?section=' + wordsArray[0]
+				+ '&chanteur=' + titreMusique , true); // Potentiellement récupérer les données stockées dans le
+				// navigateur pour un utilisateur (à la place de aChanger) à ce
+				// moment là? (idée julien)
+				xhr.onreadystatechange = majCatalogue;
+				xhr.send(); // requête pret à étre envoyé
+			}else {
+			
+				// wordsArray[0] -> Dans quelle section je suis ? Titre , albums ...
+				// wordsArray[1] -> le nom de l'auteur
+				// id du membre actuel wordsArray[2]
+	
+				console.log('premier mot:', wordsArray[0], 'deuxième mot:',
+						wordsArray[1], " et l'id du membre:", myArray[1]);
+				console.log(object.id);
+				xhr.open('GET', 'MainServlet?section=' + wordsArray[0]
+						+ '&chanteur=' + wordsArray[1], true); // Potentiellement récupérer les données stockées dans le
+				// navigateur pour un utilisateur (à la place de aChanger) à ce
+				// moment là? (idée julien)
+				xhr.onreadystatechange = majCatalogue;
+				xhr.send(); // requête pret à étre envoyé
+			}
 		}
 
 		function goInsert(object) {
-
+			
+			
 			var str = (object.id).toString();
 			console.log((object.id).toString());
 			var wordsArray = str.split(' ');
+			var titreMusique;
+			var n = 0
+			
+			if(typeof wordsArray[2] != 'undefined')
+			{
+		
+			    console.log("je suis rentré ici ? putin");
+				for(var k = 2; k < wordsArray.length; k++)
+				{
+					if(n == 0)
+					{
+						titreMusique = wordsArray[k];
+						
+						n = n + 1;
+						
+					}else{
+						titreMusique= titreMusique + " " +  wordsArray[k];
+					}
+					
+				}
+				
+				console.log("le titre worldarray3 -> "+wordsArray[3]);
+				
+				
+				console.log('premier mot:', wordsArray[0], 'deuxième mot:',
+						wordsArray[1], 'troisième mot:',titreMusique);
 
-			// wordsArray[0] -> Dans quelle section je suis ? Titre , albums ...
-			// wordsArray[1] -> le nom de l'auteur
-
-			console.log('premier mot:', wordsArray[0], 'deuxième mot:',
-					wordsArray[1], 'troisième mot:', wordsArray[2]);
-
-			// Je suis censé aussi récup l'id du MEMBRE!!!!
-			xhr.open('POST', 'MainServlet?nomPlaylist=' + wordsArray[0]
-					+ '&section=' + wordsArray[1] + '&titre=' + wordsArray[2],
-					true); // Potentiellement récupérer les données stockées dans le
-			// navigateur pour un utilisateur (à la place de aChanger) à ce
-			// moment là? (idée julien)
-			xhr.onreadystatechange = majCatalogue;
-			xhr.send(); // requête pret à étre envoyé
+				// Je suis censé aussi récup l'id du MEMBRE!!!!
+				xhr.open('POST', 'MainServlet?nomPlaylist=' + wordsArray[0]
+						+ '&section=' + wordsArray[1] + '&titre=' + titreMusique,
+						true); // Potentiellement récupérer les données stockées dans le
+				// navigateur pour un utilisateur (à la place de aChanger) à ce
+				// moment là? (idée julien)
+				xhr.onreadystatechange = majCatalogue;
+				xhr.send(); // requête pret à étre envoyé
+			}else{
+			
+				console.log("le titre worldarray2 -> "+wordsArray[2]);
+				console.log('premier mot:', wordsArray[0], 'deuxième mot:',
+						wordsArray[1], 'troisième mot:', wordsArray[2]);
+	
+				// Je suis censé aussi récup l'id du MEMBRE!!!!
+				xhr.open('POST', 'MainServlet?nomPlaylist=' + wordsArray[0]
+						+ '&section=' + wordsArray[1] + '&titre=' + wordsArray[2],
+						true); // Potentiellement récupérer les données stockées dans le
+				// navigateur pour un utilisateur (à la place de aChanger) à ce
+				// moment là? (idée julien)
+				xhr.onreadystatechange = majCatalogue;
+				xhr.send(); // requête pret à étre envoyé
+			}
 		}
 
 		function newPlaylistMembre() {
@@ -611,6 +686,13 @@ if(visiteur == null){
 			xhr.open('GET', 'MainServlet?titreOfAnAlbum=' + titre
 					+ '&InterpreteOfAnAlbum=' + interprete + '&ActualPlaylist='
 					+ titreAlbum, true);
+			xhr.onreadystatechange = majCatalogue;
+			xhr.send(); // requête pret à étre envoyé
+		}
+		
+		function goBackAlbum()
+		{
+			xhr.open('GET', 'MainServlet?nomElement=Albums', true);
 			xhr.onreadystatechange = majCatalogue;
 			xhr.send(); // requête pret à étre envoyé
 		}

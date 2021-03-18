@@ -1,6 +1,7 @@
 package org.jee;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,21 +49,28 @@ public class MainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		
+		//List<ElementDeCatalogue> alreadyInPlaylist = new ArrayList<ElementDeCatalogue>();
+
+		
+		/*if((List<ElementDeCatalogue>) request.getAttribute("alreadyInPlaylist") != null)
+		{
+		 listElementsPlaylist = (List<ElementDeCatalogue>) request.getAttribute("alreadyInPlaylist");
+		}*/
+		
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
-
 		Visiteur visiteur = (Visiteur) maSession.getAttribute("visiteurConnecte");
-
 		System.out.println("visiteur ->" + visiteur);
-
+		
 		/*
 		 * if(visiteur != null) { request.setAttribute("visiteurCo", 1); }else {
 		 * request.setAttribute("visiteurCo", 0); }
 		 */
-		
+		 CatalogueService catalogueElements = new CatalogueServiceImpl();
 		if(visiteur != null)
 		{
-			CatalogueService catalogueElements = new CatalogueServiceImpl();
+		   catalogueElements = new CatalogueServiceImpl();
 			List<ElementDeCatalogue> listElements = catalogueElements.getAllElementsFromPlaylistPublic();
 
 			request.setAttribute("listElements", listElements);
@@ -82,8 +90,14 @@ public class MainServlet extends HttpServlet {
 			
 		elMembre = Membre.getMembre(elMembre.getEmail());
 		int idMembreActuel = elMembre.getId();
-
-		CatalogueService catalogueElements = new CatalogueServiceImpl();
+		catalogueElements = new CatalogueServiceImpl();
+		
+		// POUR CHECK
+		List<String> listElementsCHECK = catalogueElements.getAllElementsFromAllPlaylistPerso(idMembreActuel);
+		for (String elemPlayl : listElementsCHECK) {
+			System.out.println("------->"+elemPlayl);
+		}
+		//maSession.setAttribute("la liste", listElementsCHECK);
 		// System.out.println(elMembre.getCivilite());
 		
 		int resAdminCompteOrNo = catalogueElements.isAdminCompte(idMembreActuel);
@@ -101,6 +115,7 @@ public class MainServlet extends HttpServlet {
 		// ajouter dans la playlist
 		String param6 = request.getParameter("section"); // Nom de la section ( titres , albums ... )
 		String param7 = request.getParameter("chanteur"); // Nom de l'auteur du titre ici
+		String param7bis = request.getParameter("titre");
 
 		String param8 = request.getParameter("titresFromPlaylistPerso"); // A pour but d'aller chercher toutes les
 																			// musiques relatives à une playlist Perso
@@ -147,9 +162,37 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 				}
-
+				
+				
 				List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
-
+				
+				System.out.println("gogogog -------->");
+				
+				int s = 0;
+				for (String elemPlayl : listElementsCHECK) {
+					
+					System.out.println("a comparer avec les autres " + elemPlayl);
+					
+					for (ElementDeCatalogue cata : listElements) {
+						System.out.println("titremusique->"+cata.getTitre());
+						if(elemPlayl.equals(cata.getTitre()))
+						{
+							System.out.println("Yes similitude");
+							s = s + 1;
+						}
+					}
+				}
+				
+				System.out.println("Nombre de similitude :"+s);
+				
+				/*
+				for (ElementDeCatalogue elemPlayl : vok) {
+					
+					System.out.println(" --->: "+ elemPlayl.getTitre());
+				}*/
+				
+				 //System.out.println("similitude"+k);
+				
 				response.getWriter().write("<table border=\"0\">" + "<tr>\n" + "	            <th>Titre</th>\n"
 
 						+ "	            <th>Auteur</th>\n" + "</tr>");
@@ -159,15 +202,17 @@ public class MainServlet extends HttpServlet {
 				}
 
 				for (ElementDeCatalogue cata : listElements) {
+					
 					String title = cata.getTitre();
 					String author = cata.getInterprete();
-
+					
+					// Parcour la liste 2 pour comparer les elements déjà présent dans les playlists perso 
+					
 					if (resAdminMusiqueOrNo == 1) {
 						response.getWriter().write("<tr>\n" + "<td>" + title + "</td>\n" + "<td>" + author + "</td>\n"
 								+ "<td><button id='jouer" + i
-								+ "' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> <td><button id='"
-								+ param1 + " " + title + " " + idMembreActuel
-								+ "' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button id='Titres "
+								+ "' onclick='goSwitch(this)'>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td> "
+								+ "<td><button id='"+ param1 + " " + title + "id"+ "' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td> <td><button id='Titres "
 								+ title + "'onclick ='deleteElement(this)'>supprimer</button></td>" + "</tr>");
 
 						i = i + 1;
@@ -183,6 +228,9 @@ public class MainServlet extends HttpServlet {
 				}
 
 				response.getWriter().write("</table>");
+				
+
+				//List<ElementDeCatalogue> listElements2 = catalogueElements.getAllElementsFromAllPlaylistPerso(idMembreActuel);
 
 			} else if (param1.equals("Albums")) {
 				
@@ -204,10 +252,9 @@ public class MainServlet extends HttpServlet {
 
 				List<ElementDeCatalogue> listElements = catalogueElements.getAllAlbums();
 
-				response.getWriter().write("<table border='0'><tr><th>Titre</th>\n"
-						+ "<th>Auteur</th>\"</tr>");
+				response.getWriter().write("<table border='0'><tr><th>Titre</th><th>Auteur</th></tr>");
 				if (listElements.isEmpty()) {
-					response.getWriter().write("<tr>\n" + "<td>vide</td>\n" + "<td>vide</td>\n" + "</tr>");
+					response.getWriter().write("<tr><td>vide</td><td>vide</td></tr>");
 				}
 
 				for (ElementDeCatalogue cata : listElements) {
@@ -408,29 +455,34 @@ public class MainServlet extends HttpServlet {
 			List<ElementDeCatalogue> listElements = catalogueElements.titreBelongingToAnAlbum(param3);
 			System.out.println("Titre de l'album ->" + param3);
 
-			if (listElements.isEmpty()) {
-				response.getWriter().write("<h1> Album vide .. </h1> ");
-				response.getWriter()
-						.write("<button id=" + idMembreActuel + "onclick ='mesPlaylists(this)'>Retour</button>");
+			
+			
+				
+				response.getWriter().write("<br>");
+				response.getWriter().write("<br>");
+				response.getWriter().write("<br>");
+				
+				response.getWriter().write("<table border=\"0\">" + "<tr>\n" + "	            <th>Titre</th>\n"
+						+ "	            <th>Auteur</th>\n" + "</tr>");
+				
+				if (listElements.isEmpty()) {
+					response.getWriter().write("<tr>\n" + "<td>vide</td>\n" + "<td>vide</td>\n" + "</tr>");
+					response.getWriter().write("<button id="+idMembreActuel+" onclick ='goBackAlbum()'>Retour</button>");
+				}else {
+					response.getWriter().write("<button id="+idMembreActuel+" onclick ='goBackAlbum()'>Retour</button>");
+					response.getWriter().write("<br>");
+					response.getWriter().write("<br>");
+					for (ElementDeCatalogue cata : listElements) {
+						String title = cata.getTitre();
+						String author = cata.getInterprete();
+		
+						System.out.println(title);
+						response.getWriter().write("<tr>\n" + "<td>" + title + "</td>\n" + "	<td>" + author + "</td>\n"
+								+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td><td><button class='buttonElements' id='Titres "
+								+ title + "' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>" + "</tr>");
+					}
+					response.getWriter().write("</table>");
 			}
-
-			response.getWriter().write("<br>");
-			response.getWriter().write("<br>");
-			response.getWriter().write("<br>");
-
-			response.getWriter().write("<table border=\"0\">" + "<tr>\n" + "	            <th>Titre</th>\n"
-					+ "	            <th>Auteur</th>\n" + "</tr>");
-
-			for (ElementDeCatalogue cata : listElements) {
-				String title = cata.getTitre();
-				String author = cata.getInterprete();
-
-				System.out.println(title);
-				response.getWriter().write("<tr>\n" + "<td>" + title + "</td>\n" + "	<td>" + author + "</td>\n"
-						+ "<td><button>Jouer <i style=\"font-size:10px\" class=\"fa\">&#xf04b;</i></button></td><td><button class='buttonElements' id='Titres "
-						+ title + "' onclick ='choosePlaylist(this)'>Ajouter a une playlist</button></td>" + "</tr>");
-			}
-			response.getWriter().write("</table>");
 
 		} else if (param4 != null) {
 			
@@ -504,7 +556,7 @@ public class MainServlet extends HttpServlet {
 
 			// execution de la requête :
 
-			System.out.println(idMembreActuel);
+			System.out.println("le param7 !!! -> "+param7);
 
 			List<Playlist> listPlaylist = catalogueElements.getTitresAlbumPersoMembre(idMembreActuel);
 
@@ -1067,16 +1119,16 @@ public class MainServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		List<ElementDeCatalogue> alreadyInPlaylist = new ArrayList<ElementDeCatalogue>();
+		//alreadyInPlaylist = ;
 		CatalogueService catalogueElements = new CatalogueServiceImpl();
 		HttpSession maSession = request.getSession();
 		Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
 		Visiteur elVisiteur = (Visiteur)maSession.getAttribute("visiteurConnecte");
-		
 		if(elMembre != null) {
 			int idMembreActuel = elMembre.getId();
 		
-			
-	
+
 			// nt idMembreActuel = alex.getId();
 			// int idMembreActuel = kevin.getId();
 	
@@ -1089,6 +1141,14 @@ public class MainServlet extends HttpServlet {
 	
 			if (param1 != null && param2 != null && param3 != null && param4 == null && param5 == null) {
 			    catalogueElements = new CatalogueServiceImpl();
+			    /*
+			    // Faut recup tout le mot param3 .. 
+			    
+			    alreadyInPlaylist.add(new ElementDeCatalogue(param3));
+			    for(ElementDeCatalogue elemPlayl : alreadyInPlaylist)
+				{
+			    	System.out.println("dans alreadyPlayl"+elemPlayl.getTitre());
+				}*/
 				catalogueElements.newElementInPrivatePlaylist(param1, param2, param3);
 				response.getWriter().write("<h3> Votre element a bien ete insere dans la playlist :" + param1 + " </h3> ");
 				//response.getWriter().write("<button id="+idMembreActuel+" onclick ='MainServlet'>Acceuil</button>");
@@ -1105,11 +1165,6 @@ public class MainServlet extends HttpServlet {
 	
 			} else if (param4 != null && param5 != null && param1 == null && param2 == null && param3 == null) {
 				
-				/*CatalogueService catalogueElements = new CatalogueServiceImpl();
-				HttpSession maSession = request.getSession();
-				Membre elMembre = (Membre) maSession.getAttribute("membreConnecte");
-				int idMembreActuel = elMembre.getId();
-				System.out.println("valeur param" + param5);*/
 				catalogueElements.deleteTitreFromPlaylistPerso(idMembreActuel, param4, param5);
 				response.getWriter().write("<h3> Le titre '" + param4 + "' a bien ete supprime</h3> ");
 				response.getWriter().write("<button id="+idMembreActuel+" onclick ='mesPlaylists(this)'>Retour</button>");

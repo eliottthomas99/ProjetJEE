@@ -39,6 +39,7 @@ public interface CatalogueService {
 	
 	
 	public List<ElementDeCatalogue> getAllElementsFromPlaylistPerso(int idMembre, String nomPlaylistPerso);
+	public List<String>  getAllElementsFromAllPlaylistPerso(int idMembre);
 	
 	
 	public void deletePlaylistMembre(String nomPlaylistPerso);

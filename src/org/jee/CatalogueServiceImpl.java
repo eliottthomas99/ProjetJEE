@@ -17,8 +17,10 @@ public class CatalogueServiceImpl implements CatalogueService {
 	
 	Statement stmt, stmt2,stmt3, stmt4;
 	ResultSet rs,rs2, rs3;
+	ResultSet rsBis;
 	Connection connexion;
 	List<ElementDeCatalogue> catalogueElements = new ArrayList<>();
+	List<String> check = new ArrayList<>();
 	List<Playlist> titresPlaylists = new ArrayList<>();
 	private int adminOrNo;
 	
@@ -50,7 +52,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				catalogueElements.add(new Titre(titre, interpret, nbEcoutePeriode , id, genre, dureeTotale, dateCreation));
 				//String titre, String interprete,int nbEcoutePeriode, int idElement,String genre, int dureeTotale, Date anneeCreation
 			}
-			
+			rs.close();
 			stmt.close();
 			connexion.close();
 			System.out.println("connection fermé");
@@ -93,7 +95,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new Album(titre, interprete, nombreDecoute ,type, annee, duree,id));			
 			}
-			
+			rs.close();
 			stmt.close();
 			connexion.close();
 		
@@ -135,7 +137,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new Album(titre,interprete));
 			}
-			
+			rs.close();
+			rs2.close();
 			stmt.close();
 			stmt2.close();
 			connexion.close();
@@ -178,7 +181,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new Album(titre,interprete));
 			}
-			
+			rs.close();
+			rs2.close();
 			stmt.close();
 			stmt2.close();
 			connexion.close();
@@ -213,7 +217,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				catalogueElements.add(new ElementDeCatalogue(titre,interprete));	
 			}
-			
+			rs.close();
 			stmt.close();
 			connexion.close();
 		
@@ -299,7 +303,12 @@ public class CatalogueServiceImpl implements CatalogueService {
 				   String titre = rs.getString("titre");
 				   String interprete = rs.getString("interprete");
 				   catalogueElements.add(new Album(titre,interprete));					
-				}  		
+				}
+				
+				rs.close();
+				stmt.close();
+				connexion.close();
+				
 			}catch(SQLException e) {
 				System.out.println(e);
 		}
@@ -307,8 +316,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 		return catalogueElements;
 	}
 	
-	
 
+	
 	public List<Playlist> getTitresAlbumPersoMembre(int idMembre)
 	{
 		try {
@@ -333,6 +342,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				titresPlaylists.add(new PlaylistPerso(id,nom));	
 			}
 			
+			rs.close();
 			stmt.close();
 			connexion.close();
 		
@@ -372,9 +382,14 @@ public class CatalogueServiceImpl implements CatalogueService {
 			 int idDuMembre = rs4.getInt("id");
 			 
 			 stmt5.executeUpdate("INSERT INTO lienPlaylistPersoMembre VALUES(("+idPlaylistPerso+"),("+idDuMembre+"))");
+			 
+			 rs3.close();
+			 rs4.close();
 			}
 			
+			
 			stmt.close();
+			rs.close();
 			stmt3.close();
 			stmt4.close();
 			stmt5.close();
@@ -394,6 +409,14 @@ public class CatalogueServiceImpl implements CatalogueService {
 	{
 		ResultSet rs3, rs4;
 		Statement stmt3,stmt4, stmt5, stmt6;
+		
+		if (titre.charAt(0) == ' ')
+		{
+			System.out.println("titre avant:"+titre);
+			titre = titre.trim();
+			System.out.println("titre modifié:"+titre.trim());
+		}
+		System.out.println("playlist:"+nomPlaylistPerso+"section:"+section+"titre:"+titre);
 		try {
 			connexion = DBManager.getInstance().getConnection();
 			stmt = connexion.createStatement();
@@ -408,16 +431,24 @@ public class CatalogueServiceImpl implements CatalogueService {
 			 System.out.println("ok");
 			 rs3 = stmt.executeQuery("select id from PlaylistPerso where nom like'%"+nomPlaylistPerso+"%'");
 			 System.out.println("ok");
-			 rs4 = stmt3.executeQuery("select id from "+section+" where titre like '%"+titre+"%'");
 			 
+			 rs4 = stmt3.executeQuery("select id from "+section+" where titre ='"+titre+"'");
+			 System.out.println("1problème ici ?");
 			 rs3.next();
+			 System.out.println("2problème ici ?");
 			 rs4.next();
+			 System.out.println("3problème ici ?");
 			 int idPlaylistPerso = rs3.getInt("id");
+			 System.out.println("4problème ici ?");
 			 int id = rs4.getInt("id");
 			 
+			 System.out.println("3problème ici ?");
 			 stmt5.executeUpdate("INSERT INTO lienPlaylistPerso"+section+" VALUES(("+idPlaylistPerso+"),("+id+"))");
 			 
+			 rs3.close();
+			 rs4.close();
 			}
+			
 			
 			stmt.close();
 			stmt3.close();
@@ -435,7 +466,6 @@ public class CatalogueServiceImpl implements CatalogueService {
 	
 	public List<ElementDeCatalogue>  getAllElementsFromPlaylistPerso(int idMembre, String nomPlaylistPerso)
 	{
-		List<ElementDeCatalogue> check;
 		
 		try {
 			connexion = DBManager.getInstance().getConnection();
@@ -452,7 +482,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			  		+ "lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id AND lienPlaylistPersoMembre.idMembre = membres.id AND \n"
 			  		+ "membres.id = "+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
 			  
-			  rs2 = stmt3.executeQuery("Select Albums.titre, Albums.interprete from lienPlaylistPersoAlbums,PlaylistPerso,lienPlaylistPersoMembre, Albums,membres where \n"
+			  rs2 = stmt3.executeQuery("Select Albums.titre from lienPlaylistPersoAlbums,PlaylistPerso,lienPlaylistPersoMembre, Albums,membres where \n"
 			 		+ "\n"
 			 		+ "PlaylistPerso.id = lienPlaylistPersoAlbums.idPlaylistPerso AND lienPlaylistPersoAlbums.idAlbums = Albums.id  AND \n"
 			 		+ "\n"
@@ -464,21 +494,23 @@ public class CatalogueServiceImpl implements CatalogueService {
 			while (rs.next()) {
 			
 				String titre = rs.getString("titre");
+			
 				System.out.println((new Titre(titre)).getTitre());
-				catalogueElements.add(new Titre(titre));	
+				catalogueElements.add((new Titre(titre)));	
 			}
 			
 			while (rs2.next()) {
 				
 		
 				String titre = rs2.getString("titre");
-				String interprete= rs2.getString("interprete");
+				
 
 				System.out.println((new Album(titre)).getTitre());
-				catalogueElements.add(new Album(titre,interprete));
+				catalogueElements.add(new Album(titre));
 			}
 			
-			
+			rs.close();
+			rs2.close();
 			stmt.close();
 			stmt3.close();
 			connexion.close();
@@ -489,6 +521,66 @@ public class CatalogueServiceImpl implements CatalogueService {
 		}
 		
 		return catalogueElements;
+		
+	}
+	
+	
+	public List<String>  getAllElementsFromAllPlaylistPerso(int idMembre)
+	{
+	
+		try {
+			connexion = DBManager.getInstance().getConnection();
+			if (connexion != null)
+			{
+			 stmt = connexion.createStatement();
+			 stmt3 = connexion.createStatement();
+			 //rs = stmt.executeQuery("Select Titres.titre, Titres.interprete, Titres.id, Titres.nbEcoutePeriode from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre, membres, PlaylistPerso where Titres.id = lienPlaylistPersoTitres.idTitre AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id and lienPlaylistPersoMembre.idMembre = membres.id and membres.id ="+idMembre+" AND PlaylistPerso.nom = '"+nomPlaylistPerso+"'");
+			 rsBis = stmt.executeQuery("Select DISTINCT Titres.titre from Titres,lienPlaylistPersoTitres,lienPlaylistPersoMembre,membres, PlaylistPerso where \n"
+			  		+ "\n"
+			  		+ "Titres.id = lienPlaylistPersoTitres.idTitres AND PlaylistPerso.id = lienPlaylistPersoTitres.idPlaylistPerso AND \n"
+			  		+ "\n"
+			  		+ "lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id AND lienPlaylistPersoMembre.idMembre = membres.id AND \n"
+			  		+ "membres.id = "+idMembre+"");
+			  
+			  rs2 = stmt3.executeQuery("Select Albums.titre from lienPlaylistPersoAlbums,PlaylistPerso,lienPlaylistPersoMembre, Albums,membres where \n"
+			 		+ "\n"
+			 		+ "PlaylistPerso.id = lienPlaylistPersoAlbums.idPlaylistPerso AND lienPlaylistPersoAlbums.idAlbums = Albums.id  AND \n"
+			 		+ "\n"
+			 		+ "lienPlaylistPersoMembre.idPlaylistPerso = PlaylistPerso.id AND lienPlaylistPersoMembre.idMembre = membres.id AND \n"
+			 		+ "\n"
+			 		+ "membres.id ="+idMembre+"");
+			}
+			
+			
+			while (rs2.next()) {
+				
+				String titre = rs2.getString("titre");
+				System.out.println((new Album(titre)).getTitre());
+				check.add(titre);
+			}
+			rs2.close();
+			while (rsBis.next() ) {
+			
+				String titre = rsBis.getString("titre");
+				if (rsBis.wasNull()) {
+			        // handle NULL field value
+			    }
+				System.out.println((new Titre(titre)).getTitre());
+				check.add(titre);	
+			}
+			
+			
+			rsBis.close();
+			stmt.close();
+			stmt3.close();
+			connexion.close();
+		
+		}catch(SQLException e) {
+		System.out.println(e);
+		
+		}
+		
+		return check;
 		
 	}
 	
@@ -523,6 +615,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 				catalogueElements.add(new Titre(titre,interprete));
 			}
 			
+			rs.close();
+			rs2.close();
 			stmt.close();
 			stmt2.close();
 			connexion.close();
@@ -558,6 +652,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			 stmt6.executeUpdate("delete from lienPlaylistPersoMembre where idPlaylistPerso = "+id+"");
 			}
 			
+			rs.close();
 			stmt3.close();
 			stmt4.close();
 			stmt5.close();
@@ -613,6 +708,9 @@ public class CatalogueServiceImpl implements CatalogueService {
 				 }
 			}
 			
+			rs.close();
+			rs2.close();
+			rs3.close();
 			stmt.close();
 			stmt2.close();
 			stmt3.close();
@@ -640,6 +738,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				 adminOrNo = rs.getInt("adminCompte");
 				 System.out.println(adminOrNo);
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -664,6 +763,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				 adminOrNo = rs.getInt("adminMusique");
 				 System.out.println(adminOrNo);
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -688,6 +788,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				 adminOrNo = rs.getInt("adminCompte");
 				 System.out.println(adminOrNo);
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -708,6 +809,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			{
 				 stmt.executeUpdate("INSERT INTO Titres (titre,interprete) VALUES(('"+nomTitre+"'),('"+interprete+"'))");
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -726,6 +828,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 			{
 				 stmt.executeUpdate("INSERT INTO Albums (titre,interprete) VALUES(('"+nomTitre+"'),('"+interprete+"'))");
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -757,6 +860,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 					stmt.executeUpdate("INSERT INTO Titres (titre,interprete,inPb) VALUES('"+nomTitre+"','"+interprete+"',1)");  
 				  }	 
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -800,6 +904,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 				}
 				
 			}
+			rs.close();
 			stmt.close();
 			connexion.close(); 
 		}catch(SQLException e) {
@@ -832,7 +937,9 @@ public class CatalogueServiceImpl implements CatalogueService {
 				
 				stmt4.executeUpdate("INSERT INTO lienAlbumTitres (idTitre, idAlbum) VALUES ("+idTitre+","+idAlbum+");");
 			}
-			
+			rs.close();
+			rs2.close();
+			rs3.close();
 			stmt.close();
 			stmt2.close();
 			stmt3.close();
