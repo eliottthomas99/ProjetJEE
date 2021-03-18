@@ -97,7 +97,9 @@ if(visiteur == null){
 			<li><input name="search" id="barre" type='text'
 				placeholder='Rechercher un element avec son titre ..'></input>
 				<button onclick="goAccueil(this)">Recherche</button></li>
-
+						
+			<li><a href="Deconnection">Deconnection</a></li>
+			
 		</ul>
 	</nav>
 
@@ -227,7 +229,7 @@ if(visiteur == null){
 		<ul>
 			<li class="current-menu-item"><a href="MainServlet">La
 					playlist du moment</a></li>
-			<li><a href="MainServlet">m'inscrire</a></li>
+			<li><a href="Deconnection">m'inscrire</a></li>
 			<li><input name="search" id="barre" type='text'
 				placeholder='Rechercher un element avec son titre ..'></input>
 				<button id="visiteur" onclick="searchByVisiteur(this)">Recherche</button></li>
