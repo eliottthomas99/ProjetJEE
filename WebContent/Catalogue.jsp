@@ -98,7 +98,7 @@ if(visiteur == null){
 				placeholder='Rechercher un element avec son titre ..'></input>
 				<button onclick="goAccueil(this)">Recherche</button></li>
 						
-			<li><a href="Deconnection">Deconnection</a></li>
+			<li><a href="Deconnection" id="deco">Deconnection</a></li>
 			
 		</ul>
 	</nav>
