@@ -20,7 +20,7 @@ String codeRetour = (String) maSession.getAttribute("codeRetour");
 
 	<form method="post" action="Connection" class="form">
 	
-		<legend>Connection</legend>
+		<legend class="title">Connection</legend>
 		<p>Veuillez rentrer vos identifiants pour vous connecter.</p>
 
 		<label for="email">Adresse email <span class="requis">*</span></label>

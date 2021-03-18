@@ -5,6 +5,17 @@ body{
 background: linear-gradient(90deg, rgba(94,129,172,1) 0%, rgba(136,192,208,1) 79%, rgba(143,188,187,1) 100%);
 background-clip:border-box;
 }
+
+.title{
+	font-family:system-ui;
+	color: rgb(18, 107, 107);
+	
+    background: linear-gradient(to right, #36ecde, rgb(18, 107, 107));
+    background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+}
 #primary_nav_wrap
 {
 	margin-top:15px

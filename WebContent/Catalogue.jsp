@@ -133,7 +133,7 @@ if(visiteur == null){
 		%>
 		<br/>
 		</div>
-		<h3>Decouvrez notre playlist du moment</h3>
+		<h3 class="title">Decouvrez notre playlist du moment</h3>
 		<br>
 		<table border="0">
 			<tr>
