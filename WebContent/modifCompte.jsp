@@ -100,7 +100,7 @@ Membre membre = (Membre) maSession.getAttribute("membreConnecte");
 					<option value=4>Pop</option>
 					<option value=5>Rock</option>
 
-				</select> <br /> <input type="submit" value="Modification" class="sansLabel" />
+				</select> <br /> <input type="submit" value="Modification" class="button" />
 				<br />
 
 			</form>
@@ -139,9 +139,9 @@ Membre membre = (Membre) maSession.getAttribute("membreConnecte");
 						id="nouveauMotDePasseConfirmation" value="" required /> <label
 						for="nouveauMotDePasse" class="form__label"> Confirmation</label>
 				</div>
-
+				</br>
 				<input type="submit" value="ModificationAvancee"
-					class="form_advanced_modif_button" /> <br />
+					class="button" /> <br />
 			</form>
 		</section>
 	</div>

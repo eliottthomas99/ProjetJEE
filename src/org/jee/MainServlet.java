@@ -134,7 +134,7 @@ public class MainServlet extends HttpServlet {
 				
 				int i = 0;
 				if (resAdminMusiqueOrNo == 1) {
-
+					response.getWriter().write("<div class='form'>");	
 					response.getWriter().write("<h3>Ajouter des Titres</h3>");
 					response.getWriter().write(
 							"<h4>Titre</h4><input name='search' id= 'barreTitre1' type='text' placeholder='titre de la musique..'>");
@@ -146,6 +146,7 @@ public class MainServlet extends HttpServlet {
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
 					response.getWriter().write("<br>");
+					response.getWriter().write("</div>");
 				}
 
 				List<ElementDeCatalogue> listElements = catalogueElements.getAllTitres();
